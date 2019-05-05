@@ -47,7 +47,7 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   justifyContent = false  # Set "text-align: justify" to `.content`.
 
   # Add custom css
-  customCSS = ["css/solarize.scss"]
+  customCSS = ["css/solarize.scss", "css/solarize.css"]
 
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
