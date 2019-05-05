@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ari Decter-Frain</title>
+    <link>/</link>
+    <description>Recent content on Ari Decter-Frain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I’m a PhD student in Cornell’s Policy Analysis and Management program.
+Through policy, governments set the rules of the game that all firms and workers play. I want to change the rules so that the game gives fairer rewards and everyone has a more equal chance at success.
+Why do people flock to major cities despite ever-rising costs of living? Why is competition declining across industries? How did elite education become a necessary and sufficient condition for economic success?</description>
+    </item>
+    
+    <item>
+      <title>How I got here</title>
+      <link>/posts/05-05-2019_howigothere/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/05-05-2019_howigothere/</guid>
+      <description>University of WinnipegI completed my undergraduate degree in Psychology at the University of Winnipeg. While studying I worked in Dr. Jeremy Frimer’s Moral Psychology lab. We used experiments and natural language processing to study:
+The psychological differences between liberals and conservatives.The determinants of public approval of governing bodies, specifically US Congress.How leaders emerge and interact with social movements.I also studied philosophy. I discovered the liberal views of John Stuart Mill, John Rawls and Amartya Sen, which continue to guide my beliefs about morality and politics today.</description>
+    </item>
+    
+  </channel>
+</rss>

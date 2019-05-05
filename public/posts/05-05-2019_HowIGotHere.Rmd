@@ -1,0 +1,49 @@
+---
+title: "How I got here"
+author: "Ari Decter-Frain"
+date: "May 5, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### University of Winnipeg
+
+I completed my undergraduate degree in Psychology at the University of Winnipeg. While studying I worked in Dr. Jeremy Frimer's Moral Psychology lab. We used experiments and natural language processing to study:
+
+1. The psychological differences between liberals and conservatives.
+2. The determinants of public approval of governing bodies, specifically US Congress.
+3. How leaders emerge and interact with social movements.
+
+I also studied philosophy. I discovered the liberal views of John Stuart Mill, John Rawls and Amartya Sen, which continue to guide my beliefs about morality and politics today.
+
+<hr>
+
+### London School of Economics
+
+I spent the next year in London completing my MSc in Inequalities and Social Science. I learned how globalization and technological change - changes in the rules of the game - had produced rising inequality in high-income countries.
+
+LSE presents all kinds of opportunities to learn and have new experiences. I tried to take on as many as I could. I:
+
+* Attended public lectures regularly. 
+* Took quant methods courses from some of the world's best social scientists. 
+* Served as team leader for a student consulting project. 
+* Took my first coding course and fell completely in love with it.
+* Made lifelong friendships with the members of my brilliant, inspiring cohort.
+
+Throughout the year I was exposed to full the scope and diversity of opportunities that lay ahead. It changed my life.
+
+<hr>
+
+### Multi Health Systems
+
+After graduating from LSE I moved to Toronto and joined Multi Health Systems as a research analyst in their Innovation Hub, the company's internal startup. In this role I did mostly data science work and developed my skills coding in R, HTML and CSS. 
+
+After a year I became a product manager. I led a small team working on feature updates for the products in our portfolio, and I worked closely with the CEO of MHS to develop the business model for the company's new product line in the workplace health and wellness market. 
+
+I learned a tremendous amount about business decision-making. cut through uncertainty with reasonable assumptions, how to decide which tasks to outsource, how to package products and services together to create value for customers while turning a profit.
+
+At a systems level, I was also learning firsthand how businesses navigate markets.  
+
