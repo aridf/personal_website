@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ### University of Winnipeg
+##### 2012 - 2016
 
 I completed my undergraduate degree in Psychology at the University of Winnipeg. While studying I worked in Dr. Jeremy Frimer's Moral Psychology lab. We used experiments and natural language processing to study:
 
@@ -22,6 +23,7 @@ I also studied philosophy. I discovered the liberal views of John Stuart Mill, J
 <hr>
 
 ### London School of Economics
+##### 2016 - 2017
 
 I spent the next year in London completing my MSc in Inequalities and Social Science. I learned how globalization and technological change - changes in the rules of the game - had produced rising inequality in high-income countries.
 
@@ -38,6 +40,7 @@ Throughout the year I was exposed to full the scope and diversity of opportuniti
 <hr>
 
 ### Multi Health Systems
+##### 2017 - 2019
 
 After graduating from LSE I moved to Toronto and joined Multi Health Systems as a research analyst in their Innovation Hub, the company's internal startup. In this role I did mostly data science work and developed my skills coding in R, HTML and CSS. 
 
