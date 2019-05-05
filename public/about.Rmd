@@ -9,13 +9,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I'm a PhD student in Cornell's Policy Analysis and Management program. 
+I am a PhD student in Cornell's Policy Analysis and Management program. I am passionate about a lot of things. Here is an abbreviated list in no particular order:
 
-Through policy, governments set the rules of the game that all firms and workers play. I want to change the rules so that the game gives fairer rewards and everyone has a more equal chance at success.
+* Interdisciplinary social science
 
-Why do people flock to major cities despite ever-rising costs of living? Why is competition declining across industries? How did elite education become a necessary and sufficient condition for economic success?
+* Business strategy
 
-Answering these questions requires accessing new kinds of data, revealing hidden social networks, identifying causal mechanisms, and understanding economic incentives. I don't expect to answer every question. I'm here gain the methodological tools I need to find the truth and create solutions.  
+* Coding
+
+* Travelling
+
+* Creating a more fair, inclusive economy
+
+If you care to learn more about me, I've written a series of blogs about the various steps in my academic and professional journey so far. You can find them here. 
+
+
 
 
 
