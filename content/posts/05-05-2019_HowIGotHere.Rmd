@@ -1,5 +1,5 @@
 ---
-title: "How I got here"
+title: "How I got to Cornell"
 author: "Ari Decter-Frain"
 date: "2019-05-05"
 output: html_document

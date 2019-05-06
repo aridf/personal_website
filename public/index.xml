@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>How I got here</title>
+      <title>How I got to Cornell</title>
       <link>/posts/05-05-2019_howigothere/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
       
@@ -39,13 +39,13 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>I am a PhD student in Cornell’s Policy Analysis and Management program. I am passionate about a lot of things. Here is an abbreviated list in no particular order:
-Interdisciplinary social science
+      <description>I am a PhD student in Cornell’s Policy Analysis and Management program. I have experience in research, product development, and business strategy. I am passionate about a lot of things. Here is an abbreviated list in no particular order:
+Quantitative social science
 Business strategy
 Coding
 Travelling
 Creating a more fair, inclusive economy
-If you care to learn more about me, I’ve written a series of blogs about the various steps in my academic and professional journey so far.</description>
+If you care to learn more about me, I’ve written a blog post about my experiences along each step of my academic and professional journey so far.</description>
     </item>
     
     <item>
