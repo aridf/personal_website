@@ -3,68 +3,63 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://aridecterfrain.com/</loc>
+    <loc>/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/posts/05-05-2019_howigothere/</loc>
+    <loc>/posts/myjourney/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/posts/myjourney/</loc>
-    <lastmod>2019-05-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://aridecterfrain.com/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/post/2015-07-23-r-rmarkdown/</loc>
+    <loc>/post/2015-07-23-r-rmarkdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/post/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://aridecterfrain.com/tags/r-markdown/</loc>
+    <loc>/post/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/tags/</loc>
+    <loc>/tags/r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/tags/plot/</loc>
+    <loc>/tags/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/tags/regression/</loc>
+    <loc>/tags/plot/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/about/</loc>
+    <loc>/tags/regression/</loc>
+    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://aridecterfrain.com/extratext/</loc>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/extratext/</loc>
   </url>
   
 </urlset>
