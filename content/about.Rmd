@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in Cornell's Policy Analysis and Management program. I have experience in research, product development, and business strategy. I am passionate about a lot of things. Here is an abbreviated list in no particular order:
+I am a PhD student in Cornell's Policy Analysis and Management program. I received my MSc from the London School of Economics and my BA (Hons.) from the University of Winnipeg. Before starting at Cornell, I spent two years working in the field of people analytics at Multi Health Systems Inc. I have experience in quantitative and experimental social science, product development, and business strategy. 
+
+I am passionate about a lot of things. Here is an abbreviated list in no particular order:
 
 * Quantitative social science
 
