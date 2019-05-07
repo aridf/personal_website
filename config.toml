@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://aridecterfrain.com"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Ari Decter-Frain"
@@ -68,11 +68,6 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   [[menu.main]]
     name = "About"
     url = "about/"
-    weight = 20
-
-    [[menu.main]]
-    name = "CV"
-    url = "cv/"
     weight = 20
 
     [[menu.main]]
