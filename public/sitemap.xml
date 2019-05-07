@@ -3,63 +3,63 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/posts/05-05-2019_howigothere/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/posts/05-05-2019_howigothere/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/posts/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/2015-07-23-r-rmarkdown/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/post/2015-07-23-r-rmarkdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r-markdown/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/post/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/tags/r-markdown/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/plot/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/tags/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/regression/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/tags/plot/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/tags/regression/</loc>
+    <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>/extratext/</loc>
+    <loc>/sharp-pare-2b33fb.netlify.com/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/sharp-pare-2b33fb.netlify.com/extratext/</loc>
   </url>
   
 </urlset>
