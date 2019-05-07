@@ -9,51 +9,55 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-My career so far has been a wonderfully ecclectic adventure. In this post I provide a brief summary of my experiences and how they led me to my current position at Cornell.     
+My career so far has been a wonderfully ecclectic adventure. In this post I provide a brief summary of my experiences and how they led me to my current position at Cornell. The stated purpose of this post is to introduce myself to readers. The actual purpose is to help me sort through and organize my thoughts about my life.      
 
 ### 1. University of Winnipeg
 ##### 2012 - 2016
 
-I completed my undergraduate degree in Psychology at the University of Winnipeg. I also took courses in philosophy and economics. While studying, I worked as a research assistant for different professors in the psychology department. I worked most extensively in Dr. Jeremy Frimer's Moral Psychology lab. During my final year I took on my first leadership role as the lab's manager. During my tenure our research used experiments and natural language processing to study:
+I completed my undergraduate degree in Psychology at the University of Winnipeg. I also took courses in philosophy and economics. While studying, I worked as a research assistant for different professors in the psychology department. I worked most extensively in Dr. Jeremy Frimer's Moral Psychology lab. During my final year I took on my first leadership role as the lab's manager. Our research used experiments and natural language processing to study:
 
 1. The psychological differences between liberals and conservatives.
 2. The determinants of public approval of governing bodies, specifically US Congress.
 3. How leaders emerge and interact with social movements.
 
-During this time I also worked as a researcher for the Public Interest Law Centre of Manitoba. I researched all sorts of topics to contribute to the *2016 Needs For and Alternatives To* Review of Manitoba Hydro's proposal to built two large hydroelectric dams in Northern Manitoba. My assignments included:
+During this time I also worked as a researcher for the Public Interest Law Centre of Manitoba (PILC). I researched all sorts of topics to contribute to the *2016 Needs For and Alternatives To (NFAT)* Review of Manitoba Hydro's proposal to built two large hydroelectric dams in Northern Manitoba. The review took over a year, and PILC played a key role in convincing the panel that the second development carried too much risk to receive approval. Throughout the review, my assignments included:
 
 * Reporting on the populations sizes, migration patterns and protection statuses of animal species native to the region surrounding the dams.
 * Learning and critiquing different approaches to cost-benefit analysis.
 * Reading, summarizing, and pulling key quotes from reports prepared by Manitoban Indigenous organization.
 
-*After graduating I left Winnipeg feeling passionately *
+The content of my academic research made plain how ideology and political motives shape policy decisions. Yet my optimism was renewed when I observed the effort and diligence that went into the NFAT proceedings.
+
+After graduating, I moved away from Winnipeg with a desire to develop my methods skillset and contribute to the most important political debates of the day. I had become convinced of the need to apply rigorous social science to every discussion about how to structure society. This remains one of my guiding principles today.
 
 <hr>
 
-### London School of Economics
+### 2. London School of Economics
 ##### 2016 - 2017
 
-I spent the next year in London completing my MSc in Inequalities and Social Science. I learned how globalization and technological change has produced more winner-take-all industries and led to rising inequality in high-income countries.
+I spent the next year in London, where I completed my MSc in Inequalities and Social Science. I learned how globalization and technological change have changed the labour market and produced rising income and wealth inequality in high-income countries.
 
 LSE presents all kinds of opportunities to learn and have new experiences. I tried to take on as many as I could. I:
 
 * Attended public lectures regularly. 
-* Took quant methods courses from some of the world's best social scientists. 
+* Took quantitative methods courses from some of the world's best social scientists. 
 * Served as team leader for a student consulting project. 
+* Travelled, for work and play, to countries across Europe.
 * Took my first coding course and fell completely in love with it.
 * Made lifelong friendships with the members of my brilliant, inspiring cohort.
-* Travelled, for work and play, to countries across Europe.
 
-Throughout the year I was exposed to full the scope and diversity of opportunities that lay ahead. It changed my outlook. I felt encouraged to expect more from myself and from my life.
+*Throughout the year at LSE I gained exposure to full the scope and diversity of opportunities I had. It completely changed my outlook on life. I felt encouraged to expect more from myself and from my life.*
+
+*jasd*
 
 <hr>
 
 ### Multi Health Systems
 ##### 2017 - 2019
 
-After graduating from LSE I moved to Toronto and joined Multi Health Systems as a research analyst in their Innovation Hub, the company's internal startup. In this role I did mostly data science work and developed my skills coding in R, HTML and CSS. 
+After graduating from LSE I moved to Toronto and joined Multi Health Systems as a research analyst in their Innovation Hub, the company's internal startup. In this role I did mostly data science work and developed my coding skills.
 
-After a year I became a product manager. I led a small team working on feature updates for the products in our portfolio. I also worked closely with the company's CEO to develop the business model for the company's new product line in the workplace health and wellness market. 
+After a year I became a product manager. I led a small team working on feature updates for the products in our portfolio. I also developed a business model for the company's new product line in the workplace health and wellness market. 
 
 From this experience I learned a tremendous amount about business decision-making. I learned how to cut through uncertainty with reasonable assumptions, how to decide which projects to develop internally and which to outsource, and how to package products and services together to create value for customers while turning a profit.
 
