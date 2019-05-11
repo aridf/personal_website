@@ -27,12 +27,13 @@ library(tidyverse)
 library(ggmap)
 library(ggrepel)
 library(maps)
+library(here)
 ```
 
 
 Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.
 ```{r}
-flights <- read_csv("../../static/map/trips.csv")
+flights <- read_csv(here("static", "map", "trips.csv"))
 head(flights)
 ```
 
@@ -54,8 +55,8 @@ flights <- flights %>%
 Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I'm making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset. 
 ```{r message = FALSE}
 locations <- c(flights$From, flights$To) 
-if(file.exists("../../static/map/geos.csv")) {
-  geos <- read_csv("../../static/map/geos.csv")
+if(file.exists(here("static", "map", "geos.csv"))) {
+  geos <- read_csv(here("static", "map", "geos.csv"))
   new <- locations[!(locations %in% geos$airport)]
   if(length(new) > 0) {
     geos <- new %>%
@@ -63,7 +64,7 @@ if(file.exists("../../static/map/geos.csv")) {
       mutate(airport = new) %>%
       bind_rows(geos) %>%
       select(airport, lon, lat)
-    write_csv(geos, "../../static/map/geos.csv")
+    write_csv(geos, here("static", "map", "geos.csv"))
   }
 } else {
   new <- unique(c(flights$From, flights$To))
@@ -71,7 +72,7 @@ if(file.exists("../../static/map/geos.csv")) {
     geocode() %>%
     mutate(airport = new) %>%
     select(airport, lon, lat)
-  write_csv(geos, "../../static/map/geos.csv") #write dataset
+  write_csv(geos, here("static", "map", "geos.csv"))
 }
 head(geos)
 ```
