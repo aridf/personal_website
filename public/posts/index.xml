@@ -28,9 +28,10 @@ To make the map I used R and ggplot. I relied heavily on The Lucid Manager’s p
 <pre class="r"><code>library(tidyverse)
 library(ggmap)
 library(ggrepel)
-library(maps)</code></pre>
+library(maps)
+library(here)</code></pre>
 <p>Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.</p>
-<pre class="r"><code>flights &lt;- read_csv(&quot;res/map/trips.csv&quot;)
+<pre class="r"><code>flights &lt;- read_csv(here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;))
 head(flights)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   From       To         
@@ -53,8 +54,8 @@ flights &lt;- flights %&gt;%
   select(From, To)</code></pre>
 <p>Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I’m making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset.</p>
 <pre class="r"><code>locations &lt;- c(flights$From, flights$To) 
-if(file.exists(&quot;res/map/geos.csv&quot;)) {
-  geos &lt;- read_csv(&quot;res/map/geos.csv&quot;)
+if(file.exists(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))) {
+  geos &lt;- read_csv(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))
   new &lt;- locations[!(locations %in% geos$airport)]
   if(length(new) &gt; 0) {
     geos &lt;- new %&gt;%
@@ -62,7 +63,7 @@ if(file.exists(&quot;res/map/geos.csv&quot;)) {
       mutate(airport = new) %&gt;%
       bind_rows(geos) %&gt;%
       select(airport, lon, lat)
-    write_csv(geos, &quot;res/map/geos.csv&quot;)
+    write_csv(geos, here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))
   }
 } else {
   new &lt;- unique(c(flights$From, flights$To))
@@ -70,7 +71,7 @@ if(file.exists(&quot;res/map/geos.csv&quot;)) {
     geocode() %&gt;%
     mutate(airport = new) %&gt;%
     select(airport, lon, lat)
-  write_csv(geos, &quot;res/map/geos.csv&quot;) #write dataset
+  write_csv(geos, here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)) #write dataset
 }
 head(geos)</code></pre>
 <pre><code>## # A tibble: 6 x 3
