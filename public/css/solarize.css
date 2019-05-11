@@ -18,3 +18,17 @@ a:hover {
 #site-header {
   background: #073642;
 }
+
+code { 
+  color: #586e75; 
+  background: #eee8d5; 
+}
+
+pre {
+  color: #586e75; 
+  background: #eee8d5; 
+}
+
+pre > code {
+  background: #eee8d5; 
+}

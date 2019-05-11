@@ -1,0 +1,46 @@
+From,To
+Bogota,Cartegena
+Cartegena,Guayaquil
+Cusco,Le Paz
+Detroit,Minneapolis
+Durham,Toronto
+Edingburgh,London
+Guayaquil,San Cristobal Island
+Guayaquil,Cusco
+Halifax,Winnipeg
+Ithaca,Detroit
+Le Paz,Lima
+Lima,Toronto
+London,Toronto
+London,Calgary
+London,Winnipeg
+London,Barcelona
+London,Edingburgh
+London,Granada
+London,"Oxford, UK"
+London,Split
+London,Paris
+Los Angeles,Toronto
+Minneapolis,Winnipeg
+Montreal,Toronto
+Ottawa,Toronto
+"Oxford, UK",London
+Paris,London
+Philadelphia,Ithaca
+Reykjavik,Berlin
+San Cristobal Island,Guayaquil
+Split,London
+Toronto,Los Angeles
+Toronto,Winnipeg
+Toronto,Philadelphia
+Toronto,Durham
+Toronto,Reykjavik
+Toronto,Bogota
+Toronto,Ottawa
+Toronto,Montreal
+Vancouver,Winnipeg
+Winnipeg,London
+Winnipeg,Toronto
+Winnipeg,Vancouver
+Winnipeg,Halifax
+Calgary,Winnipeg

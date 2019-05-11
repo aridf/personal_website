@@ -7,13 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 05 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>My journey</title>
+      <title>Travel Map</title>
+      <link>/posts/map/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/map/</guid>
+      <description>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.
+To make the map I used R and ggplot. I relied heavily on The Lucid Manager’s post in which he creates his own version.
+First loading all the necessary libraries</description>
+    </item>
+    
+    <item>
+      <title>My Journey to Cornell</title>
       <link>/posts/myjourney/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
       
