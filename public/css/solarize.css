@@ -21,14 +21,14 @@ a:hover {
 
 code { 
   color: #586e75; 
-  background: #eee8d5; 
+  background: #fdf6e3; 
 }
 
 pre {
   color: #586e75; 
-  background: #eee8d5; 
+  background: #fdf6e3; 
 }
 
 pre > code {
-  background: #eee8d5; 
+  background: #fdf6e3; 
 }

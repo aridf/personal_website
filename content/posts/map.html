@@ -1,7 +1,7 @@
 ---
 title: "Travel Map"
 author: "Ari Decter-Frain"
-date: "2019-04-30"
+date: "2019-05-11"
 output: html_document
 ---
 
@@ -16,8 +16,13 @@ library(ggmap)
 library(ggrepel)
 library(maps)
 library(here)</code></pre>
+<p>Here I’m setting internal filepaths. To reproduce the code below, replace the <code>here()</code> functions with the urls in the comments.</p>
+<pre class="r"><code>path_flights &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;)
+#https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv
+path_geos &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)
+#https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv</code></pre>
 <p>Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.</p>
-<pre class="r"><code>flights &lt;- read_csv(here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;))
+<pre class="r"><code>flights &lt;- read_csv(path_flights)
 head(flights)</code></pre>
 <pre><code>## # A tibble: 6 x 2
 ##   From       To         
@@ -40,8 +45,8 @@ flights &lt;- flights %&gt;%
   select(From, To)</code></pre>
 <p>Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I’m making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset.</p>
 <pre class="r"><code>locations &lt;- c(flights$From, flights$To) 
-if(file.exists(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))) {
-  geos &lt;- read_csv(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))
+if(file.exists(path_geos)) {
+  geos &lt;- read_csv(path_geos)
   new &lt;- locations[!(locations %in% geos$airport)]
   if(length(new) &gt; 0) {
     geos &lt;- new %&gt;%
@@ -49,7 +54,7 @@ if(file.exists(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)))
       mutate(airport = new) %&gt;%
       bind_rows(geos) %&gt;%
       select(airport, lon, lat)
-    write_csv(geos, here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))
+    write_csv(geos, path_geos)
   }
 } else {
   new &lt;- unique(c(flights$From, flights$To))
@@ -57,7 +62,7 @@ if(file.exists(here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)))
     geocode() %&gt;%
     mutate(airport = new) %&gt;%
     select(airport, lon, lat)
-  write_csv(geos, here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;))
+  write_csv(geos, path_geos)
 }
 head(geos)</code></pre>
 <pre><code>## # A tibble: 6 x 3
@@ -92,7 +97,7 @@ ymax &lt;- max(geos$lat) + 10
 
 #get map
 worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, ymax), 
-                    colour = &quot;#586e75&quot;, fill = &quot;#586e75&quot;) </code></pre>
+                    colour = &quot;#eee8d5&quot;, fill = &quot;#eee8d5&quot;) </code></pre>
 <p>This is the actual plot. The layers are pretty straightforward:</p>
 <ul>
 <li><code>geom_curve</code> creates curved lines connecting “From” and “To”.</li>
@@ -103,8 +108,8 @@ worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, y
     geom_curve(data = flights, aes(x = lon.x, y = lat.x, xend = lon.y, 
                                    yend = lat.y), col = &quot;#2aa198&quot;, size = .4) + 
     geom_point(data = geos, aes(x = lon, y = lat), col = &quot;#268bd2&quot;) + 
-    geom_text_repel(data = geos, color = &quot;#eee8d5&quot;, aes(x = lon, y = lat, label = airport), 
+    geom_text_repel(data = geos, color = &quot;#586e75&quot;, aes(x = lon, y = lat, label = airport), 
                col = &quot;black&quot;, size = 2, segment.color = NA, segment.size = 1) + 
     theme_void() +
-    theme(panel.background = element_rect(fill = &quot;#002b36&quot;))</code></pre>
-<p><img src="/posts/map_files/figure-html/unnamed-chunk-8-1.png" width="4500" /></p>
+    theme(panel.background = element_rect(fill = &quot;#fdf6e3&quot;))</code></pre>
+<p><img src="/posts/map_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>

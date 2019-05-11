@@ -1,7 +1,7 @@
 ---
 title: "Travel Map"
 author: "Ari Decter-Frain"
-date: "2019-04-30"
+date: "2019-05-11"
 output: html_document
 ---
 
@@ -31,9 +31,18 @@ library(here)
 ```
 
 
+Here I'm setting internal filepaths. To reproduce the code below, replace the ``here()`` functions with the urls in the comments.
+```{r}
+path_flights <- here("static", "map", "trips.csv")
+#https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv
+path_geos <- here("static", "map", "geos.csv")
+#https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv
+```
+
+
 Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.
 ```{r}
-flights <- read_csv(here("static", "map", "trips.csv"))
+flights <- read_csv(path_flights)
 head(flights)
 ```
 
@@ -55,8 +64,8 @@ flights <- flights %>%
 Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I'm making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset. 
 ```{r message = FALSE}
 locations <- c(flights$From, flights$To) 
-if(file.exists(here("static", "map", "geos.csv"))) {
-  geos <- read_csv(here("static", "map", "geos.csv"))
+if(file.exists(path_geos)) {
+  geos <- read_csv(path_geos)
   new <- locations[!(locations %in% geos$airport)]
   if(length(new) > 0) {
     geos <- new %>%
@@ -64,7 +73,7 @@ if(file.exists(here("static", "map", "geos.csv"))) {
       mutate(airport = new) %>%
       bind_rows(geos) %>%
       select(airport, lon, lat)
-    write_csv(geos, here("static", "map", "geos.csv"))
+    write_csv(geos, path_geos)
   }
 } else {
   new <- unique(c(flights$From, flights$To))
@@ -72,7 +81,7 @@ if(file.exists(here("static", "map", "geos.csv"))) {
     geocode() %>%
     mutate(airport = new) %>%
     select(airport, lon, lat)
-  write_csv(geos, here("static", "map", "geos.csv"))
+  write_csv(geos, path_geos)
 }
 head(geos)
 ```
@@ -105,7 +114,7 @@ ymax <- max(geos$lat) + 10
 
 #get map
 worldmap <- borders("world", xlim = c(xmin, xmax), ylim = c(ymin, ymax), 
-                    colour = "#586e75", fill = "#586e75") 
+                    colour = "#eee8d5", fill = "#eee8d5") 
 ```
 
 
@@ -119,9 +128,9 @@ ggplot() + worldmap +
     geom_curve(data = flights, aes(x = lon.x, y = lat.x, xend = lon.y, 
                                    yend = lat.y), col = "#2aa198", size = .4) + 
     geom_point(data = geos, aes(x = lon, y = lat), col = "#268bd2") + 
-    geom_text_repel(data = geos, color = "#eee8d5", aes(x = lon, y = lat, label = airport), 
+    geom_text_repel(data = geos, color = "#586e75", aes(x = lon, y = lat, label = airport), 
                col = "black", size = 2, segment.color = NA, segment.size = 1) + 
     theme_void() +
-    theme(panel.background = element_rect(fill = "#002b36"))
+    theme(panel.background = element_rect(fill = "#fdf6e3"))
 ```
 
