@@ -2,6 +2,7 @@
 title: "Travel Map"
 author: "Ari Decter-Frain"
 date: "2019-05-11"
+description: "I wrote an R script to generate a map of my trips around the world. I used Google's Maps API to get geographic coordinates for the different cities and ggplot to create the map"
 output: html_document
 ---
 

@@ -2,6 +2,7 @@
 title: "Travel Map"
 author: "Ari Decter-Frain"
 date: "2019-05-11"
+description: "I wrote an R script to generate a map of my trips around the world. I used Google's Maps API to get geographic coordinates for the different cities and ggplot to create the map"
 output: html_document
 ---
 
@@ -112,4 +113,4 @@ worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, y
                col = &quot;black&quot;, size = 2, segment.color = NA, segment.size = 1) + 
     theme_void() +
     theme(panel.background = element_rect(fill = &quot;#fdf6e3&quot;))</code></pre>
-<p><img src="/posts/map_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>
+<p><img src="/posts/ari-trips-toronto-london_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>
