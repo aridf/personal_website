@@ -64,7 +64,7 @@ flights <- flights %>%
 
 Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I'm making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset. 
 ```{r message = FALSE}
-locations <- c(flights$From, flights$To) 
+locations <- unique(c(flights$From, flights$To))
 if(file.exists(path_geos)) {
   geos <- read_csv(path_geos)
   new <- locations[!(locations %in% geos$airport)]

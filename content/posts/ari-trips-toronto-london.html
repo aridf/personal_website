@@ -45,7 +45,7 @@ flights &lt;- flights %&gt;%
   filter(From != &quot;R&quot;) %&gt;%
   select(From, To)</code></pre>
 <p>Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I’m making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset.</p>
-<pre class="r"><code>locations &lt;- c(flights$From, flights$To) 
+<pre class="r"><code>locations &lt;- unique(c(flights$From, flights$To))
 if(file.exists(path_geos)) {
   geos &lt;- read_csv(path_geos)
   new &lt;- locations[!(locations %in% geos$airport)]
@@ -67,25 +67,25 @@ if(file.exists(path_geos)) {
 }
 head(geos)</code></pre>
 <pre><code>## # A tibble: 6 x 3
-##   airport       lon    lat
-##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
-## 1 Bogota     -74.1    4.71
-## 2 Cartegena  -75.5   10.4 
-## 3 Cusco      -72.0  -13.5 
-## 4 Detroit    -83.0   42.3 
-## 5 Durham     -78.9   36.0 
-## 6 Edingburgh  -3.19  56.0</code></pre>
+##   airport     lon   lat
+##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+## 1 Milan      9.19  45.5
+## 2 Florence  11.3   43.8
+## 3 Rome      12.5   41.9
+## 4 Marseille  5.37  43.3
+## 5 Milan      9.19  45.5
+## 6 Florence  11.3   43.8</code></pre>
 <p>Merging trip data and coordinates.</p>
 <pre class="r"><code>flights &lt;- merge(flights, geos, by.x = &quot;To&quot;, by.y = &quot;airport&quot;)
 flights &lt;- merge(flights, geos, by.x = &quot;From&quot;, by.y = &quot;airport&quot;)
 head(flights)</code></pre>
-<pre><code>##        From          To     lon.x      lat.x      lon.y      lat.y
-## 1    Bogota   Cartegena -75.47943  10.391049  -74.07209   4.710989
-## 2   Calgary    Winnipeg -97.13837  49.895136 -114.07085  51.048615
-## 3 Cartegena   Guayaquil -79.92236  -2.170998  -75.47943  10.391049
-## 4     Cusco      Le Paz -68.11929 -16.489689  -71.96746 -13.531950
-## 5   Detroit Minneapolis -93.26501  44.977753  -83.04575  42.331427
-## 6    Durham     Toronto -79.38318  43.653226  -78.89862  35.994033</code></pre>
+<pre><code>##        From        To      lon.x     lat.x      lon.y     lat.y
+## 1    Berlin Marseille   5.369780 43.296482   13.40495 52.520007
+## 2    Berlin     Milan   9.189982 45.464204   13.40495 52.520007
+## 3    Berlin     Milan   9.189982 45.464204   13.40495 52.520007
+## 4    Bogota Cartegena -75.479426 10.391049  -74.07209  4.710989
+## 5   Calgary  Winnipeg -97.138374 49.895136 -114.07085 51.048615
+## 6 Cartegena Guayaquil -79.922359 -2.170998  -75.47943 10.391049</code></pre>
 <p>Removing country info from the city names here.</p>
 <pre class="r"><code>geos$airport &lt;- geos$airport %&gt;%
   word(1, sep = &quot;,&quot;)</code></pre>
