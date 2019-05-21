@@ -18,7 +18,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 I want to see as much of the world as possible while I can. The map I'm making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest. 
 
-To make the map I used R and ggplot. I relied heavily on [The Lucid Manager's](https://lucidmanager.org/create-air-travel-route-maps/) post in which he creates his own version. 
+I've made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.
+
+To make the map I used R, ggplot, and Google's geolocation API. I relied heavily on [The Lucid Manager's](https://lucidmanager.org/create-air-travel-route-maps/) post in which he creates his own version. 
 
 <hr>
 
