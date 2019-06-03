@@ -19,12 +19,12 @@
       
       <guid>/posts/ari-trips-toronto-london/</guid>
       <description>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.
-To make the map I used R and ggplot. I relied heavily on The Lucid Manager’s post in which he creates his own version.
-First loading all the necessary libraries</description>
+I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.
+To make the map I used R, ggplot, and Google’s geolocation API.</description>
     </item>
     
     <item>
-      <title>My Journey to Cornell</title>
+      <title>How I Got To Cornell</title>
       <link>/posts/ari-career-background/</link>
       <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
       

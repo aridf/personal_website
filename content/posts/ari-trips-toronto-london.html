@@ -9,7 +9,8 @@ output: html_document
 
 
 <p>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.</p>
-<p>To make the map I used R and ggplot. I relied heavily on <a href="https://lucidmanager.org/create-air-travel-route-maps/">The Lucid Manager’s</a> post in which he creates his own version.</p>
+<p>I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.</p>
+<p>To make the map I used R, ggplot, and Google’s geolocation API. I relied heavily on <a href="https://lucidmanager.org/create-air-travel-route-maps/">The Lucid Manager’s</a> post in which he creates his own version.</p>
 <hr>
 <p>First loading all the necessary libraries</p>
 <pre class="r"><code>library(tidyverse)
@@ -19,9 +20,9 @@ library(maps)
 library(here)</code></pre>
 <p>Here I’m setting internal filepaths. To reproduce the code below, replace the <code>here()</code> functions with the urls in the comments.</p>
 <pre class="r"><code>path_flights &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;)
-#https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv
+#path_flights &lt;- &quot;https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv&quot;
 path_geos &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)
-#https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv</code></pre>
+#path_geos &lt;- &quot;https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv&quot;</code></pre>
 <p>Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.</p>
 <pre class="r"><code>flights &lt;- read_csv(path_flights)
 head(flights)</code></pre>
@@ -30,7 +31,7 @@ head(flights)</code></pre>
 ##   &lt;chr&gt;      &lt;chr&gt;      
 ## 1 Bogota     Cartegena  
 ## 2 Cartegena  Guayaquil  
-## 3 Cusco      Le Paz     
+## 3 Cusco      La Paz     
 ## 4 Detroit    Minneapolis
 ## 5 Durham     Toronto    
 ## 6 Edingburgh London</code></pre>
@@ -67,14 +68,14 @@ if(file.exists(path_geos)) {
 }
 head(geos)</code></pre>
 <pre><code>## # A tibble: 6 x 3
-##   airport      lon   lat
-##   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
-## 1 Milan       9.19 45.5 
-## 2 Florence   11.3  43.8 
-## 3 Rome       12.5  41.9 
-## 4 Marseille   5.37 43.3 
-## 5 Bogota    -74.1   4.71
-## 6 Cartegena -75.5  10.4</code></pre>
+##   airport     lon    lat
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+## 1 La Paz    -68.1 -16.5 
+## 2 Bogota    -74.1   4.71
+## 3 Cartegena -75.5  10.4 
+## 4 Cusco     -72.0 -13.5 
+## 5 Detroit   -83.0  42.3 
+## 6 Durham    -78.9  36.0</code></pre>
 <p>Merging trip data and coordinates.</p>
 <pre class="r"><code>flights &lt;- merge(flights, geos, by.x = &quot;To&quot;, by.y = &quot;airport&quot;)
 flights &lt;- merge(flights, geos, by.x = &quot;From&quot;, by.y = &quot;airport&quot;)
@@ -85,11 +86,11 @@ head(flights)</code></pre>
 ## 3    Bogota Cartegena -75.479426  10.391049  -74.07209   4.710989
 ## 4   Calgary  Winnipeg -97.138374  49.895136 -114.07085  51.048615
 ## 5 Cartegena Guayaquil -79.922359  -2.170998  -75.47943  10.391049
-## 6     Cusco    Le Paz -68.119294 -16.489689  -71.96746 -13.531950</code></pre>
+## 6     Cusco    La Paz -68.119294 -16.489689  -71.96746 -13.531950</code></pre>
 <p>Removing country info from the city names here.</p>
 <pre class="r"><code>geos$airport &lt;- geos$airport %&gt;%
   word(1, sep = &quot;,&quot;)</code></pre>
-<p>Creating my world map object. I’m setting the size limits of my map dynamically so it will expand as I travel to more continents.</p>
+<p>Creating my world map object. I’m setting the size limits of my map dynamically. This enables the map to expand dynamically as I travel to more regions of the world</p>
 <pre class="r"><code>#set size limits of the worldmap. Prevent unvisited regions from displaying
 xmin &lt;- min(geos$lon) - 10
 xmax &lt;- max(geos$lon) + 10

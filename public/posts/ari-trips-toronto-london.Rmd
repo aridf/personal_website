@@ -37,9 +37,9 @@ library(here)
 Here I'm setting internal filepaths. To reproduce the code below, replace the ``here()`` functions with the urls in the comments.
 ```{r}
 path_flights <- here("static", "map", "trips.csv")
-#https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv
+#path_flights <- "https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv"
 path_geos <- here("static", "map", "geos.csv")
-#https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv
+#path_geos <- "https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv"
 ```
 
 
@@ -106,7 +106,7 @@ geos$airport <- geos$airport %>%
 
 
 
-Creating my world map object. I'm setting the size limits of my map dynamically so it will expand as I travel to more continents. 
+Creating my world map object. I'm setting the size limits of my map dynamically. This enables the map to expand dynamically as I travel to more regions of the world 
 ```{r message = FALSE}
 
 #set size limits of the worldmap. Prevent unvisited regions from displaying
