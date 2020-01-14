@@ -9,16 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in Cornell's Policy Analysis and Management program. I received my MSc from the London School of Economics and my undergradute degree from the University of Winnipeg. Before starting at Cornell, I spent two years working in people analytics at Multi Health Systems Inc. I have experience in quantitative and experimental social science, product development, and business strategy. 
+I am a PhD student in Cornell's Policy Analysis and Management program. I hold an MSc in Inequalities and Social Science from the London School of Economics and a BA in Psychology from the University of Winnipeg. Before starting at Cornell, I worked for two years as a data scientist and product manager at the people analytics firm Multi Health Systems Inc. I have experience in computational social science, product management, and team leadership. 
 
 I am passionate about a lot of things. Here is an abbreviated list in no particular order:
 
-* Quantitative social science
-
-* Coding
+* Computational social science
 
 * Travelling
 
-* Promoting evidence-based decision-making in policy and business
+* Inclusive economic growth
 
-For those who want to learn more about me, I've written a [blog post](https://aridecterfrain.com/posts/ari-career-background/) which may be informative.
+* Coding
+
+* The role of data in public policy
+
+
+For those who want to learn more about my journey, I've written a [blog post](https://aridecterfrain.com/posts/ari-career-background/) which may be informative.
