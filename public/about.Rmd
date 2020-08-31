@@ -1,7 +1,7 @@
 ---
-title: "About Me"
+title: "About me"
 author: "Ari Decter-Frain"
-date: "May 3, 2019"
+date: "August 31, 2020"
 output: html_document
 ---
 
@@ -9,19 +9,16 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in Cornell's Policy Analysis and Management program. I hold an MSc in Inequalities and Social Science from the London School of Economics and a BA in Psychology from the University of Winnipeg. Before starting at Cornell, I worked for two years as a data scientist and product manager at the people analytics firm Multi Health Systems Inc. I have experience in computational social science, product management, and team leadership. 
+I am a PhD student in Cornell's Policy Analysis and Management program. During the summer of 2020 I served as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu). I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I have also worked for two years as a data scientist and product manager at a people analytics firm called [Multi Health Systems Inc.](https://mhs.com/)
 
-I am passionate about a lot of things. Here is an abbreviated list in no particular order:
+I am interested about a lot of things. Here are some of the things I have thought about lately:
 
-* Computational social science
+* Computational demography
 
-* Travelling
+* Traveling
 
-* Inclusive economic growth
+* Election fairness
 
-* Coding
+* Software development
 
-* The role of data in public policy
-
-
-For those who want to learn more about my journey, I've written a [blog post](https://aridecterfrain.com/posts/ari-career-background/) which may be informative.
+* The need for stakeholder engagement in data science work
