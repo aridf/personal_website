@@ -16,21 +16,23 @@ knitr::opts_chunk$set(echo = TRUE,
 ```
 
 
-I want to see as much of the world as possible while I can. The map I'm making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest. 
+I want to see as much of the world as possible while I can. The map I'm making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.
 
 I've made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.
 
-To make the map I used R, ggplot, and Google's geolocation API. I relied heavily on [The Lucid Manager's](https://lucidmanager.org/create-air-travel-route-maps/) post in which he creates his own version. 
+To make the map I used R, ggplot, and Google's geolocation API. I relied heavily on [The Lucid Manager's](https://lucidmanager.org/create-air-travel-route-maps/) post in which he creates his own. 
 
 <hr>
 
 First loading all the necessary libraries
 ```{r}
-library(tidyverse)
-library(ggmap)
-library(ggrepel)
-library(maps)
-library(here)
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(ggmap)
+  library(ggrepel)
+  library(maps)
+  library(here)
+})
 ```
 
 
@@ -135,5 +137,14 @@ ggplot() + worldmap +
                col = "black", size = 2, segment.color = NA, segment.size = 1) + 
     theme_void() +
     theme(panel.background = element_rect(fill = "#fdf6e3"))
+```
+```{r}
+ggsave(
+  filename = here("static", "map", "travel_map.png"),
+  width = 7.5,
+  height = 4.5,
+  units = "in",
+  dpi = 600
+)
 ```
 

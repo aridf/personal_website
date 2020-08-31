@@ -10,14 +10,16 @@ output: html_document
 
 <p>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.</p>
 <p>I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.</p>
-<p>To make the map I used R, ggplot, and Google’s geolocation API. I relied heavily on <a href="https://lucidmanager.org/create-air-travel-route-maps/">The Lucid Manager’s</a> post in which he creates his own version.</p>
+<p>To make the map I used R, ggplot, and Google’s geolocation API. I relied heavily on <a href="https://lucidmanager.org/create-air-travel-route-maps/">The Lucid Manager’s</a> post in which he creates his own.</p>
 <hr>
 <p>First loading all the necessary libraries</p>
-<pre class="r"><code>library(tidyverse)
-library(ggmap)
-library(ggrepel)
-library(maps)
-library(here)</code></pre>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(tidyverse)
+  library(ggmap)
+  library(ggrepel)
+  library(maps)
+  library(here)
+})</code></pre>
 <p>Here I’m setting internal filepaths. To reproduce the code below, replace the <code>here()</code> functions with the urls in the comments.</p>
 <pre class="r"><code>path_flights &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;)
 #path_flights &lt;- &quot;https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv&quot;
@@ -68,25 +70,25 @@ if(file.exists(path_geos)) {
 }
 head(geos)</code></pre>
 <pre><code>## # A tibble: 6 x 3
-##   airport     lon    lat
-##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
-## 1 La Paz    -68.1 -16.5 
-## 2 Bogota    -74.1   4.71
-## 3 Cartegena -75.5  10.4 
-## 4 Cusco     -72.0 -13.5 
-## 5 Detroit   -83.0  42.3 
-## 6 Durham    -78.9  36.0</code></pre>
+##   airport       lon    lat
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Skagen      10.6   57.7 
+## 2 Lisbon      -9.14  38.7 
+## 3 Copenhagen  12.6   55.7 
+## 4 Aarhus      10.2   56.2 
+## 5 La Paz     -68.1  -16.5 
+## 6 Bogota     -74.1    4.71</code></pre>
 <p>Merging trip data and coordinates.</p>
 <pre class="r"><code>flights &lt;- merge(flights, geos, by.x = &quot;To&quot;, by.y = &quot;airport&quot;)
 flights &lt;- merge(flights, geos, by.x = &quot;From&quot;, by.y = &quot;airport&quot;)
 head(flights)</code></pre>
-<pre><code>##        From        To      lon.x      lat.x      lon.y      lat.y
-## 1    Berlin     Milan   9.189982  45.464204   13.40495  52.520007
-## 2    Berlin Marseille   5.369780  43.296482   13.40495  52.520007
-## 3    Bogota Cartegena -75.479426  10.391049  -74.07209   4.710989
-## 4   Calgary  Winnipeg -97.138374  49.895136 -114.07085  51.048615
-## 5 Cartegena Guayaquil -79.922359  -2.170998  -75.47943  10.391049
-## 6     Cusco    La Paz -68.119294 -16.489689  -71.96746 -13.531950</code></pre>
+<pre><code>##        From        To      lon.x     lat.x      lon.y     lat.y
+## 1    Aarhus    Skagen  10.579186 57.725004   10.20392 56.162939
+## 2    Berlin Marseille   5.369780 43.296482   13.40495 52.520007
+## 3    Berlin     Milan   9.189982 45.464204   13.40495 52.520007
+## 4    Bogota Cartegena -75.479426 10.391049  -74.07209  4.710989
+## 5   Calgary  Winnipeg -97.138374 49.895136 -114.07085 51.048615
+## 6 Cartegena Guayaquil -79.922359 -2.170998  -75.47943 10.391049</code></pre>
 <p>Removing country info from the city names here.</p>
 <pre class="r"><code>geos$airport &lt;- geos$airport %&gt;%
   word(1, sep = &quot;,&quot;)</code></pre>
@@ -115,3 +117,10 @@ worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, y
     theme_void() +
     theme(panel.background = element_rect(fill = &quot;#fdf6e3&quot;))</code></pre>
 <p><img src="/posts/ari-trips-toronto-london_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>
+<pre class="r"><code>ggsave(
+  filename = here(&quot;static&quot;, &quot;map&quot;, &quot;travel_map.png&quot;),
+  width = 7.5,
+  height = 4.5,
+  units = &quot;in&quot;,
+  dpi = 600
+)</code></pre>
