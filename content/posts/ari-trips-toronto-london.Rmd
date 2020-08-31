@@ -138,13 +138,15 @@ ggplot() + worldmap +
     theme_void() +
     theme(panel.background = element_rect(fill = "#fdf6e3"))
 ```
+
+Finally, save out the file to a folder on my website so I can read it in as an image elsewhere.
 ```{r}
 ggsave(
   filename = here("static", "map", "travel_map.png"),
   width = 7.5,
   height = 4.5,
   units = "in",
-  dpi = 600
+  dpi = 300
 )
 ```
 

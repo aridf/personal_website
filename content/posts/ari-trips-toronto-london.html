@@ -117,10 +117,11 @@ worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, y
     theme_void() +
     theme(panel.background = element_rect(fill = &quot;#fdf6e3&quot;))</code></pre>
 <p><img src="/posts/ari-trips-toronto-london_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>
+<p>Finally, save out the file to a folder on my website so I can read it in as an image elsewhere.</p>
 <pre class="r"><code>ggsave(
   filename = here(&quot;static&quot;, &quot;map&quot;, &quot;travel_map.png&quot;),
   width = 7.5,
   height = 4.5,
   units = &quot;in&quot;,
-  dpi = 600
+  dpi = 300
 )</code></pre>
