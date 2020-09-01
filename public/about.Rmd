@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 I am a PhD student in Cornell's Policy Analysis and Management program. During the summer of 2020 I served as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu). I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I have also worked for two years as a data scientist and product manager at a people analytics firm called [Multi Health Systems Inc.](https://mhs.com/)
 
-I am interested about a lot of things. Here are some of the things I have thought about lately:
+I am interested about a lot of things. Here is what I've thought about most lately:
 
 * Computational demography
 
