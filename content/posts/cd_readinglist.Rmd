@@ -18,7 +18,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * ([Summary](../bavel_grow_2016/)) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies
 
-* Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Reviews of Sociology 45: 27-45.
+* Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Review of Sociology 45: 27-45.
 
 ## Social media and demographic processes
 
@@ -105,3 +105,4 @@ I put together this reading list as part of a guided reading with Professor Matt
 * Gil-Clavel, S., Zagheni, E., & Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.
 
 * Dimaggio, P., & Garip, F. (2012). Network effects and social inequality. Annual Review of Sociology, 38, 93–118. https://doi.org/10.1146/annurev.soc.012809.102545
+
