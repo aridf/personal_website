@@ -21,6 +21,9 @@ googleAnalytics = "UA-141103849-1"
   # noreferrerLinks = true
   # nofollowLinks = true
 
+[permalinks]
+    post = "/:slug/"
+
 [taxonomies]
   tag = "tags"
   # Categories are disabled by default.
@@ -68,15 +71,15 @@ googleAnalytics = "UA-141103849-1"
   [[menu.main]]
     name = "About"
     url = "about/"
-    weight = 33
+    weight = 32
     
   [[menu.main]]
     name = "Research"
-    url = "research/"
+    url = "content/research.html"
     weight = 33
     
   [[menu.main]]
     name = "CV"
     url = "aridecterfrain_09-2020.pdf"
-    weight = 33
+    weight = 34
     

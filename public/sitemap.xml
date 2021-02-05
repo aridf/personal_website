@@ -3,35 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
+    <loc>https://aridecterfrain.com/</loc>
     <lastmod>2019-05-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/</loc>
+    <loc>https://aridecterfrain.com/posts/</loc>
     <lastmod>2019-05-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/ari-trips-toronto-london/</loc>
+    <loc>https://aridecterfrain.com/posts/ari-trips-toronto-london/</loc>
     <lastmod>2019-05-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/ari-career-background/</loc>
+    <loc>https://aridecterfrain.com/posts/ari-career-background/</loc>
     <lastmod>2019-05-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://aridecterfrain.com/about/</loc>
   </url>
   
   <url>
-    <loc>/extratext/</loc>
+    <loc>https://aridecterfrain.com/posts/cd_readinglist/bavel_grow_2016/</loc>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://aridecterfrain.com/posts/cd_readinglist/billari_zagheni_2017/</loc>
+  </url>
+  
+  <url>
+    <loc>https://aridecterfrain.com/posts/cd_readinglist/</loc>
+  </url>
+  
+  <url>
+    <loc>https://aridecterfrain.com/extratext/</loc>
+  </url>
+  
+  <url>
+    <loc>https://aridecterfrain.com/research/</loc>
+  </url>
+  
+  <url>
+    <loc>https://aridecterfrain.com/tags/</loc>
   </url>
   
 </urlset>
