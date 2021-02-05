@@ -13,9 +13,9 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 ## Computational social science and demography
 
-* ([Summary](cd_readinglist/billari_zagheni_2017/)) Billari, F., and Zagheni, E. (2017). Big data and population processes: a revolution? Proceedings of the Italian Statistical Society 2017 (Summary)
+* ([Summary](../billari_zagheni_2017/)) Billari, F., and Zagheni, E. (2017). Big data and population processes: a revolution? Proceedings of the Italian Statistical Society 2017
 
-* ([Summary](cd_readinglist/bavel_grow_2016/)) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies (Summary)
+* ([Summary](../bavel_grow_2016/)) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies
 
 * Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Reviews of Sociology 45: 27-45.
 
