@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+---
 
 I put together this reading list as part of a guided reading with Professor Matthew Hall. We intend it to function as an overview of the field and as a syllabus for a graduate seminar. The list broadly covers the use of new data sources and agent-based modelling to advance our understanding of population and sociocultural processes.
 
