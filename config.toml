@@ -68,10 +68,15 @@ googleAnalytics = "UA-141103849-1"
   [[menu.main]]
     name = "About"
     url = "about/"
-    weight = 20
+    weight = 33
+    
+  [[menu.main]]
+    name = "Research"
+    url = "research/"
+    weight = 33
     
   [[menu.main]]
     name = "CV"
     url = "aridecterfrain_09-2020.pdf"
-    weight = 20
+    weight = 33
     
