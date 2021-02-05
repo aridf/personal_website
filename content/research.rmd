@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Computational Demography
 
-I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Professor Matthew Hall and I have developed a reading list for the field, available [here](research/research_pages/cd_readinglist).
+I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Professor Matthew Hall and I have developed a reading list for the field, available [here](research_pages/cd_readinglist).
 
 My current work in this field is a collaboration with professors Matthew Hall and Arthur Acolin. We are evaluating potential contribution of consumer reference data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:
 
