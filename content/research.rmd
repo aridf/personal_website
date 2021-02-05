@@ -22,5 +22,3 @@ My current work in this field is a collaboration with professors Matthew Hall an
 
 * *Estimates for any geographic unit:* There are lots of ways to divide up America. Demographers divide it into Census blocks and tracts. Education researchers look at school districts. Political scientists care about election precincts. Increasingly, researchers are interested in creating their own geographic buffers around particular neighborhoods and locations. The consumer reference data contains latitude-longitude coordinates for every household. By the magic of spatial data analysis, we can use these coordinates to count the number of people within any geographic area in which a researcher might be interested.
 
-## Election Fairness
-
