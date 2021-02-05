@@ -75,7 +75,7 @@ googleAnalytics = "UA-141103849-1"
     
   [[menu.main]]
     name = "Research"
-    url = "content/research.html"
+    url = "content/research"
     weight = 33
     
   [[menu.main]]
