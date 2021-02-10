@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ---
 
-This article serves as the introduction to the book *Agent-based modelling in population studies*, edited by Bavel and Grow. Besides previewing the contributions made in the rest of the book, the authors discuss three important overarching topics:
+This article serves as the introduction to the book *Agent-based modeling in population studies*, edited by Bavel and Grow. Besides previewing the contributions made in the rest of the book, the authors discuss three important overarching topics:
 
 ### 1. Demography is "rich in methods, but poor in theories"
 
