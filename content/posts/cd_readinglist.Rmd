@@ -24,7 +24,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * ([Summary](../zagheni_etal_2014/)) Zagheni E., Garimella, K., Weber, I., and State, B. (2014). Inferring international and internal migration patterns from Twitter data. Proceedings of ACM WWW (Companion): 439-444
 
-* Zagheni, E., Weber, I., & Gummadi, K. (2017). Leveraging Facebook's Advertising Platform to Monitor Stocks of Migrants. Population and Development Review, 43(4), 721-734.
+* ([Summary](../zagheni_weber_gummadi_2017/)) Zagheni, E., Weber, I., & Gummadi, K. (2017). Leveraging Facebook's Advertising Platform to Monitor Stocks of Migrants. Population and Development Review, 43(4), 721-734.
 
 * Bruch, Elizabeth and Mark Newman. (2018). “Aspirational Pursuit of Mates in Online Dating Markets.” Science Advances, 4
 
