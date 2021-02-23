@@ -42,7 +42,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Alexander, M., Polimis, K., & Zagheni, E. (2020). Combining social media and survey data to nowcast migrant stocks in the United States. Population Research and Policy Review, 0123456789. https://doi.org/10.1007/s11113-020-09599-3
 
-## Social media data in low-income countries
+## Digital trace data in low-income countries
 
 * Blumenstock,  J.E.,  Cadamuro,  G  and  On,  R.  (2015) Predicting Poverty  and  Wealth  from  Mobile  Phone  Metadata. Science,  350:1073-1076
 
@@ -97,6 +97,8 @@ I put together this reading list as part of a guided reading with Professor Matt
 ## Sociocultural processes
 
 * Marquez, N., Garimella, K., Toomet, O., Weber, I. G., & Zagheni, E. (2019). Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data. Guide to Mobile Data Analytics in Refugee Scenarios, 49(0), 265–282. https://doi.org/10.1007/978-3-030-12554-7_14
+
+* Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., & Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. https://doi.org/10.1038/s41562-020-01045-w
 
 * Stewart, I., Flores, R. D., Riffe, T., Weber, I., & Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. https://doi.org/10.1145/3308558.3313409
 
