@@ -1,0 +1,29 @@
+---
+title: "Aspirational pursuit of mates in online dating markets"
+author: "Ari Decter-Frain"
+date: "23/02/2021"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="elizabeth-e.-bruch-and-m.e.j.-newman-2018" class="section level2">
+<h2>Elizabeth E. Bruch and M.E.J. Newman, 2018</h2>
+<p>This paper uses data from an online dating website to explore the mechanisms that lead to the well-observed phenomenon that mates tend to be similarly attractive. There are two competing explanations:</p>
+<ol style="list-style-type: decimal">
+<li><p>Individuals seek out mates that are similar to themselves, perhaps in general and also in attractiveness.</p></li>
+<li><p>Individuals seek to partner with the most attractive mate possible. Thus, the most attractive people pair off with each other, then the next most attractive, and so on in such a manner that everyone ends up paired with their equals.</p></li>
+</ol>
+<p>It’s difficult to differentiate these using experiments or survey data, and so we don’t really know which explanation better reflects the reality of mate selection.</p>
+<p>Data from online dating platforms provides a new opportunity to disentangle these explanations. The authors gained access to one month’s worth of messages on a dating platform, along with the demographic characteristics of users. They used these data to construct a direct network where nodes are individuals and a directed edge from user A to user B indicates that user A sent user B at least one message.</p>
+<p>The central measure of the paper is a user’s desirability, which is measured using the page-rank algorithm:</p>
+<p><span class="math display">\[
+x_i = 1 + \alpha\sum_{j = 1}^n\frac{a_{ij}x_j}{\sum_{k=1}^na_{kj}}
+\]</span>
+Here, <span class="math inline">\(a_{ij} = 1\)</span> if an edge exists from user <span class="math inline">\(j\)</span> to user <span class="math inline">\(i\)</span>, and zero otherwise. <span class="math inline">\(x_i\)</span> is a user’s desirability, and <span class="math inline">\(\alpha\)</span> is a parameter chosen by the authors (in this case, set to 0.85). To compute desirability from this formula, one chooses a set of values for <span class="math inline">\(x_i\)</span> to start, and computes the right hand side of the formula for all users using that set of <span class="math inline">\(x_i\)</span>’s. Then, take the results of this analysis and repeat, over and over until convergence is reached. This is a fairly common approach to ranking popularity of nodes in a network from directed edges. As indicated by the name, it can be used to rank a webpage based on the number of links on other webpages that point to it.</p>
+<p>The key result from this measure is the following:</p>
+<p><img src="/misc_img/bruch_newman_plot.png" style="width:50.0%" /></p>
+<p>I’m focusing only on the top half of this plot. Here, the curves that look like densities are the probability distributions of the desirability gap between the sender and the receiver of an initial message on the platform. Both men and women are most likely to send opening messages to other uses who are exactly as attractive as them, although they are otherwise more probably going to overshoot than undershoot. The swooping lines represent the probability that a user receives a reply from the other user once they have sent the first message. Predictably, as the desirability gap becomes more positive, the probability of receiving a response to an opening message declines. The gap between men’s and women’s probability of replying is also predictable.</p>
+<p>The authors take these results as evidence of “aspirational pursuit”, i.e. that men and women both try to seek out mates that are more attractive than them (although at a certain point they don’t bother). I’m inclined to agree with this interpretation, with three caveats. First, it’s notable that the distribution of first messages does actually peaks right around equal attractiveness, especially for women. Second, I wonder whether the desirability gap we observe here reflects the one that people perceive. If we think that people typically view themselves as more attractive than they actually are, then these plots should actually be shifted to the left. In this case, the probability density of first messages might essentially be centered around zero. These two caveats give me some pause about throwing out the possibility that people seek out mates similar to themselves. Third, it’s unclear how much messaging behavior can ever really tell us about long-term mate selection. Dating websites typically mingle together those looking for long- and short-term relationships, and they also make reaching out potential mates an extremely low-cost, low-risk endeavor. In these ways, the data do not really reflect the realities of long-term mate selection, where people might have more incentive to seek out their equals.</p>
+</div>
