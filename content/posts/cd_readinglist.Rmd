@@ -34,7 +34,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Zagheni, E., & Weber, I. (2015). Demographic research with non-representative internet data. International Journal of Manpower, 36(1), 13–25. https://doi.org/10.1108/IJM-12-2014-0261
 
-* Wang, W., Rothschild, D., Goel, S., & Gelman, A. (2015). Forecasting elections with non-representative polls. International Journal of Forecasting, 31(3), 980–991. https://doi.org/10.1016/j.ijforecast.2014.06.001
+* ([Summary](../wang_etal_2015/)) Wang, W., Rothschild, D., Goel, S., & Gelman, A. (2015). Forecasting elections with non-representative polls. International Journal of Forecasting, 31(3), 980–991. https://doi.org/10.1016/j.ijforecast.2014.06.001
 
 * Gil-Clavel, S., & Zagheni, E. (2019). Demographic differentials in facebook usage around the world. Proceedings of the 13th International Conference on Web and Social Media, ICWSM 2019, Icwsm, 647–650.
 
