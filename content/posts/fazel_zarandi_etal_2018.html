@@ -1,0 +1,30 @@
+---
+title: "The number of undocumented immigrants in the United States: Estimates based on demographic modelling with data from 1990 to 2016"
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="mohammad-fazel-zarandi-jonathan-s.-feinstein-and-edward-h.-kaplan-2018" class="section level2">
+<h2>Mohammad Fazel-Zarandi, Jonathan S. Feinstein, and Edward H. Kaplan, 2018</h2>
+<p>This paper attempts to estimate the number of undocumented immigrants by starting from an estimate at an earlier point in time and estimating annual inflows outflows of undocumented immigrants up to the present. The main punchline of the paper is that the this demographic flow approach yields estimates roughly 1.5 to 2.5 times larger than those produced from the residual method. The average estimate produced by the author’s simulation is 22.1 million undocumented immigrants, compared to 11.3 million from the residual method.</p>
+<p>The authors begin with an estimate in 1990 of 3.5 million undocumented immigrants (made from the residual method), and then construct a probabilistic model that takes in several different population inflow and outflow data sources at various time points to yield a trajectory of illegal immigrant stocks.</p>
+<p>To quantify inflows and outflows, the model combines data from a range of sources:</p>
+<ul>
+<li>1990 undocumented immigrant point estimate</li>
+<li>Estimated visa overstays for 2016, produced by the Department of Homeland Security (DHS).</li>
+<li>DHS data on number of border apprehensions per year, and DHS estimates of the apprehension <em>rate</em> from 2005-2015.</li>
+<li>Various assumed values of voluntary emigration by undocumented migrants out of the U.S.</li>
+<li>Various assumed estimates of circular migration (undocumented migrants leaving and returning).</li>
+<li>CDC mortality rates, adjusted to match estimates of the age-sex composition of the undocumented immigrant population.</li>
+<li>Annual deportations, directly from DHS data.</li>
+<li>DHS counts of the number of deferred action childhood arrivals (DACA).</li>
+</ul>
+<p>The model combines many snippets of data taken at different points in time and makes a lot of assumptions about how to use those data to inform the model. For instance, their simulations use an estimate from 2016 about the rate of immigrants who overstay their visa (therefore becoming undocumented), and for each of the previous 26 years they model the rate as somewhere between half and 1.5x the 2016 rate, with each multiplier being drawn at random from a uniform distribution. This assumption seems conservative. If the authors had applied expert knowledge instead of this random multiplier, their estimates would be less uncertain and probably just as high.</p>
+<p>The authors repeatedly emphasize that their modelling assumptions are conservative. In most cases I am inclined to agree, but the sheer number of assumptions certainly seems to raise the probability that one might be way off. Moreover, the way all the assumptions interact within the model, and the way some of them are made repeatedly year-over-year, makes it likely that one early and important mistake could result in large estimation errors.</p>
+<p>I think if I were a reviewer on this paper, I would want to see the authors fit their models with more of their assumptions left as parameters to estimate, and including a more recent estimate of the undocumented population. To convincingly demonstrate that they’re correct about underestimation via the residual method, they would need to show that the parameters in the model look absurd when <em>all</em> observed data is included.</p>
+<p>It also strikes me that the author’s explanation about non-response or misreporting by undocumented migrants should be empirically testable. There are ways to survey undocumented workers (eg. through respondent-driven sampling). Such a survey could ask undocumented immigrants if and how they indicate their immigration status when responding to the Census or ACS. Estimates from these surveys could be used to calibrate residual-based estimates and get a sense of how far off they might be.</p>
+</div>
