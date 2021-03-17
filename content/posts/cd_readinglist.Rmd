@@ -48,12 +48,11 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 ### Undocumented Immigrants in the US
 
-* Warren, R., & Warren, J. R. (2013). Unauthorized immigration to the United States: Annual estimates and components of change, by state, 1990 to 2010. International Migration Review, 47(2), 296–329. https://doi.org/10.1111/imre.12022
-
 * ([Summary](../fazel_zarandi_etal_2018/)) Fazel-Zarandi, M. M., Feinstein, J. S., & Kaplan, E. H. (2018). The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990 to 2016. PLoS ONE, 13(9), 1–11. https://doi.org/10.1371/journal.pone.0201193
 
 * ([Summary](../capps_etal_2018/)) Capps, R., Gelatt, J., Van Hook, J., & Fix, M. (2018). Commentary on “The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990-2016.” PLoS ONE, 13(9), 1–10. https://doi.org/10.1371/journal.pone.0204199
 
+* ([Summary](../posts/capps_bachmeier_vanhook_2018/)) Capps, R., Bachmeier, J. D., & Van Hook, J. (2018). Estimating the Characteristics of Unauthorized Immigrants Using U.S. Census Data: Combined Sample Multiple Imputation. Annals of the American Academy of Political and Social Science, 677(1), 165–179. https://doi.org/10.1177/0002716218767383
 
 ### Population characteristics in low-income countries
 

@@ -1,0 +1,33 @@
+---
+title: "Estimating the characteristics of unauthorized immigrants using U.S. Census Data: Combined Sample Multiple Imputation"
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="randy-capps-james-d.-bachmeier-and-jennifer-van-hook-2018" class="section level2">
+<h2>Randy Capps, James D. Bachmeier, and Jennifer Van Hook, 2018</h2>
+<p>This review paper provides an overview of common methods for imputing the authorization status of immigrants in the US in large Census Bureau surveys like the CPS and ACS. The idea is that although these surveys do not ask about the authorization status of migrants, we can guess the status of each respondent using other information about them. There are several approaches to doing this, which this paper describes in some detail:</p>
+<div id="logical-imputation" class="section level4">
+<h4>Logical imputation</h4>
+<p>Logical imputation is the most straightforward method. It involves reducing the sample of possibly unauthorized respondents in Census samples according to logical rules. For instance, respondents who report that they are naturalized U.S. citizens can be immediately ruled out, as can veterans, active duty military personnel, and those performing specialty occupations like lawyers or doctors. It is also reasonable to rule out respondents who report receiving public assistance that requires legal status. Once all such rules have been applied the remaining pool of respondents is randomly assigned to a classification of legal permanent resident or unauthorized such that the total number of unauthorized migrants ends up near an expected total, which is typically derived using the residual method or using estimates of subgroup sizes from other data sources.</p>
+<p>Both steps of this process are subject to some biases. The first because it assumes the correctness of all responses, and the second because of the uncertainty introduced arbitrary random assignment, and because results are contingent on the quality of the underlying data used to construct totals.</p>
+</div>
+<div id="statistical-imputation" class="section level4">
+<h4>Statistical imputation</h4>
+<p>Statistical imputation uses information from a small sample of survey data that includes authorization status to impute the status of respondents in a much larger survey. Typically, the Survey of Income and Program Participation (SIPP) is used as the smaller, donor sample. The SIPP is a nationally representative survey of people living in the US that includes roughly 9000 immigrants and a question about immigration status. The basic idea is to use the SIPP to learn to predict unauthorized status using other variables shared between both datasets, like demographics, occupation, etc. These statistical approaches are deemed current best practice for using the ACS or CPS for substantive research on unauthorized immigrants.</p>
+<p>The best practice of the best practice for statistical imputation of immigrant status is combined-sample multiple imputation (CSMI), which has been shown to yield low-bias estimates in the context of OLS regressions where immigrant status is an independent variable (Van Hook et al., 2015). CSMI is a four-step procedure, which is well described by the original authors of the technique, <a href="https://journals.sagepub.com/doi/10.1177/0049124113502947">Rendall et al., 2013</a>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Fit a logit model using data from SIPP, regressing authorization status on all variables included in the model.</p></li>
+<li><p>For each observation in the ACS data, an authorization status randomly select an authorization status with probability given by the logit parameters and the ACS observation’s values of all other variables.</p></li>
+<li><p>Estimate the model of interest using the imputed variable.</p></li>
+<li><p>Repeat steps 2 and 3 repeatedly, then average over the resulting effect.</p></li>
+</ol>
+<p>There are a number of conditions required for the validity of this to hold. First, both samples must come from the same sampling frame. This is conveniently the case here, because SIPP, the ACS, and the CPS are all administered nationally by the Census Bureau. The same-universe condition can be further tested by comparing the distributions of all variables between the two samples. Second, if we want to run further statistical analyses once status has been imputed, all variables included in future models must be jointly observed and used in the imputation. Otherwise the estimates from later statistical analyses will quickly drift from the truth, as Van Hook et al., show in Monte Carlo simulations.</p>
+<p>There are two other things worth noting about this method. First, from Van Hook et al. 2015, it’s notable that multiple imputation doesn’t really improve much over single imputation in testing, either in the size of standard errors or in the bias of estimates. This is notable, and perhaps more efficiency gains could be earned by increasing the number of iterations of multiple imputation (they use 10).</p>
+<p>Second, I was initially tempted to think that machine learning algorithms like Lasso or Elasticnet might help further reduce the bias in the final estimation by precisely honing the parameters in the model. But then I realized these types of algorithms are mainly meant to counteract overfitting while using highly parameterized models. For CMSI, we don’t actually care about overfitting at all because we’re assuming both sets of data come from the same world. This means the logistic regression we run to estimate the probability that respondents are unauthorized can include every possible interaction between variables, and variables taken to multiple powers. If machine learning algorithms could be helpful here, it might be in the setting where we’re leveraging data from outside the Census Bureau and we’re worried about overfitting to the characteristics unique to some other sampling frame.</p>
+</div>
+</div>
