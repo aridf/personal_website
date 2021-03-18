@@ -46,13 +46,19 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 ## Hard to reach populations
 
-### Undocumented Immigrants in the US
+### Residuals and imputation
 
 * ([Summary](../fazel_zarandi_etal_2018/)) Fazel-Zarandi, M. M., Feinstein, J. S., & Kaplan, E. H. (2018). The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990 to 2016. PLoS ONE, 13(9), 1–11. https://doi.org/10.1371/journal.pone.0201193
 
 * ([Summary](../capps_etal_2018/)) Capps, R., Gelatt, J., Van Hook, J., & Fix, M. (2018). Commentary on “The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990-2016.” PLoS ONE, 13(9), 1–10. https://doi.org/10.1371/journal.pone.0204199
 
 * ([Summary](../posts/capps_bachmeier_vanhook_2018/)) Capps, R., Bachmeier, J. D., & Van Hook, J. (2018). Estimating the Characteristics of Unauthorized Immigrants Using U.S. Census Data: Combined Sample Multiple Imputation. Annals of the American Academy of Political and Social Science, 677(1), 165–179. https://doi.org/10.1177/0002716218767383
+
+### Respondent-driven sampling
+
+* Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
+
+* ([Summary](../posts/merli_etal_2015/)) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., & Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. https://doi.org/10.1016/j.socscimed.2014.04.022
 
 ### Population characteristics in low-income countries
 
