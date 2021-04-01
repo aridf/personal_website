@@ -62,13 +62,13 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. https://doi.org/10.1177/0081175016641713
 
-* Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., & Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). https://doi.org/10.2196/17564
+* ([Summary](../helms_etal_2021/)) Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., & Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). https://doi.org/10.2196/17564
 
 * Li, J., Valente, T. W., Shin, H. S., Weeks, M., Zelenev, A., Moothi, G., Mosher, H., Heimer, R., Robles, E., Palmer, G., & Obidoa, C. (2018). Overlooked threats to respondent driven sampling estimators: Peer recruitment reality, degree measures, and random selection assumption. AIDS and Behavior, 22(7), :2340-2359. https://doi.org/10.1007/s10461-017-1827-1
 
 * Mouw, T., & Verdery, A. M. (2012). Network Sampling with Memory: A Proposal for More Efficient Sampling from Social Networks. Sociological Methodology, 42(1), 206–256. https://doi.org/10.1177/0081175012461248
 
-* Goel, S., & Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. https://doi.org/10.1073/pnas.1000261107
+* ([Summary](../goel_salganik_2010/)) Goel, S., & Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. https://doi.org/10.1073/pnas.1000261107
 
 ### Regions with sparse data
 

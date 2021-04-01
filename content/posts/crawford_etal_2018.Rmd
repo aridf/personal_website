@@ -1,0 +1,30 @@
+---
+title: Hidden population size estimation from respondent-driven sampling\: a network approach
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Forrest Crawford, Jiacheng Wu, and Robert Heimer, 2018
+
+I'm essentially summarizing this paper and Crawford's 2016 paper together, since the 2016 paper is essential background for understanding this paper. 
+
+The 2016 paper begins from the premise that standard RDS assumptions (that sampling probability is a function of degree alone) do not adequately reflect the sampling process in RDS. Crawford lists several reasons for this:
+
+* It is only unbiased given sampling with replacement, but in practice RDS is always carried out without replacement.
+
+* It only becomes unbiased at "equilibrium". By equilibrium, we mean a point where recruitment chains are distributed throughout the network at random. The concept of equilibrium only really makes sense if we are sampling with replacement, which we're not, and if chains carry on indefinitely, which they don't. 
+
+* It assumes seeds and recruitment occur at random in accordance with node degree. This only makes sense at equilibrium. In actuality, network structure and information about the current state of recruitment both heavily condition the progression of recruitment paths. For instance, when a node has no neighbors that are currently recruiting, it's probability of being sampled is zero. 
+
+This motivates the need for fully recovering the "recruitment subgraph" that underlies the graph of recruited nodes, from which estimators can be constructed which make fewer assumptions about the network. The key point is that we only observe a fraction of the real edges in the network of recruited nodes - the ones along which recruitment occurs. The author also notes that we have more information at our disposal to estimate this subgraph than is typically considered in RDS statistical approaches. Specifically, we can learn something about the graph from the sequence of recruitments and the time between recruitments.
+
+To recover this graph, the author constructs a likelihood function for the *times* between recruitments, which he shows can be described as a function of an exponential rate parameter and the underlying graph. Then, simple rearrangement of the likelihood yields how the adjacency matrix for the recruitment subgraph is a probabilistic function of the rate parameter, the observed set of times between recruitments, and the number of susceptible edges at each recruitment time. The unknowns in the problem are the rate parameter and the underlying subgraph, which can be estimated by maximum liklihood or by setting priors on each and sampling from the posterior within a Bayesian framework. 
+
+---
+
+The 2018 paper expands upon the subgraph modelling idea to develop an estimate of total population size. This paper starts by assuming the degree of each population member is binomially distributed, $d_i \sim Binomial(N - 1, p)$.
