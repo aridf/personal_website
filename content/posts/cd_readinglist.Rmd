@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ---
 
-I put together this reading list as part of a guided reading with Professor Matthew Hall. We intend it to function as an overview of the field and as a syllabus for a graduate seminar. The list broadly covers the use of new data sources and agent-based modelling to advance our understanding of population and sociocultural processes.
+I put together this reading list as part of a guided reading with Professor Matthew Hall. We intend it to function as an overview of the field and as a syllabus for a graduate seminar. The list broadly covers the use of new data sources for demographic estimation, tools for accessing hard to reach populations, and some specific examples of agent-based modelling.
 
 ## Computational social science and demography
 
@@ -32,7 +32,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Rampazzo, F., Zagheni, E., Weber, I., Testa, M. R., & Billari, F. (2018). Mater certa est, pater numquam: What can facebook advertising data tell us about male fertility rates? 12th International AAAI Conference on Web and Social Media, ICWSM 2018, 672–675.
 
-## Representativeness of social media data
+### Representativeness of social media data
 
 * Zagheni, E., & Weber, I. (2015). Demographic research with non-representative internet data. International Journal of Manpower, 36(1), 13–25. https://doi.org/10.1108/IJM-12-2014-0261
 
@@ -56,15 +56,21 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 ### Respondent-driven sampling
 
-* Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
-
 * ([Summary](../merli_etal_2015/)) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., & Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. https://doi.org/10.1016/j.socscimed.2014.04.022
+
+* Crawford, F. W., Wu, J., & Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
 
 * Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. https://doi.org/10.1177/0081175016641713
 
 * Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., & Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). https://doi.org/10.2196/17564
 
-### Population characteristics in low-income countries
+* Li, J., Valente, T. W., Shin, H. S., Weeks, M., Zelenev, A., Moothi, G., Mosher, H., Heimer, R., Robles, E., Palmer, G., & Obidoa, C. (2018). Overlooked threats to respondent driven sampling estimators: Peer recruitment reality, degree measures, and random selection assumption. AIDS and Behavior, 22(7), :2340-2359. https://doi.org/10.1007/s10461-017-1827-1
+
+* Mouw, T., & Verdery, A. M. (2012). Network Sampling with Memory: A Proposal for More Efficient Sampling from Social Networks. Sociological Methodology, 42(1), 206–256. https://doi.org/10.1177/0081175012461248
+
+* Goel, S., & Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. https://doi.org/10.1073/pnas.1000261107
+
+### Regions with sparse data
 
 * Blumenstock,  J.E.,  Cadamuro,  G  and  On,  R.  (2015) Predicting Poverty  and  Wealth  from  Mobile  Phone  Metadata. Science,  350:1073-1076
 

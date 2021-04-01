@@ -12,9 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Computational Demography
 
-I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Professor Matthew Hall and I have developed a reading list for the field, available [here](../cd_readinglist).
+I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available [here](../cd_readinglist). I have one ongoing project in this area:
 
-My current work in this field is a collaboration with professors Matthew Hall and Arthur Acolin. We are evaluating potential contribution of consumer reference data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:
+#### Small Area Population Estimates from Consumer Data
+
+With Professor's Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:
 
 * *Annual small-area estimates:* Researchers often need measures of year-over-year change in populations. The Census Bureau does not provide such measures for small geographies like tracts and block-groups on an annual basis, but consumer reference data does. This might make it uniquely useful, for example, for computing accurate rates of a virus like COVID-19, or measuring how population structures change after a natural disaster like a hurricane.
 
@@ -22,3 +24,7 @@ My current work in this field is a collaboration with professors Matthew Hall an
 
 * *Estimates for any geographic unit:* There are lots of ways to divide up America. Demographers divide it into Census blocks and tracts. Education researchers look at school districts. Political scientists care about election precincts. Increasingly, researchers are interested in creating their own geographic buffers around particular neighborhoods and locations. The consumer reference data contains latitude-longitude coordinates for every household. By the magic of spatial data analysis, we can use these coordinates to count the number of people within any geographic area in which a researcher might be interested.
 
+
+## Voting behavior and election fairness
+
+This project emerged from my summer as a Data Science for Social Good Fellow at the University of Washington's eScience Institute. Our team worked to revamp and publish an R package called [eiCompare](https://cran.r-project.org/web/packages/eiCompare/index.html), which contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Since releasing the package, our team has continued working to produce research that demonstrates the use of these tools in different regions and elections across the US, and continues to improve upon the methods included in the package. 
