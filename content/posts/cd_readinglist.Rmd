@@ -58,7 +58,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * ([Summary](../merli_etal_2015/)) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., & Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. https://doi.org/10.1016/j.socscimed.2014.04.022
 
-* Crawford, F. W., Wu, J., & Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
+* ([Summary](../crawford_etal_2018/)) Crawford, F. W., Wu, J., & Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
 
 * Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. https://doi.org/10.1177/0081175016641713
 
