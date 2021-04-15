@@ -86,7 +86,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Lukac, M., & Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. https://doi.org/10.1007/s42001-020-00072-x
 
-* Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
+* ([Summary](subbotin_aref_2020.Rmd)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
 
 ## Migration
 
