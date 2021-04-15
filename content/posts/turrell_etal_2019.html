@@ -1,0 +1,23 @@
+---
+title: Transforming Naturally Occurring Text Data Into Economic Statistics - The Case of Online Job Vacancy Postings
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="arthur-turrell-and-co-authors-2019" class="section level2">
+<h2>Arthur Turrell and Co-Authors, 2019</h2>
+<p>This paper might go a bit beyond the bounds of a the ‘computational demography’ field, but I want to talk about it nonetheless! It’s also not <em>irrelevant</em>. The authors use a dataset of 15 million job adds to develop a measure of job vacancy flows and quantify the ‘tightness’ of the UK labor market. ‘Tightness’ is the ratio of the number of current job vacancies to the number of unemployed workers. It’s an important measure in some sub-fields of labor economics, but it might also be of interest to demographers who study people’s decisions about entry and exit the labor market.</p>
+<p>There are several interesting components of this paper. Perhaps its most innovative aspect, at least for this reading list, is the way it applies NLP tools can be used to construct measures of important economic or demographic variables from unstructured data. Here, the authors match jobs to SOC occupation codes by comparing the text descriptions posted by employers to the text descriptions of the SOC occupations. The full algorithm is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>First, check if the job title from an ad matches exactly to a SOC occupation. If so, assign it as an exact match. This step seems reasonable, although it’s certainly true that different companies can use different tasks to assign the same job. For instance, from company to company what distinguishes a data engineer from a data scientist may not be the same.</p></li>
+<li><p>In the absence of an exact match, the authors seek to match based on the text description of the ad. They first convert the full text description of the job into a Bag-of-words (BOW) representation weighted by term-frequency inverse-document frequency (TF-IDF). BOW representations convert a document into one-dimensional vector with length equal to the size of the total across the full corpus of text. For each document, the entries in the vector count the number of times each word occurs in that vector. Using TF-IDF weighting means that words are not entered in the bag-of-words as simple frequencies. Instead, they are weighted in such a way that magnifies the importance of rare words and limits the importance of very common words. This is one of many ways bring out the most meaningful text components of a document.</p></li>
+<li><p>Once the text has been processed, the authors get the five SOC occupations with text that most closely matches the BOW representation. Presumably, the SOC occupation descriptions have undergone the same pre-processing as the job ads. “Closeness” is measured using cosine similarity, which is one of many ways of measuring similarity between vectors.</p></li>
+<li><p>Among the final five candidate occupations for a job, the best is chosen using a fuzzy match.</p></li>
+</ol>
+<p>This procedure isn’t perfect. It encodes a number of ad hoc researcher decisions. In doing so, it becomes nearly impossible to quantify the statistical uncertainty carried through each step of the algorithm. It also assumes that the use of particular words by an employer implies the same meaning as the US Bureau of Labor Statistics, who maintain the SOC list. This may not always be the case. For instance, employers may exaggerate or understate the complexity of skills required for a job. Alternatively, employers in innovation-driven industries may quickly develop new qualifications and add them to their list of qualifications before the SOC descriptions can adjust. One could also argue that the methods they use are fairly basic, and that they could get better performance from a more modern NLP toolkit. However, I might argue that the incremental performance gains from such a shift might not be worth the effort in this case. Finally, the authors do not provide any explicit tests of how their algorithm performs. They could have, for instance, hand-labelled a small number of job ads and then applied their algorithm to see how many it got right. This is really the type of evaluation readers need to make a decision about the utility of the approach.</p>
+<p>Nonetheless, I think the authors’ use of unstructured text to essentially solve a missing data problem is quite generative. It suggests to future researchers that given unstructured text alone, one can still derive ways to get at the types of concrete measures economists and demographers care about.</p>
+</div>

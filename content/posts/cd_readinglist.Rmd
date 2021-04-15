@@ -74,40 +74,15 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Blumenstock,  J.E.,  Cadamuro,  G  and  On,  R.  (2015) Predicting Poverty  and  Wealth  from  Mobile  Phone  Metadata. Science,  350:1073-1076
 
-
-
-
-## Simulating population processes
-
-* Billari, F.C., Fent, T., Prskawetz, A., & Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.
-
-* Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies. 
-
-* Williams, N.E., O'Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies. 
-
-* Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.
-
-* Wolfson M., Gribble, S., & Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.
-
-* Kashyap, R., & Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. https://doi.org/10.1007/s13524-016-0500-z
-
-## Agent-based modelling and neighborhood choice
-
-* Bruch, E. E., & Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. https://doi.org/10.1086/507856
-
-* Van de Rijt, A., Siegel, A., & Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/588795
-
-* Bruch, E. E., & Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/597599
-
-* Clark, W. A. V., & Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. https://doi.org/10.1073/pnas.0708155105
-
-* Bruch, E. E., & Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105
-
 ## Labor markets
 
-* Turrell, A., Speigner, B. J., Djumalieva, J., Copple, D., & Thurgood, J. (2019). Transforming Naturally Occurring Text Data Into Economic Statistics: The Case of Online Job Vacancy Postings. NBER Working Paper Series, 34. http://www.nber.org/papers/w25837
+* ([Summary](../turrell_etal_2019/)) Turrell, A., Speigner, B. J., Djumalieva, J., Copple, D., & Thurgood, J. (2019). Transforming Naturally Occurring Text Data Into Economic Statistics: The Case of Online Job Vacancy Postings. NBER Working Paper Series, 34. http://www.nber.org/papers/w25837
 
-* Baker, R. S., Bloom, N., & Davis, S. (2016). Measuring economic policy uncertainty. Quarterly Journal of Economics, 131(November), 1593–1636. https://doi.org/https://doi.org/10.1093/qje/qjw024
+* ([Summary](../baker_bloom_davis_2016/)) Baker, R. S., Bloom, N., & Davis, S. (2016). Measuring economic policy uncertainty. Quarterly Journal of Economics, 131(November), 1593–1636. https://doi.org/https://doi.org/10.1093/qje/qjw024
+
+* Brand, J. E., Xu, J., Koch, B., & Geraldo, P. (2021). Uncovering Sociological Effect Heterogeneity Using Tree-Based Machine Learning. In Sociological Methodology. https://doi.org/10.1177/0081175021993503
+
+* Cengiz, D., Dube, A., Lindner, A., & Zentler-Munro, D. (2021). Seeing Beyond the Trees: Using Machine Learning to Estimate the Impact of Minimum Wages on Labor Market Outcomes. http://www.nber.org/papers/w28399.pdf
 
 * Lukac, M., & Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. https://doi.org/10.1007/s42001-020-00072-x
 
@@ -136,4 +111,32 @@ I put together this reading list as part of a guided reading with Professor Matt
 * Gil-Clavel, S., Zagheni, E., & Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.
 
 * Dimaggio, P., & Garip, F. (2012). Network effects and social inequality. Annual Review of Sociology, 38, 93–118. https://doi.org/10.1146/annurev.soc.012809.102545
+
+
+
+## Simulating population processes
+
+* Billari, F.C., Fent, T., Prskawetz, A., & Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.
+
+* Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies. 
+
+* Williams, N.E., O'Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies. 
+
+* Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.
+
+* Wolfson M., Gribble, S., & Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.
+
+* Kashyap, R., & Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. https://doi.org/10.1007/s13524-016-0500-z
+
+## Agent-based modelling and neighborhood choice
+
+* Bruch, E. E., & Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. https://doi.org/10.1086/507856
+
+* Van de Rijt, A., Siegel, A., & Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/588795
+
+* Bruch, E. E., & Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/597599
+
+* Clark, W. A. V., & Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. https://doi.org/10.1073/pnas.0708155105
+
+* Bruch, E. E., & Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105
 
