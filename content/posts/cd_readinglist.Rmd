@@ -94,7 +94,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Phillips, D. C. (2020). Measuring Housing Stability With Consumer Reference Data. Demography, 57(4), 1323–1344. https://doi.org/10.1007/s13524-020-00893-5
 
-* Palmer,  J.R.B.,  Espenshade,  T.J.,  Bartumeus,  F.,  Chung,  C.Y., Ozgencil,  N.E.,  and  Li  K.  (2012).  New  Approaches  to  Human  Mobility: Using   Mobile   Phones   for   Demographic   Research. Demography(50):1105-1128.
+* Palmer, J.R.B.,  Espenshade,  T.J.,  Bartumeus,  F.,  Chung,  C.Y., Ozgencil,  N.E.,  and  Li  K.  (2012).  New  Approaches  to  Human  Mobility: Using   Mobile   Phones   for   Demographic   Research. Demography(50):1105-1128.
 
 * Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
 
