@@ -86,17 +86,17 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Lukac, M., & Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. https://doi.org/10.1007/s42001-020-00072-x
 
-* ([Summary](subbotin_aref_2020.Rmd)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
+* ([Summary](subbotin_aref_2020/)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
 
 ## Migration
+
+* ([Summary](fiorio_etal_2020/)). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
 
 * Deville,   P.,   Linard,   C.,   Martin,   S.,   Gilbert,   M.,   Stevens,   F.R., Gaughan,   A.E.,   Blondel,   V.D.   and   Tatem,   A.J.   (2014)   Dynamic Population  Mapping  Using  Mobile  Phone  Data. Proceedings  of  the National Academy of Sciences 111(45):15888-15893.
 
 * Phillips, D. C. (2020). Measuring Housing Stability With Consumer Reference Data. Demography, 57(4), 1323–1344. https://doi.org/10.1007/s13524-020-00893-5
 
 * Palmer, J.R.B.,  Espenshade,  T.J.,  Bartumeus,  F.,  Chung,  C.Y., Ozgencil,  N.E.,  and  Li  K.  (2012).  New  Approaches  to  Human  Mobility: Using   Mobile   Phones   for   Demographic   Research. Demography(50):1105-1128.
-
-* Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
 
 ## Sociocultural processes
 
