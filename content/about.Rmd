@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in Cornell's Policy Analysis and Management program. During the summer of 2020 I served as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu). I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I have also worked for two years as a data scientist and product manager at a people analytics firm called [Multi Health Systems Inc.](https://mhs.com/)
+I am a PhD student in Cornell's Policy Analysis and Management program. For the summer of 2021 I am working as a machine learning engineer at [Graphika](https://graphika.com/). I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I have also worked for two years as a data scientist and product manager at a people analytics firm called [Multi Health Systems Inc.](https://mhs.com/). In summer 2020 I served as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu).
 
 I am interested in a lot of things. Here is what I've thought about most lately:
 
@@ -17,23 +17,33 @@ I am interested in a lot of things. Here is what I've thought about most lately:
 
 * Election fairness
 
+* Text as data
+
 * Software development
 
 * The need for stakeholder engagement in data science work
 
-## Traveling
-
-I like to travel. I especially like to stay for extended periods to get a feel for daily life. I made a map of all the places I have gone so far, mostly to hold myself accountable for filling in the rest. Here is my progress so far:
-
-![](/map/travel_map.png)
-
 ## Timeline
 
-_**Right now**_
+_**Right now:**_
 
-* First time as a TA. The course is called 'Statistics for PAM Majors'
-* Trying to build out my own research portfolio
-* Taking more methods courses and graduate seminars
+* Working as a Machine Learning Engineer at [Graphika](https://graphika.com/).
+* RAing with Matthew Hall on statistical models for the use of consumer data to measure population levels and migration flows.
+* Working on my second year paper, using character-level language models to improve racial estimation.
+
+_**01/2021 - 05/2021: Spring of second year**_
+
+* Awarded SSHRC Doctoral Fellowship, which will fund 1-2 semesters of my PhD! Thanks, Canada!
+* Presented a poster entitled "Small Area Population Estimates from Consumer Data" (joint with Arthur Acolin and Matthew Hall) at the PAA 2021 annual conference
+* Also presented the above at the APPAM 2021 Student Seminar Series
+* Submitted the first paper of my PhD, collaborative work with my DSSG colleagues on measuring racially polarized voting and the racial composition of the voting population.
+* TA'd Big Data for Policy Analysis
+
+_**09/2020 - 12/2020: Fall of second year**_
+
+* Assembled my committee: Professors Doug Miller (Chair), Michael Macy, and Matthew Hall
+* TA'd Introduction to Statistics for PAM Majors
+* Presented ongoing research with my DSSG colleagues at [PRIEC](http://priec.org/)
 
 _**06/2020 - 08/2020: Data Science for Social Good**_
 
