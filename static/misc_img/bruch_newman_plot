@@ -1,0 +1,507 @@
+INFO 6150:
+	- 
+
+Matt reading:
+
+	- Logistics:
+		* Nowcasting result soon
+		* ZCTA Model improvement from letting slopes vary within deciles
+		* Fires thing is really not working
+			- Laura
+			- Destruction of public housing in Chicago
+			- Interesting test
+	- Computational policy group?
+	- CMS
+		* Did another iteration - going back to them now
+	- Other potential projects:
+		- Call w/ People Data Labs tonight about their data
+		- Linkedin to scrape Helena
+		- thelayoff.com
+		- DSSG paper 
+
+	- Sourcing of the data
+	- Is it validated, what is their documentation
+	- 
+
+	- Notes for today's discussion:
+		* Two main themes of the reading
+			* Narrow focus on commercial data
+				- IPUMS (new old data)
+					* Underlying data is the entire micro-level decennial census
+					* Leah Boustan and colleagues linking Censuses across years
+				* All still included in the big data revolution
+				* Increasingly we have access to administrative data
+				* Connecting across these different domains
+				* Some states are collecting massive amounts of data
+					* minimum wage study in Washington
+					* group in Utah combining state and hospital data and them mormon church
+						* Huge ancestral files
+					* California, Texas
+			* Jenna Nobles
+				- Got access to data from an app on women's menstrual cycles, was able to calculate the number of lost pregnancies (massive number).
+
+			* Rapid growth of commercial data (social media + other digital trace)
+				* Calibration is key, in absence of calibration, look only at changes
+				* Is it possible to match the performance of data collected for research?
+				* These data can be used for two types of problems:
+					1. Improved monitoring/forecasting
+					2. Answering previously unanswerable questions (eg. social media data can tell us about social networks and diffusion at a low cost compared to other sources)
+						- Hard to find these sorts of applications
+			* Agent-based modelling as a way of understanding the implications of micro-level processes for macro-trends
+				* Don't see any reason to buy into this
+				* Maybe my mind will change when we get to these weeks
+
+PAM 6060 (DemTech):
+	- Class exercise - Example of life tables
+		* Initial population: Voters in a particular year
+		* Every national election -- 2 years apart
+			- Major issue is known drop-offs in turnout in non-presidential elections
+		* Unit-specific loss
+			- Not voting
+		* Policy goal
+			- Achieve persistent turnout
+
+PAM 6050 (CI):
+	- 
+
+PAM 2070 (TA)
+	- 
+
+Infogroup:
+	- 
+
+
+
+Christie
+
+Update dates on Course syllabus canvas page
+
+- Look for migration shocks
+
+- second: tract-tract migration flows - huge matrices 
+	* reconstruct this using infogroup
+	* compare the deviations
+
+- third: try to validate it against soem known source of data
+
+
+
+
+docker run \
+	--rm \
+    -v "$PWD":/home/jovyan/work \
+    -p 8888:8888 \
+    --shm-size 2g \
+    --memory 8gb \
+    jupyter/scipy-notebook:latest
+
+
+
+Live Discussion:
+################
+
+- Describe something you learned about inequality this week.  
+- Describe something you learned about the measurement of inequality this week.
+- How did the videos of the week surprise you?  
+- What drivers of income inequality have you seen evidence of in your life?
+
+
+
+
+- Check how long UK student loan policy has been in place
+- Check relative openness of US and Canadian migration
+- Post about NEEL in NYT
+- Look up how educational spending is calculated
+- CQ1 is different
+
+
+* Do bias adjustment in 2010, and include year-effects
+* Add year effects, every five years you can calculate an average, which needs to be some number +/- 5%
+* Five-yearly effect
+
+
+
+- How and why did you choose the specific part of the United States for your map?
+- How did you expect intergenerational mobility to look like for the group you chose in the location/region you chose?
+- Describe what you found in your chosen map:
+- What does intergenerational mobility look like for this group in this location/region?  Is there a little or a lot of variation in this area/region?
+- What did you find surprising? Why? What did you already expect?  Why?
+
+
+Paper 1
+	- Peizan Sheng
+
+
+General points of discussion:
+	- Bruch and Newman:
+		* May reflect short-term relationship preferences only
+		* Network data
+		* Opportunism	
+
+	- Wang et al.:
+		* MRP as a method of obtaining nationally representative parameter estimates using a non-representative sample
+		* Applications to subpopulation
+			* Scenarios where we have biased state-level estimates and county-level estimates
+			* Take county-level estimates, pool them, then weight them correctly. See how they compare with actual state-level results
+			* Estimate very hidden populations:
+				* Drug users
+				* Undocumented immigrants
+					- Residual approach. Take the difference between total immigration from the census and legal immigration
+					- Jeff Bissel: Logical imputation. Make assumptions about the data, allocate the data
+					- Jenny van Hook: Append two datasets, one with something like legal status and known relationships between variables. Append that to the Census and then treat Census as a missing variable.
+					- Matt Salganik: Respondent-driven sampling. Filiz + Matt doing one of these to get features of undocumented immigrants in the population.
+					- More recent paper uses migration flow information. 
+						* Border patrol collects information about border apprehensions.
+						* Yields result 2.5x larger than previous estimates.
+					- Question would be: 
+						* How possible would it be to apply this sort of framework to determining a population count.
+						* https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0201193
+						* https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0204199
+						****
+						Add hard to reach populations section
+						****
+
+					- No way to express counts subnationally
+						* Imputation model can work
+
+					- Applications outside the US, trying to understand clandestine migration in Europe.
+
+March 11th, 11-12PM For meeting
+
+					- From a relatively small survey
+
+	- Ideally you're interested in some big theoretical question:
+		* Developing innovative tools?
+		* Some big theoretical question?
+		* New types of data to an existing question?
+
+	- List of research ideas
+		* Opportunism involved with the field makes it a bit hard to generate research ideas
+		* My areas of interest:
+			- Polarization
+			- Election fairness (turnout + representation)
+			- Social determinants of health:
+				* Employment conditions
+				* Ecological effect of economic environment on health
+			- Inequality
+				* Relative importance of high/low skill division versus elite/non-elite division.
+			- Bayesian modelling
+
+
+	How to approach research in this area:
+
+
+WRDS:
+- Ravenpack analytics
+	- Will check for layoff announcements
+	- subscriptions listed in blue:
+		* CRSP
+			- CRSP compustat merged 
+		* Compustat
+			- Quarterly financials
+			- 
+	- CUSIP identifiers
+		* Where to find these
+
+	- Execucomp for CEO pay
+	- Ravenpack for layoffs
+
+
+
+- Research ideas:
+	* Who moves during recessions?
+	* Politics audit study
+	* Demographic decomposition of electoral change 
+	* Hurricane maria as shock to hispanic electoral power / voteshare
+	* Topic modelling conversations about layoffs
+
+- Residual method
+	* Makes intuitive sense
+	* At national level Census migrant counts, DHS legal immigrant counts, and undercount rates seem to fully describe migration
+	* Odd that even response paper notes lack of confidence intervals on these estimates. Could be put into a Bayesian framework and incorporate forecasting. Don't think the model would be that hard
+	* Undercount comes from post-enumeration survey where they do a second census in certain areas.
+		- On a small scale and based on a survey. From that, they determine the undercount based on the responses to the survey. This uses the same sampling frame, though, so wouldn't help
+		- They also do ethnographic censuses. They embed someone in a neighbourhood and through people's personal connections to that neighbourhood they get a second count. 
+			- What they find is that in heavily latino communities the undercounts are really high
+			- Census also asks about neighbors.
+			- ACS and CPS are used, these are not meant for getting full counts
+
+- Imputation methods
+	* I think the focus on multiple imputation is a bit dubious because the simulation results from Van Hook et al., 2015 at least on paper seem to do just as well.
+	* It's possible that Bayesian or ML-based regularization could help if we wanted to carry out this sort of procedure across different sampling frames or datasets with unbalanced covariates. 
+	* Or just some kind of re-weighting scheme
+	* Otherwise, this seems like really the right tool for this job.
+	* Seems like as long as we are stuck in the Census bureau national sampling frame world, we can't really go below the state level for these analyses.
+	* Problem: No recognition that there's non-response, and non-response is non-random. Not just missing some chunk of the unauthorized population (could be up to 50%)
+	* If you look at the imputation model, it flags a lot of immigrants as being undocumented who are non-mexican. It's basically assuming the correlates of legal status that exist among mexicans are the same that they among virtually every other group.
+	* It adjusts the weights to reach a control floor, assuming that the DHS estimate is correct and keeps sampling from that. 
+	* When you run the imputation nationally, you get an estimation that is vastly under what it should be.
+	* Huge disconnect between the model and what they're assuming the truth.
+	* Lot of room for innovation here
+	* SIPP doesn't actually ask about undocumented status, it asks about "everything else"
+	* Census public data also has its own imputations - there are weird patterns to relationships based on whether or not you include imputed responses.
+	* LA FANS is based just on a sample drawn from Los Angeles
+	* Sources of error:
+		- Non-response bias
+		- Measurement error in the question
+		- Data generation error from the Census imputation
+		- Then there's error in the ACS which generates population weights
+		- Non-response bias in the ACS
+	* All of this uses circular logic. Gold standard is the residual estimate. Based on counts of immigrant population.
+	* Upcoming symposium in Germany hosted by Ignmar Weber on digital trace data and migration.
+
+- Respondent-driven sampling
+	* Seems very promising. Crawford paper is so clever, I love it.
+	* Don't 100% understand the "recruitment subgraph" that they use as 
+	* What is the respondent subgraph?
+	* Merli's paper is really cool in showing how the distribution of the network across space can undermine assumptions about the relationship between degree and probability of being sampled. 
+	* Looks like there's quite a few papers doing online and offline respondent-driven sampling and a solid review of these.
+	* Seems like online RDS is better for measuring characteristics, worse for measuring population sizes
+	* Less so looking at undocumented immigrants, although Claire
+	* Ted Mao is doing some of this stuff too
+	* What are you doing with Filiz
+	* Seems like a really useful mechanism for scoping the size of violent extremist organizations
+	* Also made me think about the music lab multiple worlds survey, what could we learn from replacing the multiple worlds with multiple referral chains? 
+
+- What is particularly interesting to me?
+	* Coverage issue
+	* Only a couple papers on t
+	* Frank Bean et al. 
+	* Census Bureau
+
+
+Network sampling with memory.
+	- modified RDS that tries to explore the bounds of the network, tries to identify bridge nodes that tries to explore these different areas
+	- Regular RDS and modifying things
+		* Asking different degree questions
+		* Tom Valente, Lee et al. (play with questions for the denominator and numerator)
+	- Compared to the ACS -- matched 
+	- Overestimated proportion citizen
+	- How to weight RDS? 
+	- Christa Guile review of RDS methods
+		* Where the sources of bias can creep into RDS
+	- Ask people to give friends who probably don't know each other
+	- Criticsm about seeds
+
+
+	Gold standard -- Qualitative fieldwork to get a sense of what's going in the community
+
+	- Can we use migrant typologies to identify migrant typologies
+	- Study of Venezuelan migrants to Costa Rica
+		* Interesting assimilation pattern because of high/low income
+		* Was going to use NSM to study labor market referral process
+		* Will now try to do on whatsapp
+		* Experimental work through a survey experiment
+
+
+	- Ted Mao 
+	- Team in France
+
+	- In Europe it's really hard to do it, do it in the US.
+	- Weird selection issues that come about because 
+
+	- Capture-recapture models:
+		* We've done the network sample for three waves
+		* We know the proportion of their nominations
+		* How big do we think the true network is
+		* Look at those formulas
+			- Do they work for undocumented migrants
+			- Seem to be off a bit because they use a statistic that is proportion of people who have been nominated once and only once.
+			- Might get a slightly weird count
+			- What you're actually doing is estimating the proportion of the network that is undocumented
+
+	- You can't really ask people if they know undocumented workers 
+	- Probably do cluster on country of origin
+
+	- Pick a community that's largely undocumented
+
+	- We have no idea how networks of documented and undocumented people are connected 
+
+	- What we're estimating is the parameter y_0 / y_1
+
+	- Tried to ask documentation questions in initial IRB, the method they're okay with me using is a series of ten to fifteen questions about documentation status
+
+	- How to elicit documentation status
+
+	- Put it into three questions
+
+	- Do some qualitative work before going in
+
+	- As we're talking, especially with undocumented, in-person might be better
+
+	- Alex says why don't you just find a sampling frame
+		* Why not just get a sampling frame?
+		* This is another option
+
+
+
+
+
+School segregation
+	- Did this take place in your own lives?
+	- Old boy's clubs 
+	- https://www.nber.org/system/files/working_papers/w28583/w28583.pdf
+
+
+
+##### 
+# Joscha seminar
+#####
+
+Can you talk more about the methodological challenges of quantifying police bias
+Kohler-Hausmann, 2019
+	- Eddie Murphy paper on the dangers of counterfactual thinking
+
+
+
+
+Geoffrey
+Felix Elvert
+David Harding
+	- Neighborhood and time exposure
+
+
+
+#### 
+Where I stand on the literature:
+	- Basic RDS estimators seem quite problematic:
+		* Assumptions for estimation are usually too strong.
+		* Goel and Salganik -- huge design effects.
+		* Potential biases 
+			* Claire -- clusters, how to do this with migrants.
+	- Ted Mouw alternative:
+		- Network sampling with memory
+		- Replace user-driven recruitment with building a sample by asking people for their networks. 
+		- Sample in a targetted way that seeks out hidden parts of the network
+		- Could be done through RDS by prompting people to recruit people others might not know
+	- Crawford approach:
+		- Leverage more information about the recruiting process
+		- Just can't tell if it's a genuine improvement
+		- Review paper is quite dismissive of it
+
+- Claire: 
+
+a) She knows of a couple groups using RDS to study migrant populations around the world, all of whom are connected to Professor Merli in some way. So, things are starting here.
+
+b) She thinks it will be a hard sell if we estimate undercount rates using RDS and try to claim that those estimates are correct while others are incorrect. She perceives a lot of skepticism about RDS from statisticians. She doesn't think there's a consensus that RDS works, and it seems in most cases quite difficult to tell whether assumptions have been validated without a second datasource for comparison. 
+
+c) It came up in our discussion that there is probably scope for a project that validates RDS for measuring migrant characteristics, including documentation status. This would require a) getting a sampling frame for all migrants in an area, and then b) sampling it randomly and via RDS to compare estimates of proportion undocumented and proportion who filled out the 2020 Census. If we could do this successfully, this could motivate a next paper applying RDS more widely. Alternatively, if you think we won't face this issue, we could skip ahead to the main study. 
+
+d) We will likely run into challenges figuring out who is and isn't documented, and who is or is not included in the Census. Both of these measurements seem subject to bias and measurement error, and will be tough to get right.
+
+
+What would we measure if we did this?
+	- How would we ask people if they were undocumented/unauthorized?
+	- Assuming we focus on Mexican migrants? 
+	- If so, we might not be able to generalize up to the national estimates in a direct way
+	- How would we choose sites?
+	- Web vs. in-person? (Preference for web)
+	- Worth talking to Filiz?
+
+
+Convention on legal status
+	- Not explicitly ask about doc status, but ask about other categories and have undocumented be the residual.
+	- Are you a citizen? Yes/no? Are you an LPR? Yes/no
+	- Generate a local estimate of the population size 
+	- Compare that estimate to the Census
+
+	- Really hard question to answer, might be impossible without huge resources
+
+	- How have coverage rates been addressed?
+		* How are people addressing coverage rates in surveys
+		* 
+
+	- Take a look at the methods of determining coverage
+	- What other contexts is this an issue?
+		* Homelessness?
+		* Via RDS, post-enumeration approaches, qualitative work
+
+	- One question he's been thinking about that he's been interested in for a while:
+		* Are unauthorized folks socially/physically isolated
+		* By legalizing immigrants, we can bring them out of the shadows and into mainstream society
+		* The social relationships that they hold
+		* Social isolation of undocumented migrants
+			- Extent to which unauthorized youth have friendships that cross youth boundaries 
+
+	- Homework
+		* Map out a side set of readings on coverage
+		* 
+
+
+The paper is fine for PAA
+- Provide an intro that sketches out what we're doing
+- David Swanson might be a reviewer. Not familiar with the statistical framework 
+- Kyle Crowder: Demographer but doesn't really do this sort of applied demographic methods sort of thing. Jack Deward (Consumer data before)
+
+
+
+
+Matt today:
+
+- Crawford papers
+	* Feel 85% there on understanding the papers
+	* Key points:
+		- It's a way to measure 
+
+- Turrell et al. 
+	* Extracting meaning from text to construct new measures
+	* I sort of think this is the most fruitful place for computational social science research generally
+	* I would call this paper a level-2 version of NLP classification/matching
+		* Level 3:
+			- Topic modelling
+		* Level 4:
+			- Embeddings / neural networks
+	* I am always searching for corpuses
+		* thelayoff.com
+	* Validation by application in economic context
+	* The representativeness in this paper looks really bad
+	* Some obvious challenges - words mean different things in job ads than in descriptions of occupation tasks
+
+- Baker, Bloom, and Davis, 2016
+	* Known about this paper since applying for PhD programs
+	* Very simple keyword-based measure of policy uncertainty
+	* Heavy on manual work, extensive auditing.
+	* Most work went into validation
+		- Replicated in multiple countries/regions
+		- Correlates with several related variables
+		- Shift-share design where firm-level exposure to government contracts predicts the effect of uncertainty on option volatility.
+	* Was kind of suggested to me that something similar might be constructed to capture determinants of demographic processes
+		- Eg. fertility, mortality, migration
+	* Never really been sure how to do this, or if it makes sense
+		- Had one idea for an instrumental variable where economic news is randomly bumped out of headlines by other news (eg. local sporting events)
+	* Seth Sanders said his intuition was that these processes work through close social networks, not large macro processes.
+
+- Subbotin and Aref
+	* This paper is using Scopus data to measure in- and out-flows from 
+
+
+
+are the covariate distributions stable
+
+- Look much more deeply into the spike
+	* If it's a true data issue, you might not want to use
+	* 
+
+
+
+Alana, Deedee, 
+
+
+
+
+Emma notes:
+	- Different methodological approaches to studying dietary diversity
+	- What scale do you envision these sorts of analyses taking place?
+	- Dietary diversity score as a predictor of health/mortality, etc. 
+
+
+
+
+
+
+
+
+
+
+
+
