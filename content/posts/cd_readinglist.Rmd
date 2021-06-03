@@ -106,7 +106,7 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Stewart, I., Flores, R. D., Riffe, T., Weber, I., & Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. https://doi.org/10.1145/3308558.3313409
 
-* Herdaǧdelen, A., State, B., Adamic, L., & Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. https://doi.org/10.1145/2908131.2908163
+* ([Summary](Herdagdelen_etal_2016/)). Herdaǧdelen, A., State, B., Adamic, L., & Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. https://doi.org/10.1145/2908131.2908163
 
 * Gil-Clavel, S., Zagheni, E., & Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.
 
