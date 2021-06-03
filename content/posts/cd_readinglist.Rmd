@@ -86,11 +86,11 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Lukac, M., & Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. https://doi.org/10.1007/s42001-020-00072-x
 
-* ([Summary](subbotin_aref_2020/)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
+* ([Summary](../subbotin_aref_2020/)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
 
 ## Migration
 
-* ([Summary](fiorio_etal_2020/)). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
+* ([Summary](../fiorio_etal_2020/)). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
 
 * Deville,   P.,   Linard,   C.,   Martin,   S.,   Gilbert,   M.,   Stevens,   F.R., Gaughan,   A.E.,   Blondel,   V.D.   and   Tatem,   A.J.   (2014)   Dynamic Population  Mapping  Using  Mobile  Phone  Data. Proceedings  of  the National Academy of Sciences 111(45):15888-15893.
 
@@ -102,11 +102,11 @@ I put together this reading list as part of a guided reading with Professor Matt
 
 * Marquez, N., Garimella, K., Toomet, O., Weber, I. G., & Zagheni, E. (2019). Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data. Guide to Mobile Data Analytics in Refugee Scenarios, 49(0), 265–282. https://doi.org/10.1007/978-3-030-12554-7_14
 
-* Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., & Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. https://doi.org/10.1038/s41562-020-01045-w
+* ([Summary](../muggleton_etal_2020/)) Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., & Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. https://doi.org/10.1038/s41562-020-01045-w
 
-* Stewart, I., Flores, R. D., Riffe, T., Weber, I., & Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. https://doi.org/10.1145/3308558.3313409
+* ([Summary](../stewart_etal_2019/)) Stewart, I., Flores, R. D., Riffe, T., Weber, I., & Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. https://doi.org/10.1145/3308558.3313409
 
-* ([Summary](Herdagdelen_etal_2016/)). Herdaǧdelen, A., State, B., Adamic, L., & Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. https://doi.org/10.1145/2908131.2908163
+* ([Summary](../Herdagdelen_etal_2016/)). Herdaǧdelen, A., State, B., Adamic, L., & Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. https://doi.org/10.1145/2908131.2908163
 
 * Gil-Clavel, S., Zagheni, E., & Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.
 

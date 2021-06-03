@@ -1,0 +1,26 @@
+---
+title: The association between gambling and financial, social and health outcomes in big financial data
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="naomi-muggleton-and-co-authors-2021" class="section level2">
+<h2>Naomi Muggleton and co-authors, 2021</h2>
+<p>This paper uses data from a large retail bank in the UK to study the association between gambling and other health and social outcomes that banks track. The dataset is large, containing 6.5 million banking customers over a 7 year span. The main findings of the paper can be summed up by one <strong>awesome</strong> figure:</p>
+<p><img src="/misc_img/muggleton_2021_p1.png" /></p>
+<p>I’ve actually cut the figure off because it goes on and on and I can’t fit it all here. This figure was constructed in the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Take each month of each person’s banking activity and rank all those person-months according to the amount they spent on gambling.</p></li>
+<li><p>Bin those person-months into percentiles.</p></li>
+<li><p>For the person-months within each bin, take the mean value on all the other outcomes in the data.</p></li>
+<li><p>Plot the resulting 100 means as a function of gambling percentile.</p></li>
+</ol>
+<p>This is just a spectacular way to present the associations in the data. The first row, labelled “financial distress” outcomes, shows that activities like taking out payday loans or missing payments spike for people during months when they heavily engage in gambling. It almost looks like there’s some kind of threshold percentile after which gambling becomes problematic.</p>
+<p>We can also observe casual gamblers in the bottom row. When people gamble very little (this might be as little as one lottery ticket in a month, although we can’t tell because of the percentile transformation), they tend to also be spending more at bars and off-licenses. So this looks more like recreational gambling.</p>
+<p>Then in the middle we observe that gambling tends to be negatively associated with most forms of financial inclusion and financial planning. Things like having a mortgage, making mortgage payments, and having insurance are all increasingly common as people gamble less. The only financial activities that rise with gambling behavior are credit card use and debt recovery, which makes sense.</p>
+<p>The results of this paper are very intuitive and one might argue not novel or surprising. However, there is always value in documenting important social phenomena at a grand scale and with fine detail. I think such papers have great opportunity to make an actual direct impact on policy, especially when the results are so compellingly presented.</p>
+</div>

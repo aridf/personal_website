@@ -1,0 +1,46 @@
+---
+title: The social ties of immigrant communities in the United States
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ian Stewart, Rene Flores, Timothy Riffe, Ingmar Weber, and Emilio Zagheni, 2019
+
+This is a really interesting paper about measuring cultural assimilation using the Facebook advertising platform. This platform is an increasingly common tool for sociological and demographic research. It provides estimates of an advertiser's 'reach' should they target a particular subpopulation of Facebook users. In this case, the authors leverage the platform to measure the divergence of musical preferences between Mexican immigrants to the US and US nationals, focussing in on musical preferences as one culturally salient dimension along which assimilation can occur.
+
+The basic measures used in the paper are interest ratios, which is the ratio of the number of Facebook users from a given population who express interest in a particular genre to the number of users from that population expressing interest in any genre. That is,
+
+$$
+I_{p,i} = \frac{count(p,i)}{\sum_{j}count(p, j)}
+$$
+Interest ratios quantify the interest that a population has in a genre of music. The next step to measure assimilation is to measure the proximity of interest ratios between populations. The authors put nicely how they want to do this:
+
+> If the destination population is highly interested in hip-hop music, the origin population shows little interest in hip- hop, but the expat population from origin to destination is highly interested in hip-hop, we would say that the expat population is highly assimilated to the destination population with respect to hip-hop, meaning that expats match the taste of natives for the specific genre.
+
+This is exactly how I would try to define it. The definition is interestingly operationalized. To measure assimilation between a particular source population and US nationals, the authors proceed in the following steps:
+
+1. Remove all interests that are more associated with the source pupolation than the destination population ($I_{source} > I_{US}$).
+2. Compute the difference between the interest ratios for source and destination populations for each inttterest, then remove all the interests where the difference falls below the 50th percentile. This means only the interests for which there are large base differences between people from Mexico and people from the US are included.
+3. For the remaining interests, compute the **assimilation ratio**:
+
+$$
+AR_i = \frac{I_{expat, i}}{I_{dest,i}}
+$$
+This approach makes sense but it's also a bit odd. It means later when the present the distributions of assimilation ratios across interests for the different migrant groups the distributions are not actually equivalent. The interests composing those distributions changes across groups. Here's the figure:
+
+![](/misc_img/stewart_etal_p1.png){width=70%}
+
+You can see the method is working because most of the logged ratios are below zero (meaning most of the ratios are below 1). This means they're only looking at interests favored by the destination group and they're removed the rest. Precisely what has been removed actually changes across these panels, making direct comparisons more difficult than they seem.
+
+This figure also causes me to rethink my agreement with the above definition of assimilation. Shouldn't there be a side of assimilation that has to do with the loss of interest in the culture of one's origin country? Perhaps this ought to be captured or examined separately. It seems the method presented here could accommodate this analysis by flipping the way interests are subsetted. 
+
+There's also a really interesting plot of the assimilation ratios broken down by demographics:
+
+![](/misc_img/stewart_etal_p2.png){width=70%}
+
+Some features of the figure are expected, others less so. It makes sense that Spanish-speaking users would be less assimilated than bilignual and English speakers. Perhaps it also surprising that across all demographic groups, there is not much difference between second-generation Mexican migrants (orange) and first generation expats (blue). I might expect a larger gap between them, particular at younger ages. These estimates do seem fairly noisy, however.
