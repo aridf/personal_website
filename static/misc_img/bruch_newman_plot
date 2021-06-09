@@ -489,15 +489,47 @@ Alana, Deedee,
 
 
 
-Emma notes:
-	- Different methodological approaches to studying dietary diversity
-	- What scale do you envision these sorts of analyses taking place?
-	- Dietary diversity score as a predictor of health/mortality, etc. 
+Create a syllabus for a computational policy course
+	- Go through the reading list and convert it into an organized syllabus
+	- Split into themes
+		- Create 3-4 thematic questions per theme
+	- Identify remaining holes
+
+
+* Second year paper
+	- Summer course is on offer
+	- Send Maria + Matt an email summarizing the course
+
+* Summer plans
+	 
+
+* Share the Overleaf with Chris Hess
+	- 
 
 
 
+Papers I read:
+	- Muggleton
+		* Very cool paper. Simple but impactful. Putting on a clinic re-visualization, except I wish they had quantified the uncertainty in the means
+
+	- Stewart
+		* Another elegant Zagheni paper
+		* Cultural assimilation is an interesting thing to try and measure
+		* Facebook ad manager data *still* feels untapped even though Emilio presents it everywhere and there are a number of papers on it.
+		* Their definition is, I think, a bit rough or too simplistic the way they drop out interests
+		* Comparisons are sketchy.
+		* It's interesting how when we deviate from traditional methods of data collection we end up with all these papers that construct ad-hoc measures that only work for the particular data structure being used. 
+		* We trust surveys and polls because they have decades of empirical validation. Much harder with this kind of stuff.
+
+	- Facebook paper
+		* When you're looking at social network integration, I don't even know if you have to validate the data (provided sufficient and random N)
+		* Network measure makes sense but is also kind of limited. Paper only shows one thing. Provided one has the data, there seems to be an easy extension here to study the political interests of different groups through friendships/group belonging of users.
+		* The section on the relationship between geographic and network segregation was pretty brutal. Geographic info not really fine-grained enough to get at the types of segregation measures they want. 
+		* Might have been better to just ask if integration differed across geographies or geographyXcountry of origin.
 
 
+	- Redo the plots with legends
+	- 
 
 
 

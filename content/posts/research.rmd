@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Computational Demography
 
-I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available [here](../cd_readinglist). I have one ongoing project in this area:
+I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have one ongoing project in this area:
 
 #### Small Area Population Estimates from Consumer Data
 

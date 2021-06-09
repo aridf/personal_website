@@ -1,0 +1,235 @@
+---
+title: "Computational Demography Reading List"
+author: "Ari Decter-Frain"
+date: "03/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+---
+
+The following is an incomplete reading list that tries to sketch out the field of computational demography. I think of computational demography as any research that asks whether and how new insights about demographic processes can be gained from the recent[^1] emergence of *new online data sources* and *computationally intensive methods*. As I see it, this literature is composed mostly of papers that present a new way of measuring something. Sometimes this means quantifying some phenomenon that has never been captured before. Other times it simply means measuring something more precisely, more frequently, or at a more grand scale.
+
+[^1]: I don't have a specific definition of 'recent' in mind and the precise cutoff probably varies by across research questions. I also think of 'recent' as a moving target -- what constitutes computational demography seems to change over time as tools and available data evolve. 
+
+Nearly all of the time, this work is flashy. Who doesn't love a paper that uses data collected by high-growth Silicon Valley darlings, presented in beautiful, multicolored, force-directed network graphs. The main task of a reader in this field is to see through the glory and the glamour and ask what all these hot methods and datasets can really tell us about demographic and social change.
+
+I see the scope of this field very broadly. I think it's fair to say that any of the methods that might be called "computational social science", applied to demographic questions, should be called computational demography. In this list, I focus in on the data data and tools from computational social science that I have most frequently seen applied in demographic research. I briefly outline these below.
+
+## New online data sources
+
+Thanks to the internet and the various commercial and social activities that have sprung up on top of it, much of human behavior is now logged somewhere in a database. Nowadays we don't necessarily need large-scale surveys to measure things like friendship networks, cultural tastes, or political polarization -- we can get massive, rich data on these topics at a low cost by accessing data stored on social media platforms or elsewhere. The readings below cover many different sources of data, including social media platforms, job posting websites, private commercial records, banking databases, dating apps, etc. 
+
+It's important to recognize that we already know a lot about demography in most high-income countries, so the bar for improvement is high. In the US there is the Census Bureau, a well-funded organization that gives us pretty good information about the demographic composition of the country on an annual basis. The government also carefully tracks vital statistics and so we know with some precision how many people are born and die each year. Equally useful are the range of longitudinal surveys that track people across time and enable researchers to study the factors that influence decision-processes related to demographic outcomes. This includes things like mate selection, fertility, and entry/exit from the labor market. 
+
+Because demographers already have a lot of really high quality data, it's important to think carefully about what new data sources add, and whether they warrant the often considerable effort it takes to work with them. 
+
+## Computationally intensive methods
+
+In concert with the emergence of new data, recent advances in computation have enabled new methods that also open doors for research. Powerful machines enable running increasingly complex algorithms, and algorithms themselves advance to solve hard problems more efficient. Machine learning obviously fits into this category, although few papers on this list (so far) apply these tools to common demographic prediction problems. 
+
+Another example is Bayesian data analysis, which has benefited both from the increasing accessibility of computational power and the steady improvement of posterior sampling algorithms. Bayesian methods have become increasingly popular because of their utility handling sparse data, their flexibility in handling complex error structures, and their capacity to combining different types of data.
+
+New computational methods have enabled measurement of demographic characteristics in new contexts, like identifying undocumented immigrants in survey data, estimating the race of individuals using only their name and address, and estimating the mortality rate of regions with almost no data. Papers on the reading list address these questions, and others, with computational methods.
+
+Now, to the list.
+
+---
+
+# The list
+
+## Overview: Computational social science and demography
+
+These readings provide broad overviews of the challenges and methods that come up throughout the list.
+
+* ([Summary](../billari_zagheni_2017/)) Billari, F., and Zagheni, E. (2017). Big data and population processes: a revolution? Proceedings of the Italian Statistical Society 2017
+
+* Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Review of Sociology 45: 27-45.
+
+* ([Summary](../bavel_grow_2016/)) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies
+
+* Bijak, J., & Bryant, J. (2016). Bayesian demography 250 years after Bayes. Population Studies, 70(1), 1–19. https://doi.org/10.1080/00324728.2015.1122826
+
+---
+
+## SECTION 1: Learning from new sources of data
+
+The first of two major sections covers work that uses nontraditional data sources to augment or develop new demographic measures. 
+
+It begins with a series of readings on representativeness. These are meant to outline the challenge of using alternative data sources: They were not built for demographic research. These readings focus on the scale of the problem, and cover the different general approaches to handling nonrepresentative samples in demography. 
+
+The remaining subsections contain groups of papers using alternative data sources to makep progress in a particular substantive area of demography. Working through these, readers should keep in mind the following two questions:
+
+1. Is non-representativeness an issue for this particular research question and dataset, and do the authors adequately address it?
+
+2. Does the paper justify using an alternative data source? What does this paper find that couldn't be learned via more traditional methods like surveys? 
+
+---
+
+### SECTION 1A: The challenge of representativeness
+
+* Zagheni, E., & Weber, I. (2015). Demographic research with non-representative internet data. International Journal of Manpower, 36(1), 13–25. https://doi.org/10.1108/IJM-12-2014-0261
+
+* ([Summary](../wang_etal_2015/)) Wang, W., Rothschild, D., Goel, S., & Gelman, A. (2015). Forecasting elections with non-representative polls. International Journal of Forecasting, 31(3), 980–991. https://doi.org/10.1016/j.ijforecast.2014.06.001
+
+* Yildiz, D., Munson, J., Vitali, A., Tinati, R., & Holland, J. A. (2017). Using Twitter data for demographic research. Demographic Research, 37(1), 1477–1514. https://doi.org/10.4054/DemRes.2017.37.46
+
+* Gil-Clavel, S., & Zagheni, E. (2019). Demographic differentials in facebook usage around the world. Proceedings of the 13th International Conference on Web and Social Media, ICWSM 2019, Icwsm, 647–650.
+
+* Feehan, D. M., & Cobb, C. (2019). Using an online sample to estimate the size of an offline population. Demography, 2377–2392. https://doi.org/https://doi.org/10.1007/s13524-019- 00840-z)
+
+---
+
+### SECTION 1B: Migration
+
+* ([Summary](../zagheni_etal_2014/)) Zagheni E., Garimella, K., Weber, I., and State, B. (2014). Inferring international and internal migration patterns from Twitter data. Proceedings of ACM WWW (Companion): 439-444
+
+* ([Summary](../zagheni_weber_gummadi_2017/)) Zagheni, E., Weber, I., & Gummadi, K. (2017). Leveraging Facebook's Advertising Platform to Monitor Stocks of Migrants. Population and Development Review, 43(4), 721-734.
+
+* Deville, P., Linard, C., Martin, S., Gilbert, M., Stevens, F.R., Gaughan, A.E., Blondel, V.D. and Tatem, A.J. (2014) Dynamic Population Mapping Using Mobile Phone Data. Proceedings of the National Academy of Sciences 111(45):15888-15893. 
+
+* Alexander, M., Polimis, K., & Zagheni, E. (2020). Combining social media and survey data to nowcast migrant stocks in the United States. Population Research and Policy Review, 0123456789. https://doi.org/10.1007/s11113-020-09599-3
+
+* ([Summary](../fiorio_etal_2020/)). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., & Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. https://doi.org/10.4054/MPIDR-WP-2020-024
+
+* Deville,   P.,   Linard,   C.,   Martin,   S.,   Gilbert,   M.,   Stevens,   F.R., Gaughan,   A.E.,   Blondel,   V.D.   and   Tatem,   A.J.   (2014)   Dynamic Population  Mapping  Using  Mobile  Phone  Data. Proceedings  of  the National Academy of Sciences 111(45):15888-15893.
+
+* Phillips, D. C. (2020). Measuring Housing Stability With Consumer Reference Data. Demography, 57(4), 1323–1344. https://doi.org/10.1007/s13524-020-00893-5
+
+* Palmer, J.R.B.,  Espenshade,  T.J.,  Bartumeus,  F.,  Chung,  C.Y., Ozgencil,  N.E.,  and  Li  K.  (2012).  New  Approaches  to  Human  Mobility: Using   Mobile   Phones   for   Demographic   Research. Demography(50):1105-1128.
+
+---
+
+### SECTION 1C: Labor markets
+
+* ([Summary](../turrell_etal_2019/)) Turrell, A., Speigner, B. J., Djumalieva, J., Copple, D., & Thurgood, J. (2019). Transforming Naturally Occurring Text Data Into Economic Statistics: The Case of Online Job Vacancy Postings. NBER Working Paper Series, 34. http://www.nber.org/papers/w25837
+
+* ([Summary](../baker_bloom_davis_2016/)) Baker, R. S., Bloom, N., & Davis, S. (2016). Measuring economic policy uncertainty. Quarterly Journal of Economics, 131(November), 1593–1636. https://doi.org/https://doi.org/10.1093/qje/qjw024
+
+* Brand, J. E., Xu, J., Koch, B., & Geraldo, P. (2021). Uncovering Sociological Effect Heterogeneity Using Tree-Based Machine Learning. In Sociological Methodology. https://doi.org/10.1177/0081175021993503
+
+* Cengiz, D., Dube, A., Lindner, A., & Zentler-Munro, D. (2021). Seeing Beyond the Trees: Using Machine Learning to Estimate the Impact of Minimum Wages on Labor Market Outcomes. http://www.nber.org/papers/w28399.pdf
+
+* Lukac, M., & Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. https://doi.org/10.1007/s42001-020-00072-x
+
+* ([Summary](../subbotin_aref_2020/)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
+
+
+* Rampazzo, F., Zagheni, E., Weber, I., Testa, M. R., & Billari, F. (2018). Mater certa est, pater numquam: What can facebook advertising data tell us about male fertility rates? 12th International AAAI Conference on Web and Social Media, ICWSM 2018, 672–675.
+
+---
+
+### SECTION 1D: Sociocultural processes
+
+* Marquez, N., Garimella, K., Toomet, O., Weber, I. G., & Zagheni, E. (2019). Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data. Guide to Mobile Data Analytics in Refugee Scenarios, 49(0), 265–282. https://doi.org/10.1007/978-3-030-12554-7_14
+
+* ([Summary](../muggleton_etal_2020/)) Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., & Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. https://doi.org/10.1038/s41562-020-01045-w
+
+* ([Summary](../stewart_etal_2019/)) Stewart, I., Flores, R. D., Riffe, T., Weber, I., & Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. https://doi.org/10.1145/3308558.3313409
+
+* ([Summary](../Herdagdelen_etal_2016/)). Herdaǧdelen, A., State, B., Adamic, L., & Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. https://doi.org/10.1145/2908131.2908163
+
+* Gil-Clavel, S., Zagheni, E., & Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.
+
+* Dimaggio, P., & Garip, F. (2012). Network effects and social inequality. Annual Review of Sociology, 38, 93–118. https://doi.org/10.1146/annurev.soc.012809.102545
+
+* ([Summary](../bruch_newman_2018/)) Bruch, Elizabeth and Mark Newman. (2018). “Aspirational Pursuit of Mates in Online Dating Markets.” Science Advances, 4
+
+---
+
+## SECTION 2: Computational methods
+
+Computational methods feature heavily throughout the first half of this list. This second section focuses in on how computational methods might be used to resolve longstanding problems faced by demographers. The three problems I focus on are a) imputing race/ethnicity when it has not been measured, b) measuring the population size of undocumented immigrants in the US, and c) generating predictions from complex academic theories.
+
+The first two of these can be construed as prediction problems. Estimating race/ethnicity involves picking up on faint statistical signals in things like a person's name or the neighborhood they live in. The task itself also demands careful ethical consideration. Any predictive model is prone to bias. Even if unbiased estimation is possible, it's unclear whether a tool for guessing the race of people who did not report it should even exist.
+
+The problem of identifying undocumented immigrants poses similar ethical quandaries. Methodologically, this problem is even harder than estimating race/ethnicity because no "ground-truth" dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.
+
+The third section pertains to *agent-based modeling*. Agent-based modeling is what a researcher does when they have complex theory of individual behavior and want to know what the implications of that theory are at the population level. It generally involves programming a simulation wherein many individuals are instantiated with a particular set of behaviors/options. Then as time moves on they make decisions. Throughout the simulation, population-level parameters are tracked to observe how population-change emerges from individual behaviors. A classic example of this comes from Bruch and Mare's paper on the implications of household neighborhood choices for long-run neighborhood segregation.
+
+---
+
+### SECTION 2A: Estimating race/ethnicity
+
+#### Origins and applications
+
+* Elliott, M. N., Fremont, A., Morrison, P. A., Pantoja, P., & Lurie, N. (2008). A new method for estimating race/ethnicity and associated disparities where administrative records lack self-reported race/ethnicity. Health Services Research, 43(5 P1), 1722–1736. https://doi.org/10.1111/j.1475-6773.2008.00854.x
+
+* Elliott, M. N., Morrison, P. A., Fremont, A., McCaffrey, D. F., Pantoja, P., & Lurie, N. (2009). Using the Census Bureau’s surname list to improve estimates of race/ ethnicity and associated disparities. Health Services and Outcomes Research Methodology, 9(2), 69–83. https://doi.org/10.1007/s10742-009-0047-1
+
+* Imai, K., & Khanna, K. (2016). Improving ecological inference by predicting individual ethnicity from voter registration records. Political Analysis, 24(2), 263–272. https://doi.org/10.1093/pan/mpw001
+
+* Adjaye-Gbewonyo, D., Bednarczyk, R. A., Davis, R. L., & Omer, S. B. (2014). Using the bayesian improved surname geocoding method (BISG) to create a working classification of race and ethnicity in a diverse managed care population: A validation study. Health Services Research, 49(1), 268–283. https://doi.org/10.1111/1475-6773.12089
+
+* Barreto, M., Collingwood, L., Garcia-Rios, S., & Oskooii, K. A. R. (2019). Estimating Candidate Support in Voting Rights Act Cases: Comparing Iterative EI and EI-R×C Methods. Sociological Methods and Research. https://doi.org/10.1177/0049124119852394
+
+#### Recent advances
+
+* Lee, J., Kim, H., Ko, M., Choi, D., Choi, J., & Kang, J. (2017). Name nationality classification with recurrent neural networks. IJCAI International Joint Conference on Artificial Intelligence, 0, 2081–2087. https://doi.org/10.24963/ijcai.2017/289
+
+* Voicu, I. (2018). Using First Name Information to Improve Race and Ethnicity Classification. Statistics and Public Policy, 5(1), 1–13. https://doi.org/10.1080/2330443X.2018.1427012
+
+* Sood, G., & Laohaprapanon, S. (2018). Predicting race and ethnicity from the sequence of characters in a name. ArXiv, 1–13.
+
+* Wong, K. O., Zaïane, O. R., Davis, F. G., & Yasui, Y. (2020). A machine learning approach to predict ethnicity using personal name and census location in Canada. PLoS ONE, 15(11 November), 1–16. https://doi.org/10.1371/journal.pone.0241239
+
+---
+
+### SECTION 2B: Finding the undocumented immigrant population
+
+#### Residuals, logic, and imputation
+
+* ([Summary](../fazel_zarandi_etal_2018/)) Fazel-Zarandi, M. M., Feinstein, J. S., & Kaplan, E. H. (2018). The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990 to 2016. PLoS ONE, 13(9), 1–11. https://doi.org/10.1371/journal.pone.0201193
+
+* ([Summary](../capps_etal_2018/)) Capps, R., Gelatt, J., Van Hook, J., & Fix, M. (2018). Commentary on “The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990-2016.” PLoS ONE, 13(9), 1–10. https://doi.org/10.1371/journal.pone.0204199
+
+* ([Summary](../capps_bachmeier_vanhook_2018/)) Capps, R., Bachmeier, J. D., & Van Hook, J. (2018). Estimating the Characteristics of Unauthorized Immigrants Using U.S. Census Data: Combined Sample Multiple Imputation. Annals of the American Academy of Political and Social Science, 677(1), 165–179. https://doi.org/10.1177/0002716218767383
+
+#### Respondent-driven sampling
+
+* ([Summary](../merli_etal_2015/)) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., & Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. https://doi.org/10.1016/j.socscimed.2014.04.022
+
+* ([Summary](../crawford_etal_2018/)) Crawford, F. W., Wu, J., & Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. https://doi.org/10.1080/01621459.2017.1285775.Hidden
+
+* Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. https://doi.org/10.1177/0081175016641713
+
+* ([Summary](../helms_etal_2021/)) Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., & Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). https://doi.org/10.2196/17564
+
+* Li, J., Valente, T. W., Shin, H. S., Weeks, M., Zelenev, A., Moothi, G., Mosher, H., Heimer, R., Robles, E., Palmer, G., & Obidoa, C. (2018). Overlooked threats to respondent driven sampling estimators: Peer recruitment reality, degree measures, and random selection assumption. AIDS and Behavior, 22(7), :2340-2359. https://doi.org/10.1007/s10461-017-1827-1
+
+* Mouw, T., & Verdery, A. M. (2012). Network Sampling with Memory: A Proposal for More Efficient Sampling from Social Networks. Sociological Methodology, 42(1), 206–256. https://doi.org/10.1177/0081175012461248
+
+* ([Summary](../goel_salganik_2010/)) Goel, S., & Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. https://doi.org/10.1073/pnas.1000261107
+
+---
+
+### SECTION 2C: Simulating population processes
+
+#### Intro to agent-based modelling
+
+* Billari, F.C., Fent, T., Prskawetz, A., & Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.
+
+* Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies. 
+
+* Williams, N.E., O'Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies. 
+
+* Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.
+
+* Wolfson M., Gribble, S., & Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.
+
+* Kashyap, R., & Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. https://doi.org/10.1007/s13524-016-0500-z
+
+#### Agent-based modelling and neighborhood choice
+
+* Bruch, E. E., & Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. https://doi.org/10.1086/507856
+
+* Van de Rijt, A., Siegel, A., & Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/588795
+
+* Bruch, E. E., & Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/597599
+
+* Clark, W. A. V., & Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. https://doi.org/10.1073/pnas.0708155105
+
+* Bruch, E. E., & Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105
+
