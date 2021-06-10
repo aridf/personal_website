@@ -168,7 +168,11 @@ The third section pertains to *agent-based modeling*. Agent-based modeling is wh
 
 When reading this section, consider the following questions:
 
+1. What role do agent-based models play in the process of knowledge discovery? Are they theory, evidence, or something else entirely?
 
+2. Should we believe the results of these models? If the answer is 'sometimes', what determines their believability?
+
+3. How much of the value of these models comes from their parsimony? Can complexity harm interpretability?
 
 ---
 
