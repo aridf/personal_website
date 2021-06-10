@@ -34,6 +34,16 @@ Another example is Bayesian data analysis, which has benefited both from the inc
 
 New computational methods have enabled measurement of demographic characteristics in new contexts, like identifying undocumented immigrants in survey data, estimating the race of individuals using only their name and address, and estimating the mortality rate of regions with almost no data. Papers on the reading list address these questions, and others, with computational methods.
 
+## What is still missing?
+
+There's still a lot missing from the list, especially given the broad scope I've used (if you're reading this and have a paper to add, please send it along!). Some things I think are missing are as follows:
+
+* Nontraditional data sources **other** than social media data. I think it's fair to say that right now most demographic research in this space uses social media data. But this might not last. There are a growing number of administrative datasets that could be included here, and data provided by commercial vendors. Research that validates and applies these sources probably belong in their own section.
+
+* A section on Bayesian methods in demography. Right now, Bayesian methods are sprinkled throughout the list. In reality I think they are very good tools for some problems demographers often face, like sparse data or needing to combine data sources to make predictions. Because these use cases are so clear, it seems reasonable that these could become their own section. But this would also require adding a number of papers just to introduce Bayesian methods, and maybe that would be too much.
+
+* More machine learning applications. I make the case on this page that machine learning is a great tool for developing model-based measures of demographic characteristics where a model can be trained on ground-truth data elsewhere. I bet there are more papers that use machine learning to address this type of problem that I'm missing. There are also other applications I don't go into, like causal inference, linking data, and clustering. These are reviewed in Mario Molina and Filiz Garip's paper in the overview section below.
+
 Now, to the list.
 
 ---
@@ -116,7 +126,6 @@ The remaining subsections contain groups of papers using alternative data source
 
 * ([Summary](../subbotin_aref_2020/)). Subbotin, A., & Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.
 
-
 * Rampazzo, F., Zagheni, E., Weber, I., Testa, M. R., & Billari, F. (2018). Mater certa est, pater numquam: What can facebook advertising data tell us about male fertility rates? 12th International AAAI Conference on Web and Social Media, ICWSM 2018, 672–675.
 
 ---
@@ -145,9 +154,21 @@ Computational methods feature heavily throughout the first half of this list. Th
 
 The first two of these can be construed as prediction problems. Estimating race/ethnicity involves picking up on faint statistical signals in things like a person's name or the neighborhood they live in. The task itself also demands careful ethical consideration. Any predictive model is prone to bias. Even if unbiased estimation is possible, it's unclear whether a tool for guessing the race of people who did not report it should even exist.
 
-The problem of identifying undocumented immigrants poses similar ethical quandaries. Methodologically, this problem is even harder than estimating race/ethnicity because no "ground-truth" dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.
+The problem of identifying undocumented immigrants poses similar ethical quandaries. This problem is even harder than estimating race/ethnicity because no "ground-truth" dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.
+
+When reading through the these two sections, I found myself thinking about the following questions:
+
+1. What other demographic characteristics do we struggle to measure? Can the tools here be reapplied to measure those characteristics?
+
+2. How do the assumptions used to measure individual characteristics cascade into measures of population characteristics?
+
+3. When estimating a characteristic like race, how important is it to have a theory-driven or explainable model?
 
 The third section pertains to *agent-based modeling*. Agent-based modeling is what a researcher does when they have complex theory of individual behavior and want to know what the implications of that theory are at the population level. It generally involves programming a simulation wherein many individuals are instantiated with a particular set of behaviors/options. Then as time moves on they make decisions. Throughout the simulation, population-level parameters are tracked to observe how population-change emerges from individual behaviors. A classic example of this comes from Bruch and Mare's paper on the implications of household neighborhood choices for long-run neighborhood segregation.
+
+When reading this section, consider the following questions:
+
+
 
 ---
 
@@ -211,7 +232,7 @@ The third section pertains to *agent-based modeling*. Agent-based modeling is wh
 
 * Billari, F.C., Fent, T., Prskawetz, A., & Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.
 
-* Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies. 
+* ([Summary](../hilton_bijak_2016/)) Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies. 
 
 * Williams, N.E., O'Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies. 
 
@@ -219,11 +240,11 @@ The third section pertains to *agent-based modeling*. Agent-based modeling is wh
 
 * Wolfson M., Gribble, S., & Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.
 
-* Kashyap, R., & Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. https://doi.org/10.1007/s13524-016-0500-z
+* ([Summary](../kashyap_villavicencio_2016/)) Kashyap, R., & Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. https://doi.org/10.1007/s13524-016-0500-z
 
 #### Agent-based modelling and neighborhood choice
 
-* Bruch, E. E., & Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. https://doi.org/10.1086/507856
+* ([Summary](../bruch_mare_2006/)) Bruch, E. E., & Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. https://doi.org/10.1086/507856
 
 * Van de Rijt, A., Siegel, A., & Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). https://doi.org/https://doi.org/10.1086/588795
 
@@ -232,4 +253,3 @@ The third section pertains to *agent-based modeling*. Agent-based modeling is wh
 * Clark, W. A. V., & Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. https://doi.org/10.1073/pnas.0708155105
 
 * Bruch, E. E., & Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105
-

@@ -1,0 +1,39 @@
+---
+title: The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth - A Simulation Approach
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ridhi Kashyap and Francisco Villavicencio, 2016
+
+This paper develops a simulation to explain the rising sex ratio at birth (SRB) across many countries in Asia. The model addresses an important theoretical question: Why has the ratio of male to female births been rising in many countries even as they modernize and son preference becomes less culturally salient?
+
+The answer, as their model shows, is that even as the proportion of women with a son preference has been declining, access to sex-selection technology has expanded. Access to this technology has a twofold effect. First, it enables parents to directly select for male children by aborting females. Second, it prevents parents from continuing to have children until they have a male. 
+
+These mechanisms all lend themselves to a model. The authors construct such a model with the following set of input parameters:
+
+![](/misc_img/kashyap_villavicencio_2016.png){width=80%}
+
+They execute the model for the South Korean context. The assign specific functions to each of these parameters and try, where possible to map the onto South Korean data. After defining their inputs, they carry out many of the practices suggested in Bavel and Grow's book: They using a Latin Hypercube to construct a grid over their inputs and they use regression metamodels to extrapolate the results from running the cube over the full grid. 
+
+Their model moves in yearly increments, where each year people die and give birth at rates equivalent to estimates from the UN of South Korean demographic change. Meanwhile, access to sex-selective technology diffuses across the population of agents and women's son preference declines over time.
+
+Likely because many of the model's inputs were set using real data, it ends up conforming quite closely to observed trends in South Korea. Even more convincingly, they use RMSE to measure the deviation between the two.
+
+![](/misc_img/kashyap_villavicencio_2016_2.png){width=80%}
+
+After fitting their models, the authors run experiments to try and distinguish the roles of declining son preference and rising access to sex-selective technology. This figure is particularly informative:
+
+![](/misc_img/kashyap_villavicencio_2016_3.png){width=80%}
+
+It shows the results of running simulations where son-preference does not change from 1980 onward (stays at 50\%), versus when it declines as modeled. They've also included a 100\% constant son preference for reference. The plot shows the relative impacts of son-preference and access to technology on SRB. SRB rises from 1980-1990 as sex-selective technology diffuses. Under the constant son-preference, it rises more and stays high. In contrast, it rises less using a declining son-preference and continues declining throughout the 21st century. 
+
+The conclusion, then, is that SRB can rise temporarily even under conditions of declining son-preference, just because sex-selective technology is becoming popular. The diffusion of this technology is temporary, however, and barring some cultural or technological shock, the overall trend will continue towards a lower SRB.
+
+
+

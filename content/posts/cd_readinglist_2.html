@@ -23,6 +23,15 @@ output: html_document
 <p>In concert with the emergence of new data, recent advances in computation have enabled new methods that also open doors for research. Powerful machines enable running increasingly complex algorithms, and algorithms themselves advance to solve hard problems more efficient. Machine learning obviously fits into this category, although few papers on this list (so far) apply these tools to common demographic prediction problems.</p>
 <p>Another example is Bayesian data analysis, which has benefited both from the increasing accessibility of computational power and the steady improvement of posterior sampling algorithms. Bayesian methods have become increasingly popular because of their utility handling sparse data, their flexibility in handling complex error structures, and their capacity to combining different types of data.</p>
 <p>New computational methods have enabled measurement of demographic characteristics in new contexts, like identifying undocumented immigrants in survey data, estimating the race of individuals using only their name and address, and estimating the mortality rate of regions with almost no data. Papers on the reading list address these questions, and others, with computational methods.</p>
+</div>
+<div id="what-is-still-missing" class="section level2">
+<h2>What is still missing?</h2>
+<p>There’s still a lot missing from the list, especially given the broad scope I’ve used (if you’re reading this and have a paper to add, please send it along!). Some things I think are missing are as follows:</p>
+<ul>
+<li><p>Nontraditional data sources <strong>other</strong> than social media data. I think it’s fair to say that right now most demographic research in this space uses social media data. But this might not last. There are a growing number of administrative datasets that could be included here, and data provided by commercial vendors. Research that validates and applies these sources probably belong in their own section.</p></li>
+<li><p>A section on Bayesian methods in demography. Right now, Bayesian methods are sprinkled throughout the list. In reality I think they are very good tools for some problems demographers often face, like sparse data or needing to combine data sources to make predictions. Because these use cases are so clear, it seems reasonable that these could become their own section. But this would also require adding a number of papers just to introduce Bayesian methods, and maybe that would be too much.</p></li>
+<li><p>More machine learning applications. I make the case on this page that machine learning is a great tool for developing model-based measures of demographic characteristics where a model can be trained on ground-truth data elsewhere. I bet there are more papers that use machine learning to address this type of problem that I’m missing. There are also other applications I don’t go into, like causal inference, linking data, and clustering. These are reviewed in Mario Molina and Filiz Garip’s paper in the overview section below.</p></li>
+</ul>
 <p>Now, to the list.</p>
 <hr />
 </div>
@@ -105,8 +114,15 @@ output: html_document
 <h2>SECTION 2: Computational methods</h2>
 <p>Computational methods feature heavily throughout the first half of this list. This second section focuses in on how computational methods might be used to resolve longstanding problems faced by demographers. The three problems I focus on are a) imputing race/ethnicity when it has not been measured, b) measuring the population size of undocumented immigrants in the US, and c) generating predictions from complex academic theories.</p>
 <p>The first two of these can be construed as prediction problems. Estimating race/ethnicity involves picking up on faint statistical signals in things like a person’s name or the neighborhood they live in. The task itself also demands careful ethical consideration. Any predictive model is prone to bias. Even if unbiased estimation is possible, it’s unclear whether a tool for guessing the race of people who did not report it should even exist.</p>
-<p>The problem of identifying undocumented immigrants poses similar ethical quandaries. Methodologically, this problem is even harder than estimating race/ethnicity because no “ground-truth” dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.</p>
+<p>The problem of identifying undocumented immigrants poses similar ethical quandaries. This problem is even harder than estimating race/ethnicity because no “ground-truth” dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.</p>
+<p>When reading through the these two sections, I found myself thinking about the following questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>What other demographic characteristics do we struggle to measure? Can the tools here be reapplied to measure those characteristics?</p></li>
+<li><p>How do the assumptions used to measure individual characteristics cascade into measures of population characteristics?</p></li>
+<li><p>When estimating a characteristic like race, how important is it to have a theory-driven or explainable model?</p></li>
+</ol>
 <p>The third section pertains to <em>agent-based modeling</em>. Agent-based modeling is what a researcher does when they have complex theory of individual behavior and want to know what the implications of that theory are at the population level. It generally involves programming a simulation wherein many individuals are instantiated with a particular set of behaviors/options. Then as time moves on they make decisions. Throughout the simulation, population-level parameters are tracked to observe how population-change emerges from individual behaviors. A classic example of this comes from Bruch and Mare’s paper on the implications of household neighborhood choices for long-run neighborhood segregation.</p>
+<p>When reading this section, consider the following questions:</p>
 <hr />
 <div id="section-2a-estimating-raceethnicity" class="section level3">
 <h3>SECTION 2A: Estimating race/ethnicity</h3>
@@ -161,17 +177,17 @@ output: html_document
 <h4>Intro to agent-based modelling</h4>
 <ul>
 <li><p>Billari, F.C., Fent, T., Prskawetz, A., &amp; Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.</p></li>
-<li><p>Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>(<a href="../hilton_bijak_2016/">Summary</a>) Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
 <li><p>Williams, N.E., O’Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
 <li><p>Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
 <li><p>Wolfson M., Gribble, S., &amp; Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
-<li><p>Kashyap, R., &amp; Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. <a href="https://doi.org/10.1007/s13524-016-0500-z" class="uri">https://doi.org/10.1007/s13524-016-0500-z</a></p></li>
+<li><p>(<a href="../kashyap_villavicencio_2016/">Summary</a>) Kashyap, R., &amp; Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. <a href="https://doi.org/10.1007/s13524-016-0500-z" class="uri">https://doi.org/10.1007/s13524-016-0500-z</a></p></li>
 </ul>
 </div>
 <div id="agent-based-modelling-and-neighborhood-choice" class="section level4">
 <h4>Agent-based modelling and neighborhood choice</h4>
 <ul>
-<li><p>Bruch, E. E., &amp; Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. <a href="https://doi.org/10.1086/507856" class="uri">https://doi.org/10.1086/507856</a></p></li>
+<li><p>(<a href="../bruch_mare_2006/">Summary</a>) Bruch, E. E., &amp; Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. <a href="https://doi.org/10.1086/507856" class="uri">https://doi.org/10.1086/507856</a></p></li>
 <li><p>Van de Rijt, A., Siegel, A., &amp; Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/588795" class="uri">https://doi.org/https://doi.org/10.1086/588795</a></p></li>
 <li><p>Bruch, E. E., &amp; Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/597599" class="uri">https://doi.org/https://doi.org/10.1086/597599</a></p></li>
 <li><p>Clark, W. A. V., &amp; Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. <a href="https://doi.org/10.1073/pnas.0708155105" class="uri">https://doi.org/10.1073/pnas.0708155105</a></p></li>
