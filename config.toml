@@ -80,6 +80,6 @@ googleAnalytics = "UA-141103849-1"
     
   [[menu.main]]
     name = "CV"
-    url = "adecterfrain_cv_02_2021.pdf"
+    url = "decter_frain_cv_dec2021.pdf"
     weight = 34
     
