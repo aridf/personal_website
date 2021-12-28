@@ -1,0 +1,28 @@
+---
+title: Commentary on Fazel-Zarandi et al. (2018)
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Randy Capps, Julia Gelatt, Jennifer Van Hook, Michael Fix, 2018
+
+This paper is a response to [Fazel-Zarandi and co-authors' flow-based estimate](../fazel_zarandi_etal_2018.Rmd), of the number of undocumented immigrants in the United States, which is nearly double the well-established estimates released by other organizations. The authors of this paper are affiliated with one such organization, the Migration Policy Institute, a think tank based out of Washington D.C. 
+The paper presents two main arguments for why the Fazel-Zarandi et al.'s estimates are too high. First, the authors note that previous research has estimated the response rate of undocumented immigrants to the 2000 Decennial Census as being close to 90%. Whereas estimates based on the residual method typically assume around 5-15% undercounting in the Census, Fazel-Zarandi's model implies a nonresponse rate of 62%. The authors claim such a rate is highly implausible, even given that undocumented immigrants are a hard-to-reach population. 
+
+The second argument pertains to a specific assumption made by Fazel-Zarandi et al. First, the authors note that after 2000, the growth rate of the undocumented migrant population in Fazel-Zarandi et al. roughly matches established estimates. Divergence therefore takes place in the years between 1990 and 2000. Fazel-Zarandi et al. make strong assumptions about the emigration rates of undocumented migrants back to their home countries (mostly Mexico). Specifically, they assume a 40% emigration rate for migrants during their first year in the U.S., a 4% rate for migrants in the US 2-10 years, and a 1% rate for migrants in the US 11 or more years. Using data from the Mexican Migration Project (MMP), Capps et al., compute empirical estimates of the emigration rates for these different subgroups of undocumented migrants and obtain the following:
+
+![](/misc_img/capps_etal_2018_emigrationrates.png){width=70%}
+
+Clearly, the emigration rates of longer-term migrants is higher than Fazel-Zarandi et al. assume. When the authors plug these rates to the existing model, this results in a new 2016 of 8.2 million, which is just below the existing estimates by organizations like PEW and the Migration Policy Institute. This sharp drop in estimates underscores the sensitivity of data-poor probability models to their underlying assumptions, especially when those assumptions are compounded over time.
+
+The back-and-forth between Fazel-Zarandi et al. and Capps et al. raises several important issues about policy and research surrounding undocumented migrants. First, we know generally little about this population, beyond a general sense of its total size. For instance, we know almost nothing about how this population is distributed across the country. Moreover, we are able to put upper and lower bounds on the size of the undocumented migrant population only by comparing different point estimates. It seems the existing research does not contain a fully probablistic estimate that of the size of the undocumented immigrant population. One can imagine such a model to produce such an estimate combining spare data from different sources and encoding expert knowledge as priors within a Bayesian framework. But such a model does not appear to exist, and for this reason, Capps et al. present trendlines for the growth of the population without accompanying error bands, instead relying on the comparison of different estimates by different organizations to give an ad hoc sense of the underying uncertainty. 
+
+
+
+
+

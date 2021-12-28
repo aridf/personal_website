@@ -1,0 +1,34 @@
+---
+title: "Forecasting elections with non-representative polls"
+author: "Ari Decter-Frain"
+date: "23/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015
+
+This paper differs topically from others on the list, but it's included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.
+
+The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console. Researchers at Microsoft administered election poll surveys via the Xbox online system in the months leading up to the election, to see whether these data could be used to predict the outcome of the election. Unsurprisingly, the Xbox sample has a dramatically different gender and age distribution than the voters who turned out to vote in the election. Nonetheless, they are able to obtain estimates that perform well compared to aggregates of official polls.
+
+The "secret sauce" for handling non-representativeness here is MRP, which enables researchers to use what they know about the population to re-weight the data in their sample, and to do so even with sparse data. The basic premise is to divide the sample up into meaningful subgroups, estimate the outcome of interest within each, then aggregate the subgroups estimates together, weighting each by their known population magnitude. We might worry that some of the subgroups we want to consider will have too few observations to yield reliable estimates, and this is where the "M" for "multilevel" comes in. Instead of running separate estimations for each subgroup, all the estimates can be carried out at once in a model that enables pooling between similar subgroups. This means even in subgroups with little or no data, one can achieve an estimate with reasonable levels of uncertainty by borrowing information from other cells.
+
+### In a bit more detail...
+
+The basic structure of the model used in the paper is:
+
+$$
+Y_i = \alpha_0 + a_{j[i]}^{state} + a_{j[i]}^{sex} + a_{j[i]}^{age} + a_{j[i]}^{race} + ...
+$$
+
+Here, all the $a_{j[i]}$ terms shift the level of $Y_i$ according to its subgroup. Each of these level shifters is assigned prior probability distribution. In this case, the authors use a normal prior with zero mean, and assign hyperpriors to the variance. Fitting this model yields a set of parameters from which predicted values of $Y$ can be produced for each combination of $a_j$'s. For instance, once we've estimated the level shifters for white voters, female voters, voters aged 25-35, and voters from Texas, we can sum these with $\alpha_0$ to yield an estimate for voters with all of those characteristics. Then we aggregate the estimates for each subgroup, where each subgroup is weighted by their known presence in the population:
+
+$$
+\hat{y}^{PS} = \frac{\sum_{k=1}^KN_j\hat{y_j}}{\sum_{k=1}^KN_j}
+$$
+
+What's nice about MRP is you don't need to calibrate every subgroup against a ground-truth equivalent, an approach taken elsewhere (eg.[Zagheni, Weber, and Gummadi, 2017](../zagheni_weber_gummadi_2017/)). Here, all we have to know is the population distribution of demographic subgroups, which are often well-measured in Censuses. However, MRP is only ultimately applicable in situations where we're interested in a population quantity, like the proportion of American voters supporting Obama. If our goal is to decompose our variable of interest and examine how it varies by demographics, we're still stuck with potentially biased estimates.

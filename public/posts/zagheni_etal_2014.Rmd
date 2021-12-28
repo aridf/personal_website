@@ -1,0 +1,33 @@
+---
+title: "Inferring International and Internal Migration Patterns from Twitter Data"
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Emilio Zagheni, Venkata Rama Kiran Garimella, Ingmar Weber, and Bogdan State, 2014
+
+This is one of the earlier papers co-authored by Emilio Zagheni on the utility of digital trace and social media data for demographic monitoring. It attempts to use Twitter data to estimate internal and international migration flows for OECD countries. The importance of the paper comes from the severe challenges of measuring migration flows using traditional data collection procedures like a census. Migration flows are highly dependent on recent trends. This makes them challenging to estimate using the Census, which takes place only every five or ten years in most countries.
+
+The dataset used in the paper comes from 500,000 Twitter users over a year-long period, whose Tweets all have geolocations. It's worth noting that Tweets no longer come with geographic information, although locations can be backed out of some Tweets with some effort.
+
+The authors want to present the demographic breakdown of the Twitter sample for comparison against the OECD. They do this using facial recognition software that estimates a person's age and gender from their profile picture. I don't think this approach would pass muster today given the known biases of such tools. Nonetheless, the resulting population pyramind essentially matches my expectations about the demographic breakdown of Twitter users in 2013-14: 
+
+![](/misc_img/zagheni_etal_2014_poppyramid.png){width=50%}
+
+Most Twitter users were far younger than we would expect across the population, and the sample contains noticeably more males than females. 
+
+The most important proposal made in this paper is the use of a "difference-in-difference" estimator to circumvent the problem of non-representativeness:
+
+$$
+\hat{\delta} = (x_i^t - \bar{x}^t) - (x_i^{t-1} - \bar{x}^{t-1})
+$$
+$\hat{\delta}$ estimates the compares the change in quantity $x$ for area $i$ relative to the mean change across all areas. In general, the authors argue, we can use this estimator to get unbiased measures of the *change* in a quantity of interest from biased data, as long as we assume that bias is constant over time. The argument is that even if we can't learn about levels of migration flows, we can at least learn how things are changing in a given area, relative to the average. In this paper, this type of estimator is used to show that Southern European countries experienced declining outmigration, relative to the rest of the OECD, throughout the period. 
+
+This is a cool innovation, although it does seem to have some drawbacks. First, it might be hard to convince ourselves that bias holds constant over time. For instance, we might expect the bias in data from a platform like Twitter to decline over time as more and more people join and the Twitter population comes to increasingly reflect the real-world population. Secondly, to really make these relative changes meaningful we would probably need to collect data for quite a long time, or to collect it before and after some shock. For example, it's a bit hard to interpret the relative decline in outmigration from Southern European countries over the period from May 2011 through September 2012. 
+
+Despite these drawbacks, the difference-in-difference approach has become valuable for demonstrating the utility of many future digital trace data sources, for which bias is difficult or impossible to model. For instance, I believe this approach is used for many of the measures included in the recent [Opportunity Insights COVID-19 paper](https://opportunityinsights.org/paper/tracker/), which uses data from a number of private internet companies to measure the economic impact of stay-at-home orders. 

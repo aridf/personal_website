@@ -1,0 +1,35 @@
+html {
+  background: #002b36;
+}
+
+body,
+button,
+input,
+select,
+textarea,
+a {
+  color: #93a1a1;
+}
+
+a:hover {
+    color: #eee8d5;
+}
+
+#site-header {
+  background: #073642;
+}
+
+code { 
+  color: #586e75; 
+  background: #fdf6e3; 
+}
+
+pre {
+  color: #586e75; 
+  background: #fdf6e3; 
+}
+
+pre > code {
+  background: #fdf6e3; 
+}
+

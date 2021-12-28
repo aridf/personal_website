@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Research">
+<meta itemprop="description" content="Computational Demography I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available here. I have one ongoing project in this area:
+Small Area Population Estimates from Consumer Data With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations.">
+
+<meta itemprop="wordCount" content="473">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Research" />
+<meta property="og:description" content="Computational Demography I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available here. I have one ongoing project in this area:
+Small Area Population Estimates from Consumer Data With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aridecterfrain.com/posts/research/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Research"/>
+<meta name="twitter:description" content="Computational Demography I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available here. I have one ongoing project in this area:
+Small Area Population Estimates from Consumer Data With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Research</title>
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/style.min.f62726f23939259429d68ac03937a1f2c17eb3427b95c358a1d24e49bd68d2b2.css" integrity="sha256-9icm8jk5JZQp1orAOTeh8sF+s0J7lcNYodJOSb1o0rI=">
+	
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.scss">
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://aridecterfrain.com">Ari Decter-Frain</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://aridecterfrain.com/about/">About</a>
+					<a href="https://aridecterfrain.com/posts/research">Research</a>
+					<a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/adecterfrain" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://www.linkedin.com/in/ari-decter-frain-084529b2/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/aridf" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://aridecterfrain.com/about/">About</a></li>
+			<li><a href="https://aridecterfrain.com/posts/research">Research</a></li>
+			<li><a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a></li>
+		</ul>
+	</div>
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				
+				<h1>Research</h1>
+			</header>
+			<div class="content">
+				
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="computational-demography" class="section level2">
+<h2>Computational Demography</h2>
+<p>I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available <a href="../cd_readinglist_2">here</a>. I have one ongoing project in this area:</p>
+<div id="small-area-population-estimates-from-consumer-data" class="section level4">
+<h4>Small Area Population Estimates from Consumer Data</h4>
+<p>With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people’s interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:</p>
+<ul>
+<li><p><em>Annual small-area estimates:</em> Researchers often need measures of year-over-year change in populations. The Census Bureau does not provide such measures for small geographies like tracts and block-groups on an annual basis, but consumer reference data does. This might make it uniquely useful, for example, for computing accurate rates of a virus like COVID-19, or measuring how population structures change after a natural disaster like a hurricane.</p></li>
+<li><p><em>Up-to-date estimates:</em> Policy decisions should be based on the most up-to-date information possible. The Census releases updated population information on a two-year schedule, so estimates of population levels in 2020 will be released towards the end of 2021. In contrast, we received consumer reference data for the entire United States in January 2021, almost a full year earlier than the Census.</p></li>
+<li><p><em>Estimates for any geographic unit:</em> There are lots of ways to divide up America. Demographers divide it into Census blocks and tracts. Education researchers look at school districts. Political scientists care about election precincts. Increasingly, researchers are interested in creating their own geographic buffers around particular neighborhoods and locations. The consumer reference data contains latitude-longitude coordinates for every household. By the magic of spatial data analysis, we can use these coordinates to count the number of people within any geographic area in which a researcher might be interested.</p></li>
+</ul>
+</div>
+</div>
+<div id="voting-behavior-and-election-fairness" class="section level2">
+<h2>Voting behavior and election fairness</h2>
+<p>This project emerged from my summer as a Data Science for Social Good Fellow at the University of Washington’s eScience Institute. Our team worked to revamp and publish an R package called <a href="https://cran.r-project.org/web/packages/eiCompare/index.html">eiCompare</a>, which contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Since releasing the package, our team has continued working to produce research that demonstrates the use of these tools in different regions and elections across the US, and continues to improve upon the methods included in the package.</p>
+</div>
+
+			</div>
+			<hr class="post-end">
+		
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://aridecterfrain.com">Ari Decter-Frain</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://aridecterfrain.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+	<script src="https://aridecterfrain.com/js/main.min.3b8561d63aeee77aa04e677df95581a230b4b43adf7b208b8d671433e446cfc1.js" integrity="sha256-O4Vh1jru53qgTmd9+VWBojC0tDrfeyCLjWcUM+RGz8E="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-141103849-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1380 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Posts on Ari Decter-Frain</title>
+		<link>https://aridecterfrain.com/posts/</link>
+		<description>Recent content in Posts on Ari Decter-Frain</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Sat, 11 May 2019 00:00:00 +0000</lastBuildDate>
+		<atom:link href="https://aridecterfrain.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>Travel Map</title>
+			<link>https://aridecterfrain.com/posts/ari-trips-toronto-london/</link>
+			<pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/ari-trips-toronto-london/</guid>
+			<description>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.
+I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.
+To make the map I used R, ggplot, and Google’s geolocation API.</description>
+			<content type="html"><![CDATA[
+
+
+<p>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.</p>
+<p>I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.</p>
+<p>To make the map I used R, ggplot, and Google’s geolocation API. I relied heavily on <a href="https://lucidmanager.org/create-air-travel-route-maps/">The Lucid Manager’s</a> post in which he creates his own.</p>
+<hr>
+<p>First loading all the necessary libraries</p>
+<pre class="r"><code>suppressPackageStartupMessages({
+  library(tidyverse)
+  library(ggmap)
+  library(ggrepel)
+  library(maps)
+  library(here)
+})</code></pre>
+<p>Here I’m setting internal filepaths. To reproduce the code below, replace the <code>here()</code> functions with the urls in the comments.</p>
+<pre class="r"><code>path_flights &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;trips.csv&quot;)
+#path_flights &lt;- &quot;https://raw.githubusercontent.com/aridf/travel-map/master/data/trips.csv&quot;
+path_geos &lt;- here(&quot;static&quot;, &quot;map&quot;, &quot;geos.csv&quot;)
+#path_geos &lt;- &quot;https://raw.githubusercontent.com/aridf/travel-map/master/data/geos.csv&quot;</code></pre>
+<p>Loading the data. I had to add country info to some of the cities to ensure the google API searches for the correct city. I remove this later so it does not show up in my visualization.</p>
+<pre class="r"><code>flights &lt;- read_csv(path_flights)
+head(flights)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   From       To         
+##   &lt;chr&gt;      &lt;chr&gt;      
+## 1 Bogota     Cartegena  
+## 2 Cartegena  Guayaquil  
+## 3 Cusco      La Paz     
+## 4 Detroit    Minneapolis
+## 5 Durham     Toronto    
+## 6 Edingburgh London</code></pre>
+<p>Here I’m deleting duplicates and return flights. This helps reduce the clutter in the visual.</p>
+<pre class="r"><code>d &lt;- vector()
+for (i in 1:nrow(flights)) {
+    d &lt;- which(paste(flights$From, flights$To) 
+               %in% paste(flights$To[i], flights$From[i]))
+    flights$From[d] &lt;- &quot;R&quot;
+}
+flights &lt;- flights %&gt;%
+  filter(From != &quot;R&quot;) %&gt;%
+  select(From, To)</code></pre>
+<p>Next, I grab coordinate data from the google API. I use two layers of conditions to limit the number of calls I’m making to the API. First, I check if I already have a list of locations and coordinates saved. If not, I get a list of all the locations in my flight list and call that API for each. If I already have some coordinates saved, I just check to see if there are any new locations. If there are, I call the API for the new entries only. If not, then I move ahead with my previous dataset.</p>
+<pre class="r"><code>locations &lt;- unique(c(flights$From, flights$To))
+if(file.exists(path_geos)) {
+  geos &lt;- read_csv(path_geos)
+  new &lt;- locations[!(locations %in% geos$airport)]
+  if(length(new) &gt; 0) {
+    geos &lt;- new %&gt;%
+      geocode() %&gt;%
+      mutate(airport = new) %&gt;%
+      bind_rows(geos) %&gt;%
+      select(airport, lon, lat)
+    write_csv(geos, path_geos)
+  }
+} else {
+  new &lt;- unique(c(flights$From, flights$To))
+  geos &lt;- new %&gt;%
+    geocode() %&gt;%
+    mutate(airport = new) %&gt;%
+    select(airport, lon, lat)
+  write_csv(geos, path_geos)
+}
+head(geos)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   airport       lon    lat
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Skagen      10.6   57.7 
+## 2 Lisbon      -9.14  38.7 
+## 3 Copenhagen  12.6   55.7 
+## 4 Aarhus      10.2   56.2 
+## 5 La Paz     -68.1  -16.5 
+## 6 Bogota     -74.1    4.71</code></pre>
+<p>Merging trip data and coordinates.</p>
+<pre class="r"><code>flights &lt;- merge(flights, geos, by.x = &quot;To&quot;, by.y = &quot;airport&quot;)
+flights &lt;- merge(flights, geos, by.x = &quot;From&quot;, by.y = &quot;airport&quot;)
+head(flights)</code></pre>
+<pre><code>##        From        To      lon.x     lat.x      lon.y     lat.y
+## 1    Aarhus    Skagen  10.579186 57.725004   10.20392 56.162939
+## 2    Berlin Marseille   5.369780 43.296482   13.40495 52.520007
+## 3    Berlin     Milan   9.189982 45.464204   13.40495 52.520007
+## 4    Bogota Cartegena -75.479426 10.391049  -74.07209  4.710989
+## 5   Calgary  Winnipeg -97.138374 49.895136 -114.07085 51.048615
+## 6 Cartegena Guayaquil -79.922359 -2.170998  -75.47943 10.391049</code></pre>
+<p>Removing country info from the city names here.</p>
+<pre class="r"><code>geos$airport &lt;- geos$airport %&gt;%
+  word(1, sep = &quot;,&quot;)</code></pre>
+<p>Creating my world map object. I’m setting the size limits of my map dynamically. This enables the map to expand dynamically as I travel to more regions of the world</p>
+<pre class="r"><code>#set size limits of the worldmap. Prevent unvisited regions from displaying
+xmin &lt;- min(geos$lon) - 10
+xmax &lt;- max(geos$lon) + 10
+ymin &lt;- min(geos$lat) - 10
+ymax &lt;- max(geos$lat) + 10
+
+#get map
+worldmap &lt;- borders(&quot;world&quot;, xlim = c(xmin, xmax), ylim = c(ymin, ymax), 
+                    colour = &quot;#eee8d5&quot;, fill = &quot;#eee8d5&quot;) </code></pre>
+<p>This is the actual plot. The layers are pretty straightforward:</p>
+<ul>
+<li><code>geom_curve</code> creates curved lines connecting “From” and “To”.</li>
+<li><code>geom_point</code> adds dots at each location</li>
+<li><code>geom_text_repel</code> add labels while giving them room to breathe</li>
+</ul>
+<pre class="r"><code>ggplot() + worldmap + 
+    geom_curve(data = flights, aes(x = lon.x, y = lat.x, xend = lon.y, 
+                                   yend = lat.y), col = &quot;#2aa198&quot;, size = .4) + 
+    geom_point(data = geos, aes(x = lon, y = lat), col = &quot;#268bd2&quot;) + 
+    geom_text_repel(data = geos, color = &quot;#586e75&quot;, aes(x = lon, y = lat, label = airport), 
+               col = &quot;black&quot;, size = 2, segment.color = NA, segment.size = 1) + 
+    theme_void() +
+    theme(panel.background = element_rect(fill = &quot;#fdf6e3&quot;))</code></pre>
+<p><img src="/posts/ari-trips-toronto-london_files/figure-html/unnamed-chunk-9-1.png" width="4500" /></p>
+<p>Finally, save out the file to a folder on my website so I can read it in as an image elsewhere.</p>
+<pre class="r"><code>ggsave(
+  filename = here(&quot;static&quot;, &quot;map&quot;, &quot;travel_map.png&quot;),
+  width = 7.5,
+  height = 4.5,
+  units = &quot;in&quot;,
+  dpi = 300
+)</code></pre>
+]]></content>
+		</item>
+		
+		<item>
+			<title>How I Got To Cornell</title>
+			<link>https://aridecterfrain.com/posts/ari-career-background/</link>
+			<pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/ari-career-background/</guid>
+			<description>My career so far has been a delightfully eclectic adventure. In this post I provide a brief summary of my experiences and how they led me to start a PhD program at Cornell University.
+1. University of Winnipeg 2012 - 2016 I completed my undergraduate degree in Psychology at the University of Winnipeg. While studying, I worked as a research assistant for different professors in the department. I worked most extensively in Dr.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>My career so far has been a delightfully eclectic adventure. In this post I provide a brief summary of my experiences and how they led me to start a PhD program at Cornell University.</p>
+<div id="university-of-winnipeg" class="section level3">
+<h3>1. University of Winnipeg</h3>
+<div id="section" class="section level5">
+<h5>2012 - 2016</h5>
+<p>I completed my undergraduate degree in Psychology at the University of Winnipeg. While studying, I worked as a research assistant for different professors in the department. I worked most extensively in Dr. Jeremy Frimer’s Moral Psychology lab. I worked for two years as a research assistant. Then, during my final year, I took on my first leadership role as the lab’s manager. Our research used experiments and natural language processing to study:</p>
+<ol style="list-style-type: decimal">
+<li>The psychological differences between liberals and conservatives</li>
+<li>The determinants of public approval of governing bodies, specifically US Congress</li>
+<li>How leaders emerge and interact with social movements</li>
+</ol>
+<p>The unifying theme of our research was the rarity of fact-based decision-making. The field of political psychology identifies countless mechanisms that introduce bias to political and policy discourse. As I learned and contributed to this research, I came to view the scientific method as a critical asset in the war against bias. Through the application of scientific principles and rigorous research methods, we can ensure that evidence comes before ideology.</p>
+<p>During this time I also worked as a researcher for the Public Interest Law Centre of Manitoba (PILC). I researched all sorts of topics to contribute to the 2016 Needs For and Alternatives To (NFAT) Review of Manitoba Hydro’s proposal to built two large hydroelectric dams in Northern Manitoba. The review took over a year. PILC played a key role in convincing the panel that the second dam carried too much risk to receive approval. Throughout the review, my assignments included:</p>
+<ul>
+<li>Reporting on the populations sizes, migration patterns and protection statuses of animal species native to the region surrounding the dams.</li>
+<li>Learning and critiquing different approaches to cost-benefit analysis.</li>
+<li>Summarizing and pulling key quotes from reports prepared by Manitoban Indigenous organizations.</li>
+</ul>
+<p>The NFAT proceedings renewed my optimism about evidence-based policy. The review involved collection and analysis of thousands of rows of data, consultation with dozens of academic experts, and tremendously thorough, creative analysis by the legal teams at PILC and Manitoba Hydro. In the end, the province made a (relatively) prudent decision not to invest in a high risk, long-term hydro-electric development. I longed for a world where more political discourse took this form.</p>
+<p>After graduating I moved away from Winnipeg with a desire to develop my methods skillset and make data-driven contributions to the most important political debates of the day.</p>
+<hr>
+</div>
+</div>
+<div id="london-school-of-economics" class="section level3">
+<h3>2. London School of Economics</h3>
+<div id="section-1" class="section level5">
+<h5>2016 - 2017</h5>
+<p>I spent the next year in London, where I completed my MSc in Inequalities and Social Science. I learned how globalization and technological change have changed the labour market and produced rising income and wealth inequality in high-income countries.</p>
+<p>LSE presents all kinds of opportunities to learn and have new experiences. I tried to take on as many as I could. I:</p>
+<ul>
+<li>Attended public lectures each week</li>
+<li>Took methods courses from some of the world’s leading social scientists</li>
+<li>Served as team leader for a student consulting project</li>
+<li>Travelled, for work and play, to countries across Europe</li>
+<li>Took my first coding course and fell completely in love with it</li>
+<li>Made lifelong friendships with the members of my brilliant, inspiring cohort</li>
+</ul>
+<p>For my dissertation I used ten years of national UK survey data to analyze precarious employment among migrant workers. I found that migrants’ likelihood of experiencing precarious work conditions matched up with the historical and policy context surrounding their migration. For instance:</p>
+<ul>
+<li><p>Migrants from outside the European Union were the most likely to work overtime. This makes sense, since these workers depend on the sponsorship of their employer to continue residing in the UK.</p></li>
+<li><p>Migrants from a group of eight Eastern European countries flooded into the UK after their home countries joined the EU in 2002. Contrary to the widespread characterization of these migrants as lazy welfare scroungers, they are actually the least likely group to be unemployed, and among the most likely to work precarious jobs.</p></li>
+</ul>
+<p>Throughout the year at LSE I gained exposure to the full scope and diversity of opportunities I had. I graduated feeling encouraged to expect more from myself and from my life.</p>
+<hr>
+</div>
+</div>
+<div id="multi-health-systems" class="section level3">
+<h3>3. Multi Health Systems</h3>
+<div id="section-2" class="section level5">
+<h5>2017 - 2019</h5>
+<p>Next, I moved to Toronto and joined Multi Health Systems as a research analyst in their Innovation Hub, the company’s internal startup. In this role I did mostly data science work and developed my coding skills.</p>
+<p>After 10 months I became a product manager. I led a small team working on feature updates for the products in our portfolio. I also developed a business model for the company’s new product line in the workplace health and wellness market.</p>
+<p>From this experience I learned a tremendous amount about business decision-making, including how to:</p>
+<ul>
+<li>Decide which projects to develop internally and which to outsource</li>
+<li>Build and analyze product PnLs</li>
+<li>Package products and services together to create value for customers</li>
+<li>Lead teams and motivate people</li>
+</ul>
+<p>I enjoyed the challenge of creating a sustainable business model and providing value for customers. I also gained a deeper appreciation for the role of the private sector in generating innovation.</p>
+<p>I also saw how the same social scientific tools that I had come to view as essential for good policy could also help in the world of business. All manner of business decisions, from how to design a website to how to structure a business model, could be informed through the right kinds of data collection and experimentation.</p>
+<p>I enjoyed my time at MHS. After a little less than two years, I felt ready to move on. I saw that I needed and achieve mastery over the methods I had come to worship as tools for making good decisions.</p>
+<p>I chose to join Cornell’s Policy Analysis and Management program because it provides a unique level of freedom to take PhD level courses in Public Policy, Economics, and Sociology and develop specialization in any of these areas depending on how my interests develop.</p>
+<p>As I move forward, I will continue seeking new and unique opportunities to promote truth and good science.</p>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Agent-Based Modelling as a Tool to Advance Evolutionary Population Theory</title>
+			<link>https://aridecterfrain.com/posts/bavel_grow_2016/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/bavel_grow_2016/</guid>
+			<description>By Jan Van Bavel and André Grow, 2016 This article serves as the introduction to the book Agent-based modeling in population studies, edited by Bavel and Grow. Besides previewing the contributions made in the rest of the book, the authors discuss three important overarching topics:
+1. Demography is “rich in methods, but poor in theories” Bavel and Grow describe the historical development of demography as a discipline that primarily serves governments by meticulously tracking populations for policy purposes.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="by-jan-van-bavel-and-andré-grow-2016" class="section level2">
+<h2>By Jan Van Bavel and André Grow, 2016</h2>
+<hr />
+<p>This article serves as the introduction to the book <em>Agent-based modeling in population studies</em>, edited by Bavel and Grow. Besides previewing the contributions made in the rest of the book, the authors discuss three important overarching topics:</p>
+<div id="demography-is-rich-in-methods-but-poor-in-theories" class="section level3">
+<h3>1. Demography is “rich in methods, but poor in theories”</h3>
+<p>Bavel and Grow describe the historical development of demography as a discipline that primarily serves governments by meticulously tracking populations for policy purposes. As a result, they argue, the field has become mostly dominated by research using national samples to document trends. Relatively less work has gone towards theorizing the individual-level mechanisms that produce those trends, because such work is not valued unless it ties back to nationally representative data. They argue, like Billari over a decade earlier, that agent-based modelling is the key to pushing forward theory, because simulations based on these models can show how macro-scale trends emerge from individuals interacting according to theoretically-determined sets of constraints.</p>
+</div>
+<div id="the-macro-micro-macro-model" class="section level3">
+<h3>2. The macro-micro-macro model</h3>
+<p>The authors present the following diagram to describe the mechanisms in which demographers are interested:</p>
+<p><img src="/misc_img/macro-micro-macro.png" /></p>
+<p>Step 1 describes how individuals are affected by their surroundings. For instance, how one’s neighborhood of birth affects their life expectancy. Step 2 describes how individuals make decisions under external constraints, like deciding when to marry or how many children to have. Step 3 is the hardest to study. It describes how macro-level trends emerge from individual decisions. Bavel and Grow present agent-based modelling as a useful tool for carrying out this step, given that steps 1 and 2 have been carefully carried out for the question at hand.</p>
+</div>
+<div id="the-problem-of-validation" class="section level3">
+<h3>3. The problem of validation</h3>
+<p>A key challenge for agent-based modelling is demonstrating that these models are more than just “good stories”. Bavel and Grow outline a common argument that agent-based models can be made to produce any results if their parameters are set in just the right way. They propose propose the agent-based models are no more susceptible to this problem than any other type of statistical model. Moreover, they emphasize that agent-based models are meant to be used alongside empirical data in research. The can serve as guides for identifying important measures prior to conducting an empirical exercise. If the model itself is central to a researcher’s argument, they should be able to muster a range of empirical findings, both central and tangential to the model, that it match with the model’s expected outputs.</p>
+<hr />
+<div id="some-of-my-thoughts" class="section level4">
+<h4>Some of my thoughts…</h4>
+<p><em>Obvious parallels exist between the macro-micro-macro model and structural models in economics:</em></p>
+<p><em>Models of supply and demand describe mathematically how individuals respond to prices and how their responses, in aggregate, determine how much of a good is consumed and produced. In a sense, this model is a generalization of the theoretical tools of economics beyond price mechanisms. This generalization is required, presumably, because price mechanisms can’t explain demographic and social phenomenon like fertility and migration.</em></p>
+<p><em>In contrast to economic models which tend to be analytically solvable, we may only learn the outcomes complex agent-based models via simulation. However, economic models should still set the bar for validation. We should be able to see the trends that agent-based models predict in the same way that economists have long validated models of supply and demand.</em></p>
+<p><em>Demography seems to lack well-established agent-based models for connecting these three steps. A potential exception is the Schelling model of neighborhood segregation, although even this has received criticism for its simplicity.</em></p>
+</div>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data</title>
+			<link>https://aridecterfrain.com/posts/fiorio_etal_2020/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/fiorio_etal_2020/</guid>
+			<description>Lee Fiorio and co-authors, 2020 This paper develops a general framework for using geo-located digital trace data to estimate migration flows over a continuous time interval. The goal is to develop a framework that makes digital trace data useful for migration, even through most of it takes the unusual form of (id, timestamp, location). For example, if we want to use geo-located Tweets to measure migrant flows, all we have are the locations of users at the times when they Tweet.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="lee-fiorio-and-co-authors-2020" class="section level2">
+<h2>Lee Fiorio and co-authors, 2020</h2>
+<p>This paper develops a general framework for using geo-located digital trace data to estimate migration flows over a continuous time interval. The goal is to develop a framework that makes digital trace data useful for migration, even through most of it takes the unusual form of (id, timestamp, location). For example, if we want to use geo-located Tweets to measure migrant flows, all we have are the locations of users at the times when they Tweet. This makes it difficult to capture any notion of “residency”. And how should we differentiate short trips and vacations from actual moves in the data?</p>
+<p>The idea presented in the paper is to address this problem by examining changes in location across a range of intervals using the same data. The steps are as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Pick a start date a buffer size (eg. 2 weeks)</li>
+<li>Search the data around the start date within the buffer, and get the locations of all users.</li>
+<li>Pick another time in the future. The difference between this time and the starting time is called the ‘interval’ Using the same buffer, find everyone again and record their new location.</li>
+<li>Compute flows between the two points in time.</li>
+<li>Repeat steps 3 and 4 using many different future time points.</li>
+<li>Repeat steps 1-5 for many different buffer sizes.</li>
+</ol>
+<p>Visually, the procedure looks like this:</p>
+<p><img src="/misc_img/fiorio_etal_2021_img.png" style="width:70.0%" /></p>
+<p>The authors argue that by manipulating the data in this way, we can extract more information about migration from the data. By expanding the buffer we should observe that estimates become less variable over time, since they should increasingly reflect only long-term moves. By moving further out in time, we should find that migration estimates increase.</p>
+<p>Further, the authors argue that this approach enables assessing the internal consistency of a particular digital trace dataset. If we observe that slight changes to the interval (eg. 1 week) yield large changes in estimated transitions, this suggests the data might mostly be capturing short trips rather than vacations.
+The approach is demonstrated on three different digital trace datasets:</p>
+<ol style="list-style-type: decimal">
+<li><p>Orange-Sonatel 2014 Data for Development Challenge data, which contain phone calls and SMS exchanges between nine million Orange-Sonatel customers in Senegal throughout 2013.</p></li>
+<li><p>Twitter data pulled from a 1% stream sample archived at Archive.org. The archived data from 2011 through 2014 are used because after 2014, Twitter stopped releasing location inforamtion about Tweets.</p></li>
+<li><p>Data from Gowalla, which is a geosocial network like Foursquare, where people log on to share their locations. The platform was short-lived, and the data consist of roughly 6.5 million check-ins from 2010 and 2011.</p></li>
+</ol>
+<p>The demonstration of the method is impressive:</p>
+<p><img src="/misc_img/fiorio_etal_2021_img2.png" style="width:70.0%" /></p>
+<p>Each panel shows the result of applying the model with a fixed buffer. Each line represents starting at a time and moving forward taking longer and longer intervals. The y-axis shows the migration rate.</p>
+<p>The results look exactly like what we would expect. As the interval grows from any time point, the estimated rate of migration goes up. This makes sense, since more people had time to migrate and people who move don’t often come back. Also as expected, increasing the buffer smoothes out the estimates at consecutive time points.</p>
+<hr />
+<p>This is a really straightforward, simple to implement method of getting meaningful information about migration from geo-located digital trace data. The authors say they intend for this to be a sort of internal consistency technique that can be paired with typical validation approaches of comparing data against established sources. So this procedure is thought to be analogous to computing the perplexity of a language model, or the Cronbach’s alpha for a series of self-report items. It’s unclear to me whether this technique really fits as a measure of internal consistency, though. I’m struggling with it because all the examples in the paper yield the same basic conclusions about the effect of varying the buffer and the interval, which suggests these effects might be more mechanical features of the method than features of the underlying data. I suppose I would want to see examples where using this approach actually identifies a problem in digital trace data, which I’m not really seeing here. Moreover, the method really only gives these visual representations of the data, like the plots about. I might prefer instead to have some kind of metric that sums up the sensitivity of the data to the parameters in the framework.</p>
+<p>Nonetheless, the paper is really cool and creative. I think there are lots of ways to build out from this base and develop a whole set of methods around using data with this type of structure to measure mobility. I also think it’s really valuable that digital trace data break down our notion of migration as being only about changes in residency, and enforces a more fluid understanding of migration as being about one’s location at a given point in time, and frequency of transitions. As people become increasingly mobile and remote work starts to become more common, we might need to rethink the current treatment of residency as central to migration measurement.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Applications and Recruitment Performance of Web-Based Respondent-Driven Sampling Scoping Review</title>
+			<link>https://aridecterfrain.com/posts/helms_etal_2021/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/helms_etal_2021/</guid>
+			<description>Yannick Helms and co-authors, 2021 This is a scoping review of recent web-based RDS studies. The authors document the sampling efforts of 18 such papers to uncover patterns in the types of practices that typically work for recruiting RDS samples.
+The majority of the included studies either recruited seeds through targeted Facebook advertisements, and 6 combined online seeding with offline recruiting from interest groups or the researchers’ own social networks.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="yannick-helms-and-co-authors-2021" class="section level2">
+<h2>Yannick Helms and co-authors, 2021</h2>
+<p>This is a scoping review of recent web-based RDS studies. The authors document the sampling efforts of 18 such papers to uncover patterns in the types of practices that typically work for recruiting RDS samples.</p>
+<p>The majority of the included studies either recruited seeds through targeted Facebook advertisements, and 6 combined online seeding with offline recruiting from interest groups or the researchers’ own social networks. Studies recruited between 1 and 1015 seeds. Studies also varied in how they enabled recruiting (Facebook, Whatsapp, email, or passing contact info to the researcher), incentives given for recruitment, and total length of the study period. The authors caution that no definitive patterns have emerged from the literature yet, and it remains quite unclear whether these types of papers yield unbiased point estimates. They focus primarily on the success of the concrete sampling procedures - which studies tended to obtain many waves of recruits, which obtained large samples, and which did so the quickest? In general, they draw the following general lessons about web-based RDS designs:</p>
+<ul>
+<li><p>There exists a trade-off between the effort put into seed recruitment and the success of recruiting seeds. Studies that engage in-person with seeds and recruits achieve more waves of recruits from seeds on average than studies that do automated recruiting at scale via Facebook, etc.</p></li>
+<li><p>Studies not offering a guaranteed material (usually monetary) incentive for recruitment never reached more than six waves of recruiting.</p></li>
+<li><p>Studies that use online recruitment of seeds can obtain sufficient sample sizes an order of magnitude faster than in-person samples (eg. 72 hours compared to multiple months)</p></li>
+<li><p>The performance of online RDS depends at least somewhat on the digital literacy of the population under study, and the extent to which the network of the population has an online representation, either via an instant messenger, a social media platform, or some other means.</p></li>
+</ul>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Aspirational pursuit of mates in online dating markets</title>
+			<link>https://aridecterfrain.com/posts/bruch_newman_2018/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/bruch_newman_2018/</guid>
+			<description>Elizabeth E. Bruch and M.E.J. Newman, 2018 This paper uses data from an online dating website to explore the mechanisms that lead to the well-observed phenomenon that mates tend to be similarly attractive. There are two competing explanations:
+Individuals seek out mates that are similar to themselves, perhaps in general and also in attractiveness.
+ Individuals seek to partner with the most attractive mate possible. Thus, the most attractive people pair off with each other, then the next most attractive, and so on in such a manner that everyone ends up paired with their equals.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="elizabeth-e.-bruch-and-m.e.j.-newman-2018" class="section level2">
+<h2>Elizabeth E. Bruch and M.E.J. Newman, 2018</h2>
+<p>This paper uses data from an online dating website to explore the mechanisms that lead to the well-observed phenomenon that mates tend to be similarly attractive. There are two competing explanations:</p>
+<ol style="list-style-type: decimal">
+<li><p>Individuals seek out mates that are similar to themselves, perhaps in general and also in attractiveness.</p></li>
+<li><p>Individuals seek to partner with the most attractive mate possible. Thus, the most attractive people pair off with each other, then the next most attractive, and so on in such a manner that everyone ends up paired with their equals.</p></li>
+</ol>
+<p>It’s difficult to differentiate these using experiments or survey data, and so we don’t really know which explanation better reflects the reality of mate selection.</p>
+<p>Data from online dating platforms provides a new opportunity to disentangle these explanations. The authors gained access to one month’s worth of messages on a dating platform, along with the demographic characteristics of users. They used these data to construct a direct network where nodes are individuals and a directed edge from user A to user B indicates that user A sent user B at least one message.</p>
+<p>The central measure of the paper is a user’s desirability, which is measured using the page-rank algorithm:</p>
+<p><span class="math display">\[
+x_i = 1 + \alpha\sum_{j = 1}^n\frac{a_{ij}x_j}{\sum_{k=1}^na_{kj}}
+\]</span>
+Here, <span class="math inline">\(a_{ij} = 1\)</span> if an edge exists from user <span class="math inline">\(j\)</span> to user <span class="math inline">\(i\)</span>, and zero otherwise. <span class="math inline">\(x_i\)</span> is a user’s desirability, and <span class="math inline">\(\alpha\)</span> is a parameter chosen by the authors (in this case, set to 0.85). To compute desirability from this formula, one chooses a set of values for <span class="math inline">\(x_i\)</span> to start, and computes the right hand side of the formula for all users using that set of <span class="math inline">\(x_i\)</span>’s. Then, take the results of this analysis and repeat, over and over until convergence is reached. This is a fairly common approach to ranking popularity of nodes in a network from directed edges. As indicated by the name, it can be used to rank a webpage based on the number of links on other webpages that point to it.</p>
+<p>The key result from this measure is the following:</p>
+<p><img src="/misc_img/bruch_newman_plot.png" style="width:50.0%" /></p>
+<p>I’m focusing only on the top half of this plot. Here, the curves that look like densities are the probability distributions of the desirability gap between the sender and the receiver of an initial message on the platform. Both men and women are most likely to send opening messages to other uses who are exactly as attractive as them, although they are otherwise more probably going to overshoot than undershoot. The swooping lines represent the probability that a user receives a reply from the other user once they have sent the first message. Predictably, as the desirability gap becomes more positive, the probability of receiving a response to an opening message declines. The gap between men’s and women’s probability of replying is also predictable.</p>
+<p>The authors take these results as evidence of “aspirational pursuit”, i.e. that men and women both try to seek out mates that are more attractive than them (although at a certain point they don’t bother). I’m inclined to agree with this interpretation, with three caveats. First, it’s notable that the distribution of first messages does actually peaks right around equal attractiveness, especially for women. Second, I wonder whether the desirability gap we observe here reflects the one that people perceive. If we think that people typically view themselves as more attractive than they actually are, then these plots should actually be shifted to the left. In this case, the probability density of first messages might essentially be centered around zero. These two caveats give me some pause about throwing out the possibility that people seek out mates similar to themselves. Third, it’s unclear how much messaging behavior can ever really tell us about long-term mate selection. Dating websites typically mingle together those looking for long- and short-term relationships, and they also make reaching out potential mates an extremely low-cost, low-risk endeavor. In these ways, the data do not really reflect the realities of long-term mate selection, where people might have more incentive to seek out their equals.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Assessing respondent-driven sampling</title>
+			<link>https://aridecterfrain.com/posts/crawford_etal_2018/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/crawford_etal_2018/</guid>
+			<description>Sharad Goel and Matthew Salganik, 2010 This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:
+\[ \hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)} \]
+This is just the mean of \(f(X_i)\) where each person, \(X_i\) is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="sharad-goel-and-matthew-salganik-2010" class="section level2">
+<h2>Sharad Goel and Matthew Salganik, 2010</h2>
+<p>This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:</p>
+<p><span class="math display">\[
+\hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)}
+\]</span></p>
+<p>This is just the mean of <span class="math inline">\(f(X_i)\)</span> where each person, <span class="math inline">\(X_i\)</span> is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals. If <span class="math inline">\(f(X_i)\)</span> is a binary variable like whether or not a respondent has some disease, then <span class="math inline">\(\mu_f\)</span> is the proportion of the population with that disease. Theoretically, this estimator is unbiased given that a certain set of assumptions hold true.</p>
+<p>The authors construct simulations which draw sub-samples from the Project 90 and Add Health surveys. Project 90 is a longitudinal survey from the late 1980s, meant to study the role of network structure spreading infectious diseases. Add Health, or more formally the National Longitudinal Study of Adolescent Health, tracks the full set of friendship networks between students at a set of high schools across the United States. Each of these samples are fairly large, and draw 500-observation samples from them using simple random sampling (SRS) and RDS network sampling. They can then compare RDS and SRS to the known characteristics of the populations in the data.</p>
+<p>The results are presented as design effects, <span class="math inline">\(Var(\hat{p}_RDS)/Var(\hat{p}_SRS)\)</span>. “A design effect of 10, for example, effectively reduces an RDS sample of nominal size 500 to an SRS sample of size 50” (p.6744).</p>
+<p>Here are the design effects for all the rates that the authors estimate:</p>
+<p><img src="/misc_img/goel_salganik_2010.png" /></p>
+<p>It’s clear the result of the exercise is that, for every parameter the authors want to estimate, the variance across RDS samples is higher than across SRS samples, often by many times. The paper goes on to show that the confidence intervals for RDS estimates appear too small, since they only overlap with the true value between 42% and 65% of the time, when they should always overlap 95% of the time. They also show that re-weighting of the RDS sample according to degree largely does not do much to improve the estimator: The estimation errors produced by the RDS estimator are highly correlated with the errors that would emerge if those same data were treated as if they were from an SRS. This suggests that degree imbalance may not be so central to the performance of the estimator. Instead, reducing the sampling variability should instead be the main objective for methodological researchers.</p>
+<p>Overall, this paper paints a scary picture of RDS as a tool hailed as the key to accessing vulnerable, hard to reach populations. Even under simulated conditions where all assumptions are met, the estimates produced from any given sample may veer quite far from the truth about the population.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Assessing respondent-driven sampling</title>
+			<link>https://aridecterfrain.com/posts/goel_salganik_2010/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/goel_salganik_2010/</guid>
+			<description>Sharad Goel and Matthew Salganik, 2010 This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:
+\[ \hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)} \]
+This is just the mean of \(f(X_i)\) where each person, \(X_i\) is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="sharad-goel-and-matthew-salganik-2010" class="section level2">
+<h2>Sharad Goel and Matthew Salganik, 2010</h2>
+<p>This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:</p>
+<p><span class="math display">\[
+\hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)}
+\]</span></p>
+<p>This is just the mean of <span class="math inline">\(f(X_i)\)</span> where each person, <span class="math inline">\(X_i\)</span> is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals. If <span class="math inline">\(f(X_i)\)</span> is a binary variable like whether or not a respondent has some disease, then <span class="math inline">\(\mu_f\)</span> is the proportion of the population with that disease. Theoretically, this estimator is unbiased given that a certain set of assumptions hold true.</p>
+<p>The authors construct simulations which draw sub-samples from the Project 90 and Add Health surveys. Project 90 is a longitudinal survey from the late 1980s, meant to study the role of network structure spreading infectious diseases. Add Health, or more formally the National Longitudinal Study of Adolescent Health, tracks the full set of friendship networks between students at a set of high schools across the United States. Each of these samples are fairly large, and draw 500-observation samples from them using simple random sampling (SRS) and RDS network sampling. They can then compare RDS and SRS to the known characteristics of the populations in the data.</p>
+<p>The results are presented as design effects, <span class="math inline">\(Var(\hat{p}_RDS)/Var(\hat{p}_SRS)\)</span>. “A design effect of 10, for example, effectively reduces an RDS sample of nominal size 500 to an SRS sample of size 50” (p.6744).</p>
+<p>Here are the design effects for all the rates that the authors estimate:</p>
+<p><img src="/misc_img/goel_salganik_2010.png" /></p>
+<p>It’s clear the result of the exercise is that, for every parameter the authors want to estimate, the variance across RDS samples is higher than across SRS samples, often by many times. The paper goes on to show that the confidence intervals for RDS estimates appear too small, since they only overlap with the true value between 42% and 65% of the time, when they should always overlap 95% of the time. They also show that re-weighting of the RDS sample according to degree largely does not do much to improve the estimator: The estimation errors produced by the RDS estimator are highly correlated with the errors that would emerge if those same data were treated as if they were from an SRS. This suggests that degree imbalance may not be so central to the performance of the estimator. Instead, reducing the sampling variability should instead be the main objective for methodological researchers.</p>
+<p>Overall, this paper paints a scary picture of RDS as a tool hailed as the key to accessing vulnerable, hard to reach populations. Even under simulated conditions where all assumptions are met, the estimates produced from any given sample may veer quite far from the truth about the population.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Big data and population processes: A revolution?</title>
+			<link>https://aridecterfrain.com/posts/billari_zagheni_2017/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/billari_zagheni_2017/</guid>
+			<description>Fransisco Billari and Emilio Zagheni, 2017 This paper describes the influx of new data resulting from digitization as the fourth paradigm of demographic data. The four paradigms according to Billari and Zagheni, in rough chronological order, are as follows:
+Census data for national accounting: Historically, demographers have been concerned with using the largest, most complete datasets to study macro-level outcomes.
+ Microdata for testing theories: Smaller sample surveys emerged after WWII.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="fransisco-billari-and-emilio-zagheni-2017" class="section level2">
+<h2>Fransisco Billari and Emilio Zagheni, 2017</h2>
+<p>This paper describes the influx of new data resulting from digitization as the fourth paradigm of demographic data. The four paradigms according to Billari and Zagheni, in rough chronological order, are as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p><em>Census data for national accounting:</em> Historically, demographers have been concerned with using the largest, most complete datasets to study macro-level outcomes.</p></li>
+<li><p><em>Microdata for testing theories:</em> Smaller sample surveys emerged after WWII. These asked more specific questions to get at the drivers of population change.</p></li>
+<li><p><em>Multi-level data:</em> This paradigm emphasizes the importance of macro-level constraints as influencing individual behavior. Agent-based modelling is suggested as a tool for extrapolating micro-level insights to make new predictions about macro-level trends. This paradigm matches Bavel and Brow’s (2016) macro-micro-macro model.</p></li>
+<li><p><em>Data revolution:</em> Widespread logging online behavior has created many new data sources. Unlike all previous generations, these are typically decentralized and non-representative.</p></li>
+</ol>
+<p>The authors go on to describe methodological shifts resulting from the data revolution. First, demographic calibration has gained new importance. To maximize the utility of new data for monitoring populations, one must first develop statistical models that account for any bias resulting from its non-representativeness. Second, in cases where bias cannot be modelled, new data may still be useful for monitoring <em>changes</em> in a quantity of interest, rather than absolute levels. Finally, there may be some opportunity to apply formal demographic methods to the study of online populations. For instance, one can construct a life table for the life of Twitter accounts and use it to estimate Twitter’s population rate of growth.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Brain drain and brain gain in Russia</title>
+			<link>https://aridecterfrain.com/posts/subbotin_aref_2020/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/subbotin_aref_2020/</guid>
+			<description>Alexander Subbotin and Samin Aref This paper that uses Scopus data to analyze the migration of academics in and out of Russia. What’s interesting about this paper is the use of bibliometric data to track migration flows through changes in affiliation. To do this, the authors use a set of 2.4 million citations from 659,000 authors who at some point had an academic affiliation in Russia (5.2% of whom had affiliations in different countries at some point).</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="alexander-subbotin-and-samin-aref" class="section level2">
+<h2>Alexander Subbotin and Samin Aref</h2>
+<p>This paper that uses Scopus data to analyze the migration of academics in and out of Russia. What’s interesting about this paper is the use of bibliometric data to track migration flows through changes in affiliation. To do this, the authors use a set of 2.4 million citations from 659,000 authors who at some point had an academic affiliation in Russia (5.2% of whom had affiliations in different countries at some point).</p>
+<p>The authors define the migration patterns of researchers by looking at the trajectory of their publications. Authors who first publish with an American institution as their affiliation and then a Russian one are labelled as immigrants, and vice versa. This is a tricky way to define immigration because it could be the case that many “immigrants” are actually people born and raised in Russia who left to do their doctoral studies and returned afterwards. This purely affiliation-based definition of migration flows is certainly a bit problematic if the construct in question is “brain drain”.</p>
+<p>A supplemental analysis could look throughout the data for the names of authors with a high probability of being Russian or of Eastern European origin. Of course, there would be a number of tricky ethical questions around this type of analysis, and it might lead to similar questions about whether differences in citations might be driven by racial prejudice. Still, it’s an idea, and the two measures in combination might ameliorate things.</p>
+<p>There are perhaps not many surprises in this paper. The results show a hierarchy of citation success such that emigrants from Russia get the most citations, immigrants to Russia get the second-most, and academics who never leave Russia get the least. This probably exactly matches most readers’ expectations, since any time spent in a country with a stronger research community should result in some boost in exposure/citations. Further, there is likely some selection effect such that researchers with more ability might do their doctoral studies in a foreign country, or they might receive job offers at good universities in other countries later in their career.</p>
+<p>This paper is a good example of how a very big dataset may not be enough to make a paper interesting - it clearly takes a lot of thought and work to uncover exactly what facet of a dataset tells the best story, and it seems like this paper may not quite be there yet. However, I can’t be too hard on it. The results make sense and it’s only a working paper. I’m excited to see where it goes from here!</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling</title>
+			<link>https://aridecterfrain.com/posts/merli_etal_2015/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/merli_etal_2015/</guid>
+			<description>Giovanna Merli, James Moody, Jeffrey Smith, Jing Li, Sharon Weir, and Xiangsheng Chen, 2015 This paper takes advantage of unique scenario where the same population was sampled via a fairly traditional, venue-based, random sampling procedure and respondent-driven sampling (RDS) in order to assess the validity of the assumptions underlying RDS inference. Two basic assumptions underlying inference and estimation from RDS samples is that in the referral process, each participants’ probability of being sampled is proportionate to their degree, and the RDS has equal probability of proceeding anywhere across the network, conditional on the degree of its members.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="giovanna-merli-james-moody-jeffrey-smith-jing-li-sharon-weir-and-xiangsheng-chen-2015" class="section level2">
+<h2>Giovanna Merli, James Moody, Jeffrey Smith, Jing Li, Sharon Weir, and Xiangsheng Chen, 2015</h2>
+<p>This paper takes advantage of unique scenario where the same population was sampled via a fairly traditional, venue-based, random sampling procedure and respondent-driven sampling (RDS) in order to assess the validity of the assumptions underlying RDS inference. Two basic assumptions underlying inference and estimation from RDS samples is that in the referral process, each participants’ probability of being sampled is proportionate to their degree, and the RDS has equal probability of proceeding anywhere across the network, conditional on the degree of its members.</p>
+<p>The context of this paper is the sampling of female sex workers in a relatively small geographic area in China. There are various tiers of sex workers who work in different locations. Some work at hotels, others at bars, and some on the street. These different locations lead to spatial clustering which could threaten the assumption that an individual’s degree is the only thing that determines their probability of being sampled. Their spatial proximity to recruiters may also play a role.</p>
+<p>Using the RDS and venue-based samples, the authors first develop a set of simulations that try to decompose the constraints place on the true RDS data collection process. They vary the strength of geographic constraints on the RDS process and whether the the seeds and referral patterns should mimmick the observed patterns in size, demographic characteristics, and branching structure. Here are the results:</p>
+<p><img src="/misc_img/merli_etal_p1.png" /></p>
+<p>For all of these plots, a straight diagonal line with a correlation close to 1 is desired, as this indicates a strong relationship between probability of being sampled and node degree. The base model is on the right. It randomly samples seeds and referrals from the population. Under these conditions, a node’s probability of being sampled does not depend on the extent to which geography constrains referral (weak constraint on the bottom panels, strong on the top). If the simulated sampling procedure uses seeds that match the characteristics of the seeds that were actually used, then the sampling procedure only works under conditions of weak geographic constraint (middle panels). The panels on the left show that given the actual sampling conditions, the assumption that sampling depends only on degree will be violated regardless of geographic constraint. The thought experiment behind this plot is something like “did the empirical results of sampling procedure match our theoretical expectations”, and the answer appears to be “no”. I think this is analogous to an experimental setting where, even despite random assignment, the groups end up unbalanced on key covariates.</p>
+<p>The authors also plot the coverage of the RDS sample across the geographic area of the study in the plot below:</p>
+<p><img src="/misc_img/merli_etal_p2.png" /></p>
+<p>The bottom left plot shows the actual density of the female sex worker population in the region as estimated based on data from the venue-based sample. The plot of the top right shows the sample density resulting from the RDS, and the bottom right panel shows the residual from the two. If the sample achieved even coverage across geography, we would expect the residual plot to be mostly white, or shades of light red and blue. We mostly see this, except for one location which is bright red. This indicates that the RDS procedure yielded substantial oversampling in one central location.</p>
+<p>This paper shows clearly the challenges involved with executing an in-person RDS sampling procedure where the population being sampled exhibits spatial clustering. In the absence information about the geographic distribution of the individuals being sampled, it would we difficult to assess whether geography has constrained the sampling procedure, causing violation of a key assumption for inference from RDS.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Commentary on Fazel-Zarandi et al. (2018)</title>
+			<link>https://aridecterfrain.com/posts/capps_etal_2018/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/capps_etal_2018/</guid>
+			<description>Randy Capps, Julia Gelatt, Jennifer Van Hook, Michael Fix, 2018 This paper is a response to Fazel-Zarandi and co-authors’ flow-based estimate, of the number of undocumented immigrants in the United States, which is nearly double the well-established estimates released by other organizations. The authors of this paper are affiliated with one such organization, the Migration Policy Institute, a think tank based out of Washington D.C. The paper presents two main arguments for why the Fazel-Zarandi et al.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="randy-capps-julia-gelatt-jennifer-van-hook-michael-fix-2018" class="section level2">
+<h2>Randy Capps, Julia Gelatt, Jennifer Van Hook, Michael Fix, 2018</h2>
+<p>This paper is a response to <a href="../fazel_zarandi_etal_2018.Rmd">Fazel-Zarandi and co-authors’ flow-based estimate</a>, of the number of undocumented immigrants in the United States, which is nearly double the well-established estimates released by other organizations. The authors of this paper are affiliated with one such organization, the Migration Policy Institute, a think tank based out of Washington D.C.
+The paper presents two main arguments for why the Fazel-Zarandi et al.’s estimates are too high. First, the authors note that previous research has estimated the response rate of undocumented immigrants to the 2000 Decennial Census as being close to 90%. Whereas estimates based on the residual method typically assume around 5-15% undercounting in the Census, Fazel-Zarandi’s model implies a nonresponse rate of 62%. The authors claim such a rate is highly implausible, even given that undocumented immigrants are a hard-to-reach population.</p>
+<p>The second argument pertains to a specific assumption made by Fazel-Zarandi et al. First, the authors note that after 2000, the growth rate of the undocumented migrant population in Fazel-Zarandi et al. roughly matches established estimates. Divergence therefore takes place in the years between 1990 and 2000. Fazel-Zarandi et al. make strong assumptions about the emigration rates of undocumented migrants back to their home countries (mostly Mexico). Specifically, they assume a 40% emigration rate for migrants during their first year in the U.S., a 4% rate for migrants in the US 2-10 years, and a 1% rate for migrants in the US 11 or more years. Using data from the Mexican Migration Project (MMP), Capps et al., compute empirical estimates of the emigration rates for these different subgroups of undocumented migrants and obtain the following:</p>
+<p><img src="/misc_img/capps_etal_2018_emigrationrates.png" style="width:70.0%" /></p>
+<p>Clearly, the emigration rates of longer-term migrants is higher than Fazel-Zarandi et al. assume. When the authors plug these rates to the existing model, this results in a new 2016 of 8.2 million, which is just below the existing estimates by organizations like PEW and the Migration Policy Institute. This sharp drop in estimates underscores the sensitivity of data-poor probability models to their underlying assumptions, especially when those assumptions are compounded over time.</p>
+<p>The back-and-forth between Fazel-Zarandi et al. and Capps et al. raises several important issues about policy and research surrounding undocumented migrants. First, we know generally little about this population, beyond a general sense of its total size. For instance, we know almost nothing about how this population is distributed across the country. Moreover, we are able to put upper and lower bounds on the size of the undocumented migrant population only by comparing different point estimates. It seems the existing research does not contain a fully probablistic estimate that of the size of the undocumented immigrant population. One can imagine such a model to produce such an estimate combining spare data from different sources and encoding expert knowledge as priors within a Bayesian framework. But such a model does not appear to exist, and for this reason, Capps et al. present trendlines for the growth of the population without accompanying error bands, instead relying on the comparison of different estimates by different organizations to give an ad hoc sense of the underying uncertainty.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Computational Demography Reading List</title>
+			<link>https://aridecterfrain.com/posts/cd_readinglist/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/cd_readinglist/</guid>
+			<description>I put together this reading list as part of a guided reading with Professor Matthew Hall. We intend it to function as an overview of the field and as a syllabus for a graduate seminar. The list broadly covers the use of new data sources for demographic estimation, tools for accessing hard to reach populations, and some specific examples of agent-based modelling.
+Computational social science and demography  (Summary) Billari, F.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<p>I put together this reading list as part of a guided reading with Professor Matthew Hall. We intend it to function as an overview of the field and as a syllabus for a graduate seminar. The list broadly covers the use of new data sources for demographic estimation, tools for accessing hard to reach populations, and some specific examples of agent-based modelling.</p>
+<div id="computational-social-science-and-demography" class="section level2">
+<h2>Computational social science and demography</h2>
+<ul>
+<li><p>(<a href="../billari_zagheni_2017/">Summary</a>) Billari, F., and Zagheni, E. (2017). Big data and population processes: a revolution? Proceedings of the Italian Statistical Society 2017</p></li>
+<li><p>(<a href="../bavel_grow_2016/">Summary</a>) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies</p></li>
+<li><p>Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Review of Sociology 45: 27-45.</p></li>
+</ul>
+</div>
+<div id="social-media-and-demographic-processes" class="section level2">
+<h2>Social media and demographic processes</h2>
+<ul>
+<li><p>(<a href="../zagheni_etal_2014/">Summary</a>) Zagheni E., Garimella, K., Weber, I., and State, B. (2014). Inferring international and internal migration patterns from Twitter data. Proceedings of ACM WWW (Companion): 439-444</p></li>
+<li><p>(<a href="../zagheni_weber_gummadi_2017/">Summary</a>) Zagheni, E., Weber, I., &amp; Gummadi, K. (2017). Leveraging Facebook’s Advertising Platform to Monitor Stocks of Migrants. Population and Development Review, 43(4), 721-734.</p></li>
+<li><p>(<a href="../bruch_newman_2018/">Summary</a>) Bruch, Elizabeth and Mark Newman. (2018). “Aspirational Pursuit of Mates in Online Dating Markets.” Science Advances, 4</p></li>
+<li><p>Yildiz, D., Munson, J., Vitali, A., Tinati, R., &amp; Holland, J. A. (2017). Using Twitter data for demographic research. Demographic Research, 37(1), 1477–1514. <a href="https://doi.org/10.4054/DemRes.2017.37.46" class="uri">https://doi.org/10.4054/DemRes.2017.37.46</a></p></li>
+<li><p>Rampazzo, F., Zagheni, E., Weber, I., Testa, M. R., &amp; Billari, F. (2018). Mater certa est, pater numquam: What can facebook advertising data tell us about male fertility rates? 12th International AAAI Conference on Web and Social Media, ICWSM 2018, 672–675.</p></li>
+</ul>
+<div id="representativeness-of-social-media-data" class="section level3">
+<h3>Representativeness of social media data</h3>
+<ul>
+<li><p>Zagheni, E., &amp; Weber, I. (2015). Demographic research with non-representative internet data. International Journal of Manpower, 36(1), 13–25. <a href="https://doi.org/10.1108/IJM-12-2014-0261" class="uri">https://doi.org/10.1108/IJM-12-2014-0261</a></p></li>
+<li><p>(<a href="../wang_etal_2015/">Summary</a>) Wang, W., Rothschild, D., Goel, S., &amp; Gelman, A. (2015). Forecasting elections with non-representative polls. International Journal of Forecasting, 31(3), 980–991. <a href="https://doi.org/10.1016/j.ijforecast.2014.06.001" class="uri">https://doi.org/10.1016/j.ijforecast.2014.06.001</a></p></li>
+<li><p>Gil-Clavel, S., &amp; Zagheni, E. (2019). Demographic differentials in facebook usage around the world. Proceedings of the 13th International Conference on Web and Social Media, ICWSM 2019, Icwsm, 647–650.</p></li>
+<li><p>Feehan, D. M., &amp; Cobb, C. (2019). Using an online sample to estimate the size of an offline population. Demography, 2377–2392. <a href="https://doi.org/https://doi.org/10.1007/s13524-019-" class="uri">https://doi.org/https://doi.org/10.1007/s13524-019-</a> 00840-z)</p></li>
+<li><p>Alexander, M., Polimis, K., &amp; Zagheni, E. (2020). Combining social media and survey data to nowcast migrant stocks in the United States. Population Research and Policy Review, 0123456789. <a href="https://doi.org/10.1007/s11113-020-09599-3" class="uri">https://doi.org/10.1007/s11113-020-09599-3</a></p></li>
+</ul>
+</div>
+</div>
+<div id="hard-to-reach-populations" class="section level2">
+<h2>Hard to reach populations</h2>
+<div id="residuals-logic-and-imputation" class="section level3">
+<h3>Residuals, logic, and imputation</h3>
+<ul>
+<li><p>(<a href="../fazel_zarandi_etal_2018/">Summary</a>) Fazel-Zarandi, M. M., Feinstein, J. S., &amp; Kaplan, E. H. (2018). The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990 to 2016. PLoS ONE, 13(9), 1–11. <a href="https://doi.org/10.1371/journal.pone.0201193" class="uri">https://doi.org/10.1371/journal.pone.0201193</a></p></li>
+<li><p>(<a href="../capps_etal_2018/">Summary</a>) Capps, R., Gelatt, J., Van Hook, J., &amp; Fix, M. (2018). Commentary on “The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990-2016.” PLoS ONE, 13(9), 1–10. <a href="https://doi.org/10.1371/journal.pone.0204199" class="uri">https://doi.org/10.1371/journal.pone.0204199</a></p></li>
+<li><p>(<a href="../capps_bachmeier_vanhook_2018/">Summary</a>) Capps, R., Bachmeier, J. D., &amp; Van Hook, J. (2018). Estimating the Characteristics of Unauthorized Immigrants Using U.S. Census Data: Combined Sample Multiple Imputation. Annals of the American Academy of Political and Social Science, 677(1), 165–179. <a href="https://doi.org/10.1177/0002716218767383" class="uri">https://doi.org/10.1177/0002716218767383</a></p></li>
+</ul>
+</div>
+<div id="respondent-driven-sampling" class="section level3">
+<h3>Respondent-driven sampling</h3>
+<ul>
+<li><p>(<a href="../merli_etal_2015/">Summary</a>) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., &amp; Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. <a href="https://doi.org/10.1016/j.socscimed.2014.04.022" class="uri">https://doi.org/10.1016/j.socscimed.2014.04.022</a></p></li>
+<li><p>(<a href="../crawford_etal_2018/">Summary</a>) Crawford, F. W., Wu, J., &amp; Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. <a href="https://doi.org/10.1080/01621459.2017.1285775.Hidden" class="uri">https://doi.org/10.1080/01621459.2017.1285775.Hidden</a></p></li>
+<li><p>Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. <a href="https://doi.org/10.1177/0081175016641713" class="uri">https://doi.org/10.1177/0081175016641713</a></p></li>
+<li><p>(<a href="../helms_etal_2021/">Summary</a>) Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., &amp; Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). <a href="https://doi.org/10.2196/17564" class="uri">https://doi.org/10.2196/17564</a></p></li>
+<li><p>Li, J., Valente, T. W., Shin, H. S., Weeks, M., Zelenev, A., Moothi, G., Mosher, H., Heimer, R., Robles, E., Palmer, G., &amp; Obidoa, C. (2018). Overlooked threats to respondent driven sampling estimators: Peer recruitment reality, degree measures, and random selection assumption. AIDS and Behavior, 22(7), :2340-2359. <a href="https://doi.org/10.1007/s10461-017-1827-1" class="uri">https://doi.org/10.1007/s10461-017-1827-1</a></p></li>
+<li><p>Mouw, T., &amp; Verdery, A. M. (2012). Network Sampling with Memory: A Proposal for More Efficient Sampling from Social Networks. Sociological Methodology, 42(1), 206–256. <a href="https://doi.org/10.1177/0081175012461248" class="uri">https://doi.org/10.1177/0081175012461248</a></p></li>
+<li><p>(<a href="../goel_salganik_2010/">Summary</a>) Goel, S., &amp; Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. <a href="https://doi.org/10.1073/pnas.1000261107" class="uri">https://doi.org/10.1073/pnas.1000261107</a></p></li>
+</ul>
+</div>
+<div id="regions-with-sparse-data" class="section level3">
+<h3>Regions with sparse data</h3>
+<ul>
+<li>Blumenstock, J.E., Cadamuro, G and On, R. (2015) Predicting Poverty and Wealth from Mobile Phone Metadata. Science, 350:1073-1076</li>
+</ul>
+</div>
+</div>
+<div id="labor-markets" class="section level2">
+<h2>Labor markets</h2>
+<ul>
+<li><p>(<a href="../turrell_etal_2019/">Summary</a>) Turrell, A., Speigner, B. J., Djumalieva, J., Copple, D., &amp; Thurgood, J. (2019). Transforming Naturally Occurring Text Data Into Economic Statistics: The Case of Online Job Vacancy Postings. NBER Working Paper Series, 34. <a href="http://www.nber.org/papers/w25837" class="uri">http://www.nber.org/papers/w25837</a></p></li>
+<li><p>(<a href="../baker_bloom_davis_2016/">Summary</a>) Baker, R. S., Bloom, N., &amp; Davis, S. (2016). Measuring economic policy uncertainty. Quarterly Journal of Economics, 131(November), 1593–1636. <a href="https://doi.org/https://doi.org/10.1093/qje/qjw024" class="uri">https://doi.org/https://doi.org/10.1093/qje/qjw024</a></p></li>
+<li><p>Brand, J. E., Xu, J., Koch, B., &amp; Geraldo, P. (2021). Uncovering Sociological Effect Heterogeneity Using Tree-Based Machine Learning. In Sociological Methodology. <a href="https://doi.org/10.1177/0081175021993503" class="uri">https://doi.org/10.1177/0081175021993503</a></p></li>
+<li><p>Cengiz, D., Dube, A., Lindner, A., &amp; Zentler-Munro, D. (2021). Seeing Beyond the Trees: Using Machine Learning to Estimate the Impact of Minimum Wages on Labor Market Outcomes. <a href="http://www.nber.org/papers/w28399.pdf" class="uri">http://www.nber.org/papers/w28399.pdf</a></p></li>
+<li><p>Lukac, M., &amp; Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. <a href="https://doi.org/10.1007/s42001-020-00072-x" class="uri">https://doi.org/10.1007/s42001-020-00072-x</a></p></li>
+<li><p>(<a href="../subbotin_aref_2020/">Summary</a>). Subbotin, A., &amp; Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.</p></li>
+</ul>
+</div>
+<div id="migration" class="section level2">
+<h2>Migration</h2>
+<ul>
+<li><p>(<a href="../fiorio_etal_2020/">Summary</a>). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., &amp; Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. <a href="https://doi.org/10.4054/MPIDR-WP-2020-024" class="uri">https://doi.org/10.4054/MPIDR-WP-2020-024</a></p></li>
+<li><p>Deville, P., Linard, C., Martin, S., Gilbert, M., Stevens, F.R., Gaughan, A.E., Blondel, V.D. and Tatem, A.J. (2014) Dynamic Population Mapping Using Mobile Phone Data. Proceedings of the National Academy of Sciences 111(45):15888-15893.</p></li>
+<li><p>Phillips, D. C. (2020). Measuring Housing Stability With Consumer Reference Data. Demography, 57(4), 1323–1344. <a href="https://doi.org/10.1007/s13524-020-00893-5" class="uri">https://doi.org/10.1007/s13524-020-00893-5</a></p></li>
+<li><p>Palmer, J.R.B., Espenshade, T.J., Bartumeus, F., Chung, C.Y., Ozgencil, N.E., and Li K. (2012). New Approaches to Human Mobility: Using Mobile Phones for Demographic Research. Demography(50):1105-1128.</p></li>
+</ul>
+</div>
+<div id="sociocultural-processes" class="section level2">
+<h2>Sociocultural processes</h2>
+<ul>
+<li><p>Marquez, N., Garimella, K., Toomet, O., Weber, I. G., &amp; Zagheni, E. (2019). Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data. Guide to Mobile Data Analytics in Refugee Scenarios, 49(0), 265–282. <a href="https://doi.org/10.1007/978-3-030-12554-7_14" class="uri">https://doi.org/10.1007/978-3-030-12554-7_14</a></p></li>
+<li><p>(<a href="../muggleton_etal_2020/">Summary</a>) Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., &amp; Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. <a href="https://doi.org/10.1038/s41562-020-01045-w" class="uri">https://doi.org/10.1038/s41562-020-01045-w</a></p></li>
+<li><p>(<a href="../stewart_etal_2019/">Summary</a>) Stewart, I., Flores, R. D., Riffe, T., Weber, I., &amp; Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. <a href="https://doi.org/10.1145/3308558.3313409" class="uri">https://doi.org/10.1145/3308558.3313409</a></p></li>
+<li><p>(<a href="../Herdagdelen_etal_2016/">Summary</a>). Herdaǧdelen, A., State, B., Adamic, L., &amp; Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. <a href="https://doi.org/10.1145/2908131.2908163" class="uri">https://doi.org/10.1145/2908131.2908163</a></p></li>
+<li><p>Gil-Clavel, S., Zagheni, E., &amp; Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.</p></li>
+<li><p>Dimaggio, P., &amp; Garip, F. (2012). Network effects and social inequality. Annual Review of Sociology, 38, 93–118. <a href="https://doi.org/10.1146/annurev.soc.012809.102545" class="uri">https://doi.org/10.1146/annurev.soc.012809.102545</a></p></li>
+</ul>
+</div>
+<div id="simulating-population-processes" class="section level2">
+<h2>Simulating population processes</h2>
+<ul>
+<li><p>Billari, F.C., Fent, T., Prskawetz, A., &amp; Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.</p></li>
+<li><p>Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Williams, N.E., O’Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Wolfson M., Gribble, S., &amp; Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Kashyap, R., &amp; Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. <a href="https://doi.org/10.1007/s13524-016-0500-z" class="uri">https://doi.org/10.1007/s13524-016-0500-z</a></p></li>
+</ul>
+</div>
+<div id="agent-based-modelling-and-neighborhood-choice" class="section level2">
+<h2>Agent-based modelling and neighborhood choice</h2>
+<ul>
+<li><p>Bruch, E. E., &amp; Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. <a href="https://doi.org/10.1086/507856" class="uri">https://doi.org/10.1086/507856</a></p></li>
+<li><p>Van de Rijt, A., Siegel, A., &amp; Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/588795" class="uri">https://doi.org/https://doi.org/10.1086/588795</a></p></li>
+<li><p>Bruch, E. E., &amp; Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/597599" class="uri">https://doi.org/https://doi.org/10.1086/597599</a></p></li>
+<li><p>Clark, W. A. V., &amp; Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. <a href="https://doi.org/10.1073/pnas.0708155105" class="uri">https://doi.org/10.1073/pnas.0708155105</a></p></li>
+<li><p>Bruch, E. E., &amp; Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105</p></li>
+</ul>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Computational Demography Reading List</title>
+			<link>https://aridecterfrain.com/posts/cd_readinglist_2/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/cd_readinglist_2/</guid>
+			<description>The following is an incomplete reading list that tries to sketch out the field of computational demography. I think of computational demography as any research that asks whether and how new insights about demographic processes can be gained from the recent1 emergence of new online data sources and computationally intensive methods. As I see it, this literature is composed mostly of papers that present a new way of measuring something.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<p>The following is an incomplete reading list that tries to sketch out the field of computational demography. I think of computational demography as any research that asks whether and how new insights about demographic processes can be gained from the recent<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> emergence of <em>new online data sources</em> and <em>computationally intensive methods</em>. As I see it, this literature is composed mostly of papers that present a new way of measuring something. Sometimes this means quantifying some phenomenon that has never been captured before. Other times it simply means measuring something more precisely, more frequently, or at a more grand scale.</p>
+<p>Nearly all of the time, this work is flashy. Who doesn’t love a paper that uses data collected by high-growth Silicon Valley darlings, presented in beautiful, multicolored, force-directed network graphs. The main task of a reader in this field is to see through the glory and the glamour and ask what all these hot methods and datasets can really tell us about demographic and social change.</p>
+<p>I see the scope of this field very broadly. I think it’s fair to say that any of the methods that might be called “computational social science”, applied to demographic questions, should be called computational demography. In this list, I focus in on the data data and tools from computational social science that I have most frequently seen applied in demographic research. I briefly outline these below.</p>
+<div id="new-online-data-sources" class="section level2">
+<h2>New online data sources</h2>
+<p>Thanks to the internet and the various commercial and social activities that have sprung up on top of it, much of human behavior is now logged somewhere in a database. Nowadays we don’t necessarily need large-scale surveys to measure things like friendship networks, cultural tastes, or political polarization – we can get massive, rich data on these topics at a low cost by accessing data stored on social media platforms or elsewhere. The readings below cover many different sources of data, including social media platforms, job posting websites, private commercial records, banking databases, dating apps, etc.</p>
+<p>It’s important to recognize that we already know a lot about demography in most high-income countries, so the bar for improvement is high. In the US there is the Census Bureau, a well-funded organization that gives us pretty good information about the demographic composition of the country on an annual basis. The government also carefully tracks vital statistics and so we know with some precision how many people are born and die each year. Equally useful are the range of longitudinal surveys that track people across time and enable researchers to study the factors that influence decision-processes related to demographic outcomes. This includes things like mate selection, fertility, and entry/exit from the labor market.</p>
+<p>Because demographers already have a lot of really high quality data, it’s important to think carefully about what new data sources add, and whether they warrant the often considerable effort it takes to work with them.</p>
+</div>
+<div id="computationally-intensive-methods" class="section level2">
+<h2>Computationally intensive methods</h2>
+<p>In concert with the emergence of new data, recent advances in computation have enabled new methods that also open doors for research. Powerful machines enable running increasingly complex algorithms, and algorithms themselves advance to solve hard problems more efficient. Machine learning obviously fits into this category, although few papers on this list (so far) apply these tools to common demographic prediction problems.</p>
+<p>Another example is Bayesian data analysis, which has benefited both from the increasing accessibility of computational power and the steady improvement of posterior sampling algorithms. Bayesian methods have become increasingly popular because of their utility handling sparse data, their flexibility in handling complex error structures, and their capacity to combining different types of data.</p>
+<p>New computational methods have enabled measurement of demographic characteristics in new contexts, like identifying undocumented immigrants in survey data, estimating the race of individuals using only their name and address, and estimating the mortality rate of regions with almost no data. Papers on the reading list address these questions, and others, with computational methods.</p>
+</div>
+<div id="what-is-still-missing" class="section level2">
+<h2>What is still missing?</h2>
+<p>There’s still a lot missing from the list, especially given the broad scope I’ve used (if you’re reading this and have a paper to add, please send it along!). Some things I think are missing are as follows:</p>
+<ul>
+<li><p>Nontraditional data sources <strong>other</strong> than social media data. I think it’s fair to say that right now most demographic research in this space uses social media data. But this might not last. There are a growing number of administrative datasets that could be included here, and data provided by commercial vendors. Research that validates and applies these sources probably belong in their own section.</p></li>
+<li><p>A section on Bayesian methods in demography. Right now, Bayesian methods are sprinkled throughout the list. In reality I think they are very good tools for some problems demographers often face, like sparse data or needing to combine data sources to make predictions. Because these use cases are so clear, it seems reasonable that these could become their own section. But this would also require adding a number of papers just to introduce Bayesian methods, and maybe that would be too much.</p></li>
+<li><p>More machine learning applications. I make the case on this page that machine learning is a great tool for developing model-based measures of demographic characteristics where a model can be trained on ground-truth data elsewhere. I bet there are more papers that use machine learning to address this type of problem that I’m missing. There are also other applications I don’t go into, like causal inference, linking data, and clustering. These are reviewed in Mario Molina and Filiz Garip’s paper in the overview section below.</p></li>
+</ul>
+<p>Now, to the list.</p>
+<hr />
+</div>
+<div id="the-list" class="section level1">
+<h1>The list</h1>
+<div id="overview-computational-social-science-and-demography" class="section level2">
+<h2>Overview: Computational social science and demography</h2>
+<p>These readings provide broad overviews of the challenges and methods that come up throughout the list.</p>
+<ul>
+<li><p>(<a href="../billari_zagheni_2017/">Summary</a>) Billari, F., and Zagheni, E. (2017). Big data and population processes: a revolution? Proceedings of the Italian Statistical Society 2017</p></li>
+<li><p>Mario Molina and Filiz Garip. (2019). “Machine Learning for Sociology.” Annual Review of Sociology 45: 27-45.</p></li>
+<li><p>(<a href="../bavel_grow_2016/">Summary</a>) Bavel, J.V., and Grow, A. (2016). Introduction: Agent-based modelling as a tool to advance evolutionary population theory. In eds. Bavel, Grow, Agent-based modelling in population studies</p></li>
+<li><p>Bijak, J., &amp; Bryant, J. (2016). Bayesian demography 250 years after Bayes. Population Studies, 70(1), 1–19. <a href="https://doi.org/10.1080/00324728.2015.1122826" class="uri">https://doi.org/10.1080/00324728.2015.1122826</a></p></li>
+</ul>
+<hr />
+</div>
+<div id="section-1-learning-from-new-sources-of-data" class="section level2">
+<h2>SECTION 1: Learning from new sources of data</h2>
+<p>The first of two major sections covers work that uses nontraditional data sources to augment or develop new demographic measures.</p>
+<p>It begins with a series of readings on representativeness. These are meant to outline the challenge of using alternative data sources: They were not built for demographic research. These readings focus on the scale of the problem, and cover the different general approaches to handling nonrepresentative samples in demography.</p>
+<p>The remaining subsections contain groups of papers using alternative data sources to makep progress in a particular substantive area of demography. Working through these, readers should keep in mind the following two questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>Is non-representativeness an issue for this particular research question and dataset, and do the authors adequately address it?</p></li>
+<li><p>Does the paper justify using an alternative data source? What does this paper find that couldn’t be learned via more traditional methods like surveys?</p></li>
+</ol>
+<hr />
+<div id="section-1a-the-challenge-of-representativeness" class="section level3">
+<h3>SECTION 1A: The challenge of representativeness</h3>
+<ul>
+<li><p>Zagheni, E., &amp; Weber, I. (2015). Demographic research with non-representative internet data. International Journal of Manpower, 36(1), 13–25. <a href="https://doi.org/10.1108/IJM-12-2014-0261" class="uri">https://doi.org/10.1108/IJM-12-2014-0261</a></p></li>
+<li><p>(<a href="../wang_etal_2015/">Summary</a>) Wang, W., Rothschild, D., Goel, S., &amp; Gelman, A. (2015). Forecasting elections with non-representative polls. International Journal of Forecasting, 31(3), 980–991. <a href="https://doi.org/10.1016/j.ijforecast.2014.06.001" class="uri">https://doi.org/10.1016/j.ijforecast.2014.06.001</a></p></li>
+<li><p>Yildiz, D., Munson, J., Vitali, A., Tinati, R., &amp; Holland, J. A. (2017). Using Twitter data for demographic research. Demographic Research, 37(1), 1477–1514. <a href="https://doi.org/10.4054/DemRes.2017.37.46" class="uri">https://doi.org/10.4054/DemRes.2017.37.46</a></p></li>
+<li><p>Gil-Clavel, S., &amp; Zagheni, E. (2019). Demographic differentials in facebook usage around the world. Proceedings of the 13th International Conference on Web and Social Media, ICWSM 2019, Icwsm, 647–650.</p></li>
+<li><p>Feehan, D. M., &amp; Cobb, C. (2019). Using an online sample to estimate the size of an offline population. Demography, 2377–2392. <a href="https://doi.org/https://doi.org/10.1007/s13524-019-" class="uri">https://doi.org/https://doi.org/10.1007/s13524-019-</a> 00840-z)</p></li>
+</ul>
+<hr />
+</div>
+<div id="section-1b-migration" class="section level3">
+<h3>SECTION 1B: Migration</h3>
+<ul>
+<li><p>(<a href="../zagheni_etal_2014/">Summary</a>) Zagheni E., Garimella, K., Weber, I., and State, B. (2014). Inferring international and internal migration patterns from Twitter data. Proceedings of ACM WWW (Companion): 439-444</p></li>
+<li><p>(<a href="../zagheni_weber_gummadi_2017/">Summary</a>) Zagheni, E., Weber, I., &amp; Gummadi, K. (2017). Leveraging Facebook’s Advertising Platform to Monitor Stocks of Migrants. Population and Development Review, 43(4), 721-734.</p></li>
+<li><p>Deville, P., Linard, C., Martin, S., Gilbert, M., Stevens, F.R., Gaughan, A.E., Blondel, V.D. and Tatem, A.J. (2014) Dynamic Population Mapping Using Mobile Phone Data. Proceedings of the National Academy of Sciences 111(45):15888-15893.</p></li>
+<li><p>Alexander, M., Polimis, K., &amp; Zagheni, E. (2020). Combining social media and survey data to nowcast migrant stocks in the United States. Population Research and Policy Review, 0123456789. <a href="https://doi.org/10.1007/s11113-020-09599-3" class="uri">https://doi.org/10.1007/s11113-020-09599-3</a></p></li>
+<li><p>(<a href="../fiorio_etal_2020/">Summary</a>). Fiorio, L., Zagheni, E., Abel, G., Hill, J., Pestre, G., Letouzé, E., &amp; Cai, J. (2020). Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data. 49(May), 0–41. <a href="https://doi.org/10.4054/MPIDR-WP-2020-024" class="uri">https://doi.org/10.4054/MPIDR-WP-2020-024</a></p></li>
+<li><p>Deville, P., Linard, C., Martin, S., Gilbert, M., Stevens, F.R., Gaughan, A.E., Blondel, V.D. and Tatem, A.J. (2014) Dynamic Population Mapping Using Mobile Phone Data. Proceedings of the National Academy of Sciences 111(45):15888-15893.</p></li>
+<li><p>Phillips, D. C. (2020). Measuring Housing Stability With Consumer Reference Data. Demography, 57(4), 1323–1344. <a href="https://doi.org/10.1007/s13524-020-00893-5" class="uri">https://doi.org/10.1007/s13524-020-00893-5</a></p></li>
+<li><p>Palmer, J.R.B., Espenshade, T.J., Bartumeus, F., Chung, C.Y., Ozgencil, N.E., and Li K. (2012). New Approaches to Human Mobility: Using Mobile Phones for Demographic Research. Demography(50):1105-1128.</p></li>
+</ul>
+<hr />
+</div>
+<div id="section-1c-labor-markets" class="section level3">
+<h3>SECTION 1C: Labor markets</h3>
+<ul>
+<li><p>(<a href="../turrell_etal_2019/">Summary</a>) Turrell, A., Speigner, B. J., Djumalieva, J., Copple, D., &amp; Thurgood, J. (2019). Transforming Naturally Occurring Text Data Into Economic Statistics: The Case of Online Job Vacancy Postings. NBER Working Paper Series, 34. <a href="http://www.nber.org/papers/w25837" class="uri">http://www.nber.org/papers/w25837</a></p></li>
+<li><p>(<a href="../baker_bloom_davis_2016/">Summary</a>) Baker, R. S., Bloom, N., &amp; Davis, S. (2016). Measuring economic policy uncertainty. Quarterly Journal of Economics, 131(November), 1593–1636. <a href="https://doi.org/https://doi.org/10.1093/qje/qjw024" class="uri">https://doi.org/https://doi.org/10.1093/qje/qjw024</a></p></li>
+<li><p>Brand, J. E., Xu, J., Koch, B., &amp; Geraldo, P. (2021). Uncovering Sociological Effect Heterogeneity Using Tree-Based Machine Learning. In Sociological Methodology. <a href="https://doi.org/10.1177/0081175021993503" class="uri">https://doi.org/10.1177/0081175021993503</a></p></li>
+<li><p>Cengiz, D., Dube, A., Lindner, A., &amp; Zentler-Munro, D. (2021). Seeing Beyond the Trees: Using Machine Learning to Estimate the Impact of Minimum Wages on Labor Market Outcomes. <a href="http://www.nber.org/papers/w28399.pdf" class="uri">http://www.nber.org/papers/w28399.pdf</a></p></li>
+<li><p>Lukac, M., &amp; Grow, A. (2020). Reputation systems and recruitment in online labor markets: insights from an agent-based model. Journal of Computational Social Science, 0123456789. <a href="https://doi.org/10.1007/s42001-020-00072-x" class="uri">https://doi.org/10.1007/s42001-020-00072-x</a></p></li>
+<li><p>(<a href="../subbotin_aref_2020/">Summary</a>). Subbotin, A., &amp; Aref, S. (2020). Brain drain and brain gain in Russia: Analyzing international migration of researchers by discipline using scopus bibliometric data 1996-2020. ArXiv, 49(May), 0–26.</p></li>
+<li><p>Rampazzo, F., Zagheni, E., Weber, I., Testa, M. R., &amp; Billari, F. (2018). Mater certa est, pater numquam: What can facebook advertising data tell us about male fertility rates? 12th International AAAI Conference on Web and Social Media, ICWSM 2018, 672–675.</p></li>
+</ul>
+<hr />
+</div>
+<div id="section-1d-sociocultural-processes" class="section level3">
+<h3>SECTION 1D: Sociocultural processes</h3>
+<ul>
+<li><p>Marquez, N., Garimella, K., Toomet, O., Weber, I. G., &amp; Zagheni, E. (2019). Segregation and Sentiment: Estimating Refugee Segregation and Its Effects Using Digital Trace Data. Guide to Mobile Data Analytics in Refugee Scenarios, 49(0), 265–282. <a href="https://doi.org/10.1007/978-3-030-12554-7_14" class="uri">https://doi.org/10.1007/978-3-030-12554-7_14</a></p></li>
+<li><p>(<a href="../muggleton_etal_2020/">Summary</a>) Muggleton, N., Parpart, P., Newall, P., Leake, D., Gathergood, J., &amp; Stewart, N. (2021). The association between gambling and financial, social and health outcomes in big financial data. Nature Human Behaviour. <a href="https://doi.org/10.1038/s41562-020-01045-w" class="uri">https://doi.org/10.1038/s41562-020-01045-w</a></p></li>
+<li><p>(<a href="../stewart_etal_2019/">Summary</a>) Stewart, I., Flores, R. D., Riffe, T., Weber, I., &amp; Zagheni, E. (2019). Rock, rap, or reggaeton?: Assessing Mexican immigrants’ cultural assimilation using Facebook data. The Web Conference 2019 - Proceedings of the World Wide Web Conference, WWW 2019, 3258–3264. <a href="https://doi.org/10.1145/3308558.3313409" class="uri">https://doi.org/10.1145/3308558.3313409</a></p></li>
+<li><p>(<a href="../Herdagdelen_etal_2016/">Summary</a>). Herdaǧdelen, A., State, B., Adamic, L., &amp; Mason, W. (2016). The social ties of immigrant communities in the United States. WebSci 2016 - Proceedings of the 2016 ACM Web Science Conference, 78–84. <a href="https://doi.org/10.1145/2908131.2908163" class="uri">https://doi.org/10.1145/2908131.2908163</a></p></li>
+<li><p>Gil-Clavel, S., Zagheni, E., &amp; Bardone, V. (2020). Close Social Networks among Older Adults : The Online and Offline Perspectives. 49(October), 0–25.</p></li>
+<li><p>Dimaggio, P., &amp; Garip, F. (2012). Network effects and social inequality. Annual Review of Sociology, 38, 93–118. <a href="https://doi.org/10.1146/annurev.soc.012809.102545" class="uri">https://doi.org/10.1146/annurev.soc.012809.102545</a></p></li>
+<li><p>(<a href="../bruch_newman_2018/">Summary</a>) Bruch, Elizabeth and Mark Newman. (2018). “Aspirational Pursuit of Mates in Online Dating Markets.” Science Advances, 4</p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="section-2-computational-methods" class="section level2">
+<h2>SECTION 2: Computational methods</h2>
+<p>Computational methods feature heavily throughout the first half of this list. This second section focuses in on how computational methods might be used to resolve longstanding problems faced by demographers. The three problems I focus on are a) imputing race/ethnicity when it has not been measured, b) measuring the population size of undocumented immigrants in the US, and c) generating predictions from complex academic theories.</p>
+<p>The first two of these can be construed as prediction problems. Estimating race/ethnicity involves picking up on faint statistical signals in things like a person’s name or the neighborhood they live in. The task itself also demands careful ethical consideration. Any predictive model is prone to bias. Even if unbiased estimation is possible, it’s unclear whether a tool for guessing the race of people who did not report it should even exist.</p>
+<p>The problem of identifying undocumented immigrants poses similar ethical quandaries. This problem is even harder than estimating race/ethnicity because no “ground-truth” dataset exists from which to learn a model of the characteristics of the target population. We know almost nothing about undocumented migrants in the US, and this makes estimation very challenging.</p>
+<p>When reading through the these two sections, I found myself thinking about the following questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>What other demographic characteristics do we struggle to measure? Can the tools here be reapplied to measure those characteristics?</p></li>
+<li><p>How do the assumptions used to measure individual characteristics cascade into measures of population characteristics?</p></li>
+<li><p>When estimating a characteristic like race, how important is it to have a theory-driven or explainable model?</p></li>
+</ol>
+<p>The third section pertains to <em>agent-based modeling</em>. Agent-based modeling is what a researcher does when they have complex theory of individual behavior and want to know what the implications of that theory are at the population level. It generally involves programming a simulation wherein many individuals are instantiated with a particular set of behaviors/options. Then as time moves on they make decisions. Throughout the simulation, population-level parameters are tracked to observe how population-change emerges from individual behaviors. A classic example of this comes from Bruch and Mare’s paper on the implications of household neighborhood choices for long-run neighborhood segregation.</p>
+<p>When reading this section, consider the following questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>What role do agent-based models play in the process of knowledge discovery? Are they theory, evidence, or something else entirely?</p></li>
+<li><p>Should we believe the results of these models? If the answer is ‘sometimes’, what determines their believability?</p></li>
+<li><p>How much of the value of these models comes from their parsimony? Can complexity harm interpretability?</p></li>
+</ol>
+<hr />
+<div id="section-2a-estimating-raceethnicity" class="section level3">
+<h3>SECTION 2A: Estimating race/ethnicity</h3>
+<div id="origins-and-applications" class="section level4">
+<h4>Origins and applications</h4>
+<ul>
+<li><p>Elliott, M. N., Fremont, A., Morrison, P. A., Pantoja, P., &amp; Lurie, N. (2008). A new method for estimating race/ethnicity and associated disparities where administrative records lack self-reported race/ethnicity. Health Services Research, 43(5 P1), 1722–1736. <a href="https://doi.org/10.1111/j.1475-6773.2008.00854.x" class="uri">https://doi.org/10.1111/j.1475-6773.2008.00854.x</a></p></li>
+<li><p>Elliott, M. N., Morrison, P. A., Fremont, A., McCaffrey, D. F., Pantoja, P., &amp; Lurie, N. (2009). Using the Census Bureau’s surname list to improve estimates of race/ ethnicity and associated disparities. Health Services and Outcomes Research Methodology, 9(2), 69–83. <a href="https://doi.org/10.1007/s10742-009-0047-1" class="uri">https://doi.org/10.1007/s10742-009-0047-1</a></p></li>
+<li><p>Imai, K., &amp; Khanna, K. (2016). Improving ecological inference by predicting individual ethnicity from voter registration records. Political Analysis, 24(2), 263–272. <a href="https://doi.org/10.1093/pan/mpw001" class="uri">https://doi.org/10.1093/pan/mpw001</a></p></li>
+<li><p>Adjaye-Gbewonyo, D., Bednarczyk, R. A., Davis, R. L., &amp; Omer, S. B. (2014). Using the bayesian improved surname geocoding method (BISG) to create a working classification of race and ethnicity in a diverse managed care population: A validation study. Health Services Research, 49(1), 268–283. <a href="https://doi.org/10.1111/1475-6773.12089" class="uri">https://doi.org/10.1111/1475-6773.12089</a></p></li>
+<li><p>Barreto, M., Collingwood, L., Garcia-Rios, S., &amp; Oskooii, K. A. R. (2019). Estimating Candidate Support in Voting Rights Act Cases: Comparing Iterative EI and EI-R×C Methods. Sociological Methods and Research. <a href="https://doi.org/10.1177/0049124119852394" class="uri">https://doi.org/10.1177/0049124119852394</a></p></li>
+</ul>
+</div>
+<div id="recent-advances" class="section level4">
+<h4>Recent advances</h4>
+<ul>
+<li><p>Lee, J., Kim, H., Ko, M., Choi, D., Choi, J., &amp; Kang, J. (2017). Name nationality classification with recurrent neural networks. IJCAI International Joint Conference on Artificial Intelligence, 0, 2081–2087. <a href="https://doi.org/10.24963/ijcai.2017/289" class="uri">https://doi.org/10.24963/ijcai.2017/289</a></p></li>
+<li><p>Voicu, I. (2018). Using First Name Information to Improve Race and Ethnicity Classification. Statistics and Public Policy, 5(1), 1–13. <a href="https://doi.org/10.1080/2330443X.2018.1427012" class="uri">https://doi.org/10.1080/2330443X.2018.1427012</a></p></li>
+<li><p>Sood, G., &amp; Laohaprapanon, S. (2018). Predicting race and ethnicity from the sequence of characters in a name. ArXiv, 1–13.</p></li>
+<li><p>Wong, K. O., Zaïane, O. R., Davis, F. G., &amp; Yasui, Y. (2020). A machine learning approach to predict ethnicity using personal name and census location in Canada. PLoS ONE, 15(11 November), 1–16. <a href="https://doi.org/10.1371/journal.pone.0241239" class="uri">https://doi.org/10.1371/journal.pone.0241239</a></p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="section-2b-finding-the-undocumented-immigrant-population" class="section level3">
+<h3>SECTION 2B: Finding the undocumented immigrant population</h3>
+<div id="residuals-logic-and-imputation" class="section level4">
+<h4>Residuals, logic, and imputation</h4>
+<ul>
+<li><p>(<a href="../fazel_zarandi_etal_2018/">Summary</a>) Fazel-Zarandi, M. M., Feinstein, J. S., &amp; Kaplan, E. H. (2018). The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990 to 2016. PLoS ONE, 13(9), 1–11. <a href="https://doi.org/10.1371/journal.pone.0201193" class="uri">https://doi.org/10.1371/journal.pone.0201193</a></p></li>
+<li><p>(<a href="../capps_etal_2018/">Summary</a>) Capps, R., Gelatt, J., Van Hook, J., &amp; Fix, M. (2018). Commentary on “The number of undocumented immigrants in the United States: Estimates based on demographic modeling with data from 1990-2016.” PLoS ONE, 13(9), 1–10. <a href="https://doi.org/10.1371/journal.pone.0204199" class="uri">https://doi.org/10.1371/journal.pone.0204199</a></p></li>
+<li><p>(<a href="../capps_bachmeier_vanhook_2018/">Summary</a>) Capps, R., Bachmeier, J. D., &amp; Van Hook, J. (2018). Estimating the Characteristics of Unauthorized Immigrants Using U.S. Census Data: Combined Sample Multiple Imputation. Annals of the American Academy of Political and Social Science, 677(1), 165–179. <a href="https://doi.org/10.1177/0002716218767383" class="uri">https://doi.org/10.1177/0002716218767383</a></p></li>
+</ul>
+</div>
+<div id="respondent-driven-sampling" class="section level4">
+<h4>Respondent-driven sampling</h4>
+<ul>
+<li><p>(<a href="../merli_etal_2015/">Summary</a>) Merli, M. G., Moody, J., Smith, J., Li, J., Weir, S., &amp; Chen, X. (2015). Challenges to recruiting population representative samples of female sex workers in China using Respondent Driven Sampling. Social Science and Medicine, 125, 79–93. <a href="https://doi.org/10.1016/j.socscimed.2014.04.022" class="uri">https://doi.org/10.1016/j.socscimed.2014.04.022</a></p></li>
+<li><p>(<a href="../crawford_etal_2018/">Summary</a>) Crawford, F. W., Wu, J., &amp; Heimer, R. (2018). Hidden population size estimation from respondent-driven sampling: a network approach. Journal of the American Statistical Association, 113(522), 755–766. <a href="https://doi.org/10.1080/01621459.2017.1285775.Hidden" class="uri">https://doi.org/10.1080/01621459.2017.1285775.Hidden</a></p></li>
+<li><p>Crawford, F. W. (2016). The graphical structure of respondent-driven sampling. Sociological Methodology, 46(1), 187–211. <a href="https://doi.org/10.1177/0081175016641713" class="uri">https://doi.org/10.1177/0081175016641713</a></p></li>
+<li><p>(<a href="../helms_etal_2021/">Summary</a>) Helms, Y. B., Hamdiui, N., Kretzschmar, M. E. E., Rocha, L. E. C., Van Steenbergen, J. E., Bengtsson, L., Thorson, A., Timen, A., &amp; Stein, M. L. (2021). Applications and recruitment performance of web-based respondent-driven sampling: Scoping review. Journal of Medical Internet Research, 23(1). <a href="https://doi.org/10.2196/17564" class="uri">https://doi.org/10.2196/17564</a></p></li>
+<li><p>Li, J., Valente, T. W., Shin, H. S., Weeks, M., Zelenev, A., Moothi, G., Mosher, H., Heimer, R., Robles, E., Palmer, G., &amp; Obidoa, C. (2018). Overlooked threats to respondent driven sampling estimators: Peer recruitment reality, degree measures, and random selection assumption. AIDS and Behavior, 22(7), :2340-2359. <a href="https://doi.org/10.1007/s10461-017-1827-1" class="uri">https://doi.org/10.1007/s10461-017-1827-1</a></p></li>
+<li><p>Mouw, T., &amp; Verdery, A. M. (2012). Network Sampling with Memory: A Proposal for More Efficient Sampling from Social Networks. Sociological Methodology, 42(1), 206–256. <a href="https://doi.org/10.1177/0081175012461248" class="uri">https://doi.org/10.1177/0081175012461248</a></p></li>
+<li><p>(<a href="../goel_salganik_2010/">Summary</a>) Goel, S., &amp; Salganik, M. J. (2010). Assessing respondent-driven sampling. Proceedings of the National Academy of Sciences of the United States of America, 107(15), 6743–6747. <a href="https://doi.org/10.1073/pnas.1000261107" class="uri">https://doi.org/10.1073/pnas.1000261107</a></p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="section-2c-simulating-population-processes" class="section level3">
+<h3>SECTION 2C: Simulating population processes</h3>
+<div id="intro-to-agent-based-modelling" class="section level4">
+<h4>Intro to agent-based modelling</h4>
+<ul>
+<li><p>Billari, F.C., Fent, T., Prskawetz, A., &amp; Scheffran, J. (2006). Agent-based computational modelling: An introduction. In eds. Billari, Fent, Prskawetz, Scheffran, Agent-based computational modelling: Applications in demography, social, economic and environmental sciences.</p></li>
+<li><p>(<a href="../hilton_bijak_2016/">Summary</a>) Hilton, J. and Bijak, J. (2016). Design and analysis of demographic simulations. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Williams, N.E., O’Brien, M.L. (2016). Using survey data for agent-based modelling: design and challenges in a model of armed conflict and population change. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Grow, A. (2016). Regression metamodels for sensitivity analysis in agent-based computational demography. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>Wolfson M., Gribble, S., &amp; Beall, R. (2016). Exploring contingent inequalities: Building the theoretical health inequality model. In eds. Bavel, Grow, Agent-based modelling in population studies.</p></li>
+<li><p>(<a href="../kashyap_villavicencio_2016/">Summary</a>) Kashyap, R., &amp; Villavicencio, F. (2016). The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth: A Simulation Approach. Demography, 53(5), 1261–1281. <a href="https://doi.org/10.1007/s13524-016-0500-z" class="uri">https://doi.org/10.1007/s13524-016-0500-z</a></p></li>
+</ul>
+</div>
+<div id="agent-based-modelling-and-neighborhood-choice" class="section level4">
+<h4>Agent-based modelling and neighborhood choice</h4>
+<ul>
+<li><p>(<a href="../bruch_mare_2006/">Summary</a>) Bruch, E. E., &amp; Mare, R. D. (2006). Neighborhood choice and neighborhood change. American Journal of Sociology, 112(3), 667–709. <a href="https://doi.org/10.1086/507856" class="uri">https://doi.org/10.1086/507856</a></p></li>
+<li><p>Van de Rijt, A., Siegel, A., &amp; Macy, M. W. (2009). Neighborhood chance and neighborhood change: A comment on Bruch and Mare. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/588795" class="uri">https://doi.org/https://doi.org/10.1086/588795</a></p></li>
+<li><p>Bruch, E. E., &amp; Mare, R. D. (2009). Preferences and pathways to segregation: Reply to Van de Rijt, Siegel, and Macy. American Journal of Sociology, 114(4). <a href="https://doi.org/https://doi.org/10.1086/597599" class="uri">https://doi.org/https://doi.org/10.1086/597599</a></p></li>
+<li><p>Clark, W. A. V., &amp; Fossett, M. (2008). Understanding the social context of the Schelling segregation model. Proceedings of the National Academy of Sciences of the United States of America, 105(11), 4109–4114. <a href="https://doi.org/10.1073/pnas.0708155105" class="uri">https://doi.org/10.1073/pnas.0708155105</a></p></li>
+<li><p>Bruch, E. E., &amp; Mare, R. D. (2012). Methodological Issues in the Analysis of Residential Preferences, Residential Mobility, and Neighborhood Change. Sociological Methodology, 42(1), 103–154.https://doi.org/10.1177/0081175012444105</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I don’t have a specific definition of ‘recent’ in mind and the precise cutoff probably varies by across research questions. I also think of ‘recent’ as a moving target – what constitutes computational demography seems to change over time as tools and available data evolve.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Design and Analysis of Demographic Simulations</title>
+			<link>https://aridecterfrain.com/posts/hilton_bijak_2016/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/hilton_bijak_2016/</guid>
+			<description>Jason Hilton and Jakub Bijak, 2016 This is a chapter in Bavel and Grow’s book on agent-based modeling in demography. Per the title, this chapter provides guidance on best practices for how to design and analyze simulations. Most of these tips apply generally across any simulation. The techniques provided are meant to handle the complexity of agent-based models, which often combine multiple behavioral functions in ways that lead to nonlinearities that can be challenging to model.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="jason-hilton-and-jakub-bijak-2016" class="section level2">
+<h2>Jason Hilton and Jakub Bijak, 2016</h2>
+<p>This is a chapter in Bavel and Grow’s book on agent-based modeling in demography. Per the title, this chapter provides guidance on best practices for how to design and analyze simulations. Most of these tips apply generally across any simulation. The techniques provided are meant to handle the complexity of agent-based models, which often combine multiple behavioral functions in ways that lead to nonlinearities that can be challenging to model.</p>
+<div id="section-1-design" class="section level3">
+<h3>Section 1: Design</h3>
+<p>The first topic they discuss is how to design experiments that test how a simulation changes in response to changes in inputs. Ideally we would want to rerun a simulation over a grid of all of our inputs. For instance in a typical marriage market simulation, there is an input that determines the number of married individuals at the start of the simulation, two parameters determining the radius of the region within which agents search for partners, and one parameter determining the size of an agents’ social network.</p>
+<p>Ideally we would want to perform a complete grid search over these parameters, checking the output for every possible combination of inputs. For continuous inputs this is outright impossible. Even if we make every variable discrete, the number of possible combinations of inputs increases in a combinatorial way.</p>
+<p>To get around this, the authors suggest using a latin hypercube instead of a grid. A latin hypercube is a subset of the grid chosen so that inputs never reoccur together with the same values. This strategy is meant to approximate covering the full parameter space without checking every single entry in the grid<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Doing this can often reduce the number of simulations that need to be run by ten times or more.</p>
+</div>
+<div id="section-2-analysis" class="section level3">
+<h3>Section 2: Analysis</h3>
+<p>This section focusses on how to account for uncertainty in the models, of which the authors note there are many sources. The ‘brute force’ method for this, and the method I’ve seen most in other agent-based modeling papers, is to simply run a simulation many times in a Monte-Carlo to get sampling distributions over outputs for each input combination. The authors note that this, too, can be computationally prohibitive even when researchers have access to remote computing power and large numbers of processors.</p>
+<p>They suggest an alternative approach of using statistical emulators. Basically, once enough simulations have been run, these can be used to learn the parameters of a statistical model that describes how outputs are a function of inputs. Once the model is trained, the modeler does not need to rerun simulations anymore, they can just generate predictions from the statistical model instead. They can also describe the total uncertainty of the model in terms of the spread parameters of the emulator. The authors present Gaussian process emulators as an example. These treat the distribution of outputs as a joint multivariate normal distribution and assumes that similar sets of input parameters yield similar outputs.</p>
+<p>This is an interesting idea and it makes a lot of sense as a logical solution to the challenge of efficiently capturing uncertainty. However, I have some reservations. It seems as though replacing a simulation with a statistical model does get away from the ‘heart and soul’ of the exercise, particularly given that, as the authors note, agent-based models are often full of unexpected nonlinearities that might get lost in the modelling. It seems like to whole point of running simulations instead of collecting empirical data is to have more control over inputs and to be able to fully explore the input space. In treating simulations like empirical data, we seem to lose a lot of that flexibility.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This seems useful more generally. For instance, when developing machine learning models we often perform grid search cross-validation to obtain the best parameters for the model. Complex modeling pipelines have dozens to hundreds of parameters and complete grid searches over them are impossible. Latin hypercubes may represent a solution, at least to narrow the grid.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Estimating the characteristics of unauthorized immigrants using U.S. Census Data: Combined Sample Multiple Imputation</title>
+			<link>https://aridecterfrain.com/posts/capps_bachmeier_vanhook_2018/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/capps_bachmeier_vanhook_2018/</guid>
+			<description>Randy Capps, James D. Bachmeier, and Jennifer Van Hook, 2018 This review paper provides an overview of common methods for imputing the authorization status of immigrants in the US in large Census Bureau surveys like the CPS and ACS. The idea is that although these surveys do not ask about the authorization status of migrants, we can guess the status of each respondent using other information about them. There are several approaches to doing this, which this paper describes in some detail:</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="randy-capps-james-d.-bachmeier-and-jennifer-van-hook-2018" class="section level2">
+<h2>Randy Capps, James D. Bachmeier, and Jennifer Van Hook, 2018</h2>
+<p>This review paper provides an overview of common methods for imputing the authorization status of immigrants in the US in large Census Bureau surveys like the CPS and ACS. The idea is that although these surveys do not ask about the authorization status of migrants, we can guess the status of each respondent using other information about them. There are several approaches to doing this, which this paper describes in some detail:</p>
+<div id="logical-imputation" class="section level4">
+<h4>Logical imputation</h4>
+<p>Logical imputation is the most straightforward method. It involves reducing the sample of possibly unauthorized respondents in Census samples according to logical rules. For instance, respondents who report that they are naturalized U.S. citizens can be immediately ruled out, as can veterans, active duty military personnel, and those performing specialty occupations like lawyers or doctors. It is also reasonable to rule out respondents who report receiving public assistance that requires legal status. Once all such rules have been applied the remaining pool of respondents is randomly assigned to a classification of legal permanent resident or unauthorized such that the total number of unauthorized migrants ends up near an expected total, which is typically derived using the residual method or using estimates of subgroup sizes from other data sources.</p>
+<p>Both steps of this process are subject to some biases. The first because it assumes the correctness of all responses, and the second because of the uncertainty introduced arbitrary random assignment, and because results are contingent on the quality of the underlying data used to construct totals.</p>
+</div>
+<div id="statistical-imputation" class="section level4">
+<h4>Statistical imputation</h4>
+<p>Statistical imputation uses information from a small sample of survey data that includes authorization status to impute the status of respondents in a much larger survey. Typically, the Survey of Income and Program Participation (SIPP) is used as the smaller, donor sample. The SIPP is a nationally representative survey of people living in the US that includes roughly 9000 immigrants and a question about immigration status. The basic idea is to use the SIPP to learn to predict unauthorized status using other variables shared between both datasets, like demographics, occupation, etc. These statistical approaches are deemed current best practice for using the ACS or CPS for substantive research on unauthorized immigrants.</p>
+<p>The best practice of the best practice for statistical imputation of immigrant status is combined-sample multiple imputation (CSMI), which has been shown to yield low-bias estimates in the context of OLS regressions where immigrant status is an independent variable (Van Hook et al., 2015). CSMI is a four-step procedure, which is well described by the original authors of the technique, <a href="https://journals.sagepub.com/doi/10.1177/0049124113502947">Rendall et al., 2013</a>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Fit a logit model using data from SIPP, regressing authorization status on all variables included in the model.</p></li>
+<li><p>For each observation in the ACS data, an authorization status randomly select an authorization status with probability given by the logit parameters and the ACS observation’s values of all other variables.</p></li>
+<li><p>Estimate the model of interest using the imputed variable.</p></li>
+<li><p>Repeat steps 2 and 3 repeatedly, then average over the resulting effect.</p></li>
+</ol>
+<p>There are a number of conditions required for the validity of this to hold. First, both samples must come from the same sampling frame. This is conveniently the case here, because SIPP, the ACS, and the CPS are all administered nationally by the Census Bureau. The same-universe condition can be further tested by comparing the distributions of all variables between the two samples. Second, if we want to run further statistical analyses once status has been imputed, all variables included in future models must be jointly observed and used in the imputation. Otherwise the estimates from later statistical analyses will quickly drift from the truth, as Van Hook et al., show in Monte Carlo simulations.</p>
+<p>There are two other things worth noting about this method. First, from Van Hook et al. 2015, it’s notable that multiple imputation doesn’t really improve much over single imputation in testing, either in the size of standard errors or in the bias of estimates. This is notable, and perhaps more efficiency gains could be earned by increasing the number of iterations of multiple imputation (they use 10).</p>
+<p>Second, I was initially tempted to think that machine learning algorithms like Lasso or Elasticnet might help further reduce the bias in the final estimation by precisely honing the parameters in the model. But then I realized these types of algorithms are mainly meant to counteract overfitting while using highly parameterized models. For CMSI, we don’t actually care about overfitting at all because we’re assuming both sets of data come from the same world. This means the logistic regression we run to estimate the probability that respondents are unauthorized can include every possible interaction between variables, and variables taken to multiple powers. If machine learning algorithms could be helpful here, it might be in the setting where we’re leveraging data from outside the Census Bureau and we’re worried about overfitting to the characteristics unique to some other sampling frame.</p>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Forecasting elections with non-representative polls</title>
+			<link>https://aridecterfrain.com/posts/wang_etal_2015/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/wang_etal_2015/</guid>
+			<description>Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015 This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.
+The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="wei-wang-david-rothschild-sharad-goel-and-andrew-gelman-2015" class="section level2">
+<h2>Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015</h2>
+<p>This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.</p>
+<p>The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console. Researchers at Microsoft administered election poll surveys via the Xbox online system in the months leading up to the election, to see whether these data could be used to predict the outcome of the election. Unsurprisingly, the Xbox sample has a dramatically different gender and age distribution than the voters who turned out to vote in the election. Nonetheless, they are able to obtain estimates that perform well compared to aggregates of official polls.</p>
+<p>The “secret sauce” for handling non-representativeness here is MRP, which enables researchers to use what they know about the population to re-weight the data in their sample, and to do so even with sparse data. The basic premise is to divide the sample up into meaningful subgroups, estimate the outcome of interest within each, then aggregate the subgroups estimates together, weighting each by their known population magnitude. We might worry that some of the subgroups we want to consider will have too few observations to yield reliable estimates, and this is where the “M” for “multilevel” comes in. Instead of running separate estimations for each subgroup, all the estimates can be carried out at once in a model that enables pooling between similar subgroups. This means even in subgroups with little or no data, one can achieve an estimate with reasonable levels of uncertainty by borrowing information from other cells.</p>
+<div id="in-a-bit-more-detail" class="section level3">
+<h3>In a bit more detail…</h3>
+<p>The basic structure of the model used in the paper is:</p>
+<p><span class="math display">\[
+Y_i = \alpha_0 + a_{j[i]}^{state} + a_{j[i]}^{sex} + a_{j[i]}^{age} + a_{j[i]}^{race} + ...
+\]</span></p>
+<p>Here, all the <span class="math inline">\(a_{j[i]}\)</span> terms shift the level of <span class="math inline">\(Y_i\)</span> according to its subgroup. Each of these level shifters is assigned prior probability distribution. In this case, the authors use a normal prior with zero mean, and assign hyperpriors to the variance. Fitting this model yields a set of parameters from which predicted values of <span class="math inline">\(Y\)</span> can be produced for each combination of <span class="math inline">\(a_j\)</span>’s. For instance, once we’ve estimated the level shifters for white voters, female voters, voters aged 25-35, and voters from Texas, we can sum these with <span class="math inline">\(\alpha_0\)</span> to yield an estimate for voters with all of those characteristics. Then we aggregate the estimates for each subgroup, where each subgroup is weighted by their known presence in the population:</p>
+<p><span class="math display">\[
+\hat{y}^{PS} = \frac{\sum_{k=1}^KN_j\hat{y_j}}{\sum_{k=1}^KN_j}
+\]</span></p>
+<p>What’s nice about MRP is you don’t need to calibrate every subgroup against a ground-truth equivalent, an approach taken elsewhere (eg.<a href="../zagheni_weber_gummadi_2017/">Zagheni, Weber, and Gummadi, 2017</a>). Here, all we have to know is the population distribution of demographic subgroups, which are often well-measured in Censuses. However, MRP is only ultimately applicable in situations where we’re interested in a population quantity, like the proportion of American voters supporting Obama. If our goal is to decompose our variable of interest and examine how it varies by demographics, we’re still stuck with potentially biased estimates.</p>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Hidden Population Size Estimation From Respondent-Driven `Sampling:` A Network Approach</title>
+			<link>https://aridecterfrain.com/posts/crawford_wu_heimer_2019/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/crawford_wu_heimer_2019/</guid>
+			<description>Forrest W. Crawford, Jiacheng Wu, Robert Heimer, 2018 This paper proposes a method for estimating the population size of hidden groups by leveraging network information from a sample collected via respondent-driven sampling (RDS). The “big idea” behind this paper is that a process of (RDS) is in some way a function of the total size of the network being sampled. The authors cleverly develop a probability model for how a respondent-driven network will develop, given a particular network size and probability of underlying edges in the network.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="forrest-w.-crawford-jiacheng-wu-robert-heimer-2018" class="section level2">
+<h2>Forrest W. Crawford, Jiacheng Wu, Robert Heimer, 2018</h2>
+<p>This paper proposes a method for estimating the population size of hidden groups by leveraging network information from a sample collected via respondent-driven sampling (RDS). The “big idea” behind this paper is that a process of (RDS) is in some way a function of the total size of the network being sampled. The authors cleverly develop a probability model for how a respondent-driven network will develop, given a particular network size and probability of underlying edges in the network. The model incorporates the actual recruitment edges made, the degree of each sampled individual, the time it takes for someone to recruit their neighbor.</p>
+<p>The model begins by assuming a the underlying graph <span class="math inline">\(G = (V, E)\)</span> of individuals in the hidden population can be described by what’s called an Erdős-Rényi random graph, which is basically a random graph where each edge has an equal probability, <span class="math inline">\(p\)</span>, of occurring. Given this starting point, the degree, <span class="math inline">\(d_i\)</span>, of any individual in the graph follows a binomial distribution. The authors use the following notation:</p>
+<p><span class="math display">\[
+d_i \sim Binomial(N, p)
+\]</span></p>
+<p>There are <span class="math inline">\(N\)</span> total nodes in the graph. This is what the authors want to estimate - the total population size. Individual <span class="math inline">\(i\)</span> can have edges to all <span class="math inline">\(N\)</span> others, and does so with probability <span class="math inline">\(p\)</span>.</p>
+<p>This is the basic intuition behind the model, but it gets more complicated quickly. To begin with, a recruitment network like the one constructed during RDS is not a random graph</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Inferring International and Internal Migration Patterns from Twitter Data</title>
+			<link>https://aridecterfrain.com/posts/zagheni_etal_2014/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/zagheni_etal_2014/</guid>
+			<description>Emilio Zagheni, Venkata Rama Kiran Garimella, Ingmar Weber, and Bogdan State, 2014 This is one of the earlier papers co-authored by Emilio Zagheni on the utility of digital trace and social media data for demographic monitoring. It attempts to use Twitter data to estimate internal and international migration flows for OECD countries. The importance of the paper comes from the severe challenges of measuring migration flows using traditional data collection procedures like a census.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="emilio-zagheni-venkata-rama-kiran-garimella-ingmar-weber-and-bogdan-state-2014" class="section level2">
+<h2>Emilio Zagheni, Venkata Rama Kiran Garimella, Ingmar Weber, and Bogdan State, 2014</h2>
+<p>This is one of the earlier papers co-authored by Emilio Zagheni on the utility of digital trace and social media data for demographic monitoring. It attempts to use Twitter data to estimate internal and international migration flows for OECD countries. The importance of the paper comes from the severe challenges of measuring migration flows using traditional data collection procedures like a census. Migration flows are highly dependent on recent trends. This makes them challenging to estimate using the Census, which takes place only every five or ten years in most countries.</p>
+<p>The dataset used in the paper comes from 500,000 Twitter users over a year-long period, whose Tweets all have geolocations. It’s worth noting that Tweets no longer come with geographic information, although locations can be backed out of some Tweets with some effort.</p>
+<p>The authors want to present the demographic breakdown of the Twitter sample for comparison against the OECD. They do this using facial recognition software that estimates a person’s age and gender from their profile picture. I don’t think this approach would pass muster today given the known biases of such tools. Nonetheless, the resulting population pyramind essentially matches my expectations about the demographic breakdown of Twitter users in 2013-14:</p>
+<p><img src="/misc_img/zagheni_etal_2014_poppyramid.png" style="width:50.0%" /></p>
+<p>Most Twitter users were far younger than we would expect across the population, and the sample contains noticeably more males than females.</p>
+<p>The most important proposal made in this paper is the use of a “difference-in-difference” estimator to circumvent the problem of non-representativeness:</p>
+<p><span class="math display">\[
+\hat{\delta} = (x_i^t - \bar{x}^t) - (x_i^{t-1} - \bar{x}^{t-1})
+\]</span>
+<span class="math inline">\(\hat{\delta}\)</span> estimates the compares the change in quantity <span class="math inline">\(x\)</span> for area <span class="math inline">\(i\)</span> relative to the mean change across all areas. In general, the authors argue, we can use this estimator to get unbiased measures of the <em>change</em> in a quantity of interest from biased data, as long as we assume that bias is constant over time. The argument is that even if we can’t learn about levels of migration flows, we can at least learn how things are changing in a given area, relative to the average. In this paper, this type of estimator is used to show that Southern European countries experienced declining outmigration, relative to the rest of the OECD, throughout the period.</p>
+<p>This is a cool innovation, although it does seem to have some drawbacks. First, it might be hard to convince ourselves that bias holds constant over time. For instance, we might expect the bias in data from a platform like Twitter to decline over time as more and more people join and the Twitter population comes to increasingly reflect the real-world population. Secondly, to really make these relative changes meaningful we would probably need to collect data for quite a long time, or to collect it before and after some shock. For example, it’s a bit hard to interpret the relative decline in outmigration from Southern European countries over the period from May 2011 through September 2012.</p>
+<p>Despite these drawbacks, the difference-in-difference approach has become valuable for demonstrating the utility of many future digital trace data sources, for which bias is difficult or impossible to model. For instance, I believe this approach is used for many of the measures included in the recent <a href="https://opportunityinsights.org/paper/tracker/">Opportunity Insights COVID-19 paper</a>, which uses data from a number of private internet companies to measure the economic impact of stay-at-home orders.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Leveraging Facebook&#39;s advertising platform to monitor stocks of migrants</title>
+			<link>https://aridecterfrain.com/posts/zagheni_weber_gummadi_2017/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/zagheni_weber_gummadi_2017/</guid>
+			<description>Emilio Zagheni, Igmar Weber, and Krishna Gummadi, 2017 This paper presents Facebook’s marketing API as a tool for social science research and demonstrates the value of this tool for measuring migrant stocks in the US and internationally. The API enables advertisers to programmatically purchase ads on the platform. Before advertisers purchase an ad targeting a particular demographic group, Facebook provides an estimate of the number of monthly active users in that group.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="emilio-zagheni-igmar-weber-and-krishna-gummadi-2017" class="section level2">
+<h2>Emilio Zagheni, Igmar Weber, and Krishna Gummadi, 2017</h2>
+<p>This paper presents Facebook’s marketing API as a tool for social science research and demonstrates the value of this tool for measuring migrant stocks in the US and internationally. The API enables advertisers to programmatically purchase ads on the platform. Before advertisers purchase an ad targeting a particular demographic group, Facebook provides an estimate of the number of monthly active users in that group. The authors give the example of an ad targeting Italian expats aged 18 and over living in the state of Washington. Facebook estimates there are 3,800 such users. By programmatically calling this API and requesting reach estimates, one can construct a detailed demographic picture of the Facebook population.</p>
+<p>This data source holds great potential since it is available on a monthly basis and it is decomposable to small geographies and narrowly defined subgroups. To realize this potential, however, it must either be representative of the underlying population, or amenable to adjustment so that it reflects the underlying population. The plot below shows the correspondence between Facebook estimates and ACS estimates of the number of expats from different countries currently living in different US states. The Facebook data explains 94% of the variation in the ACS, which suggests a fairly strong correspondence.</p>
+<p><img src="/misc_img/zagheni_weber_gummadi_2017_corrplot.png" style="width:50.0%" /></p>
+<p>The authors go on to decompose the bias in the data across age and country of origin, and fit a linear model to calibrate the biases within each country-of-origin by age subgroup. They show that estimates produced by predicting based on the fitted regression model yield 34% lower errors than the naive estimates.</p>
+<p>As far as I can tell, there isn’t really a paper outlining how to introduce a new dataset with potential demographic estimation. Such a paper probably out to be written. In the absence such a pedagogical paper, I think this one does a good job laying out the necessary things to cover:</p>
+<ol style="list-style-type: decimal">
+<li>Describe how the data are collected, and why it is potentially useful</li>
+<li>Plot out how the data compare to some ground truth estimate (probably from a Census)</li>
+<li>Assess the extent to which the data can be calibrated against these ground truth data.</li>
+</ol>
+<p>In some ways, this feels like the bare minimum. It’s probably always better to include specific applications that demonstrate the value of the data over and above existing measures. At the same time, Emilio Zagheni and co. have shown here that a valid approach is to first publish this kind of introductory paper, and then follow up with future papers focussing on specific applications (eg. nowcasting (Alexander, Polimis, and Zagheni, 2020), capturing migration shocks (Alexander, Polimis, and Zagheni, 2019)).</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Measuring Economic Policy Uncertainty</title>
+			<link>https://aridecterfrain.com/posts/baker_bloom_davis_2016/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/baker_bloom_davis_2016/</guid>
+			<description>Scott Baker, Nicholas Bloom, and Steven Davis, 2016 The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.
+The index is so simple: Just count up the number of “articles in 10 leading U.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="scott-baker-nicholas-bloom-and-steven-davis-2016" class="section level2">
+<h2>Scott Baker, Nicholas Bloom, and Steven Davis, 2016</h2>
+<p>The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.</p>
+<p>The index is so simple: Just count up the number of “articles in 10 leading U.S. newspapers that contain the following trio of terms: ‘economic’ or ‘economy’; ‘uncertain’ or ‘uncertainty’; and one or more of ‘Congress,’ ‘deficit,’ ‘Federal Reserve,’ ‘legislation,’ ‘regulation,’ or ‘White House.’” (p.1594). That’s it. That’s the index<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>What’s so impressive about this paper is a) the qualitative effort that went into establishing the face validity of the measure, and b) that despite its simplicity, the authors are able to demonstrate its utility in very rigorous and compelling ways. I’ll talk about each of these.</p>
+<p>The authors document and the incredibly labor-intensive coding procedure they used to narrow in on their list of keywords. The process involves multiple rounds of audits by dozens of research assistants and a 65-page guidebook. Through auditing, they labeled a sizeable number of documents and narrowed in on a set of candidate keywords. Then, they constructed indices from every possible combination of keywords in their list and tested which permutation most closely match the hand-labeling of documents. The best-fitting set of keywords matches up with the hand-labeled index like this:</p>
+<p><img src="/misc_img/baker_bloom_davis_2016.png" style="width:60.0%" /></p>
+<p>Obviously a strong correlation. They also include appendices that show the effect of dropping any single keyword from the list is minimal. All in all, this is a model of rigorous text-based measure construction. And amazingly it doesn’t involve any fancy NLP techniques at all.</p>
+<p>The authors also do an incredible job of demonstrating that the index has practical applications and fits within existing economic frameworks as expected. They cover the basics of establishing convergent validity by showing that the EPU index correlates with other measures of uncertainty. They do this first using a measure of option price volatility. They also use the frequency of the word “uncertain” in the ‘Beige Book’, which is a 15,000 word document released eight times a year by the Federal Open Market Committee and summarizes the concerns expressed by businesses to the major Federal Reserve Banks across the U.S. They <em>also</em> do a similar analysis of firms’ 10-K filings (which are basically annual reports that include more financial details).</p>
+<p>But they don’t stop there! Going even further, the authors note that firms should differ in their exposure to policy uncertainty depending how much of their revenues come from government contracts. This motivates a validation exercise using firm-level data in a shift-share type setup. They use private and public data on Federal contracts to measure industry-level exposure policy uncertainty as the share of industry revenue that comes from government contracts<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>Using these exposure measures, they fit a regression model of firm option volatility on the interaction between exposure and the national EPU index, while including firm and time fixed effects in the model. The coefficient on the interaction implies that “for every 1% increase in our policy uncertainty index a firm with, say, a 50% government revenue share would see its stock volatility rise by 0.11%” (p. 1620).</p>
+<p>What’s so powerful about this last result is how closely it ties the EPU measure to such a specific outcome - the implied volatility within firms most affected by government fiscal policy. I think this paper really has it all when it comes to presenting and validating measures based on unique data.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Okay, it’s a little more complicated than that. First, the article frequencies are normalized to account for variation over time and across magazines in the number of articles published. Also, this keyword-based index is the main version, but there are two others. The first measures the current price of assets that pay out based on future government fiscal policy, and the second measures disagreement between professional forecasters of future government purchases. In the paper, however, only the keyword-based index is presented.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>“At the top end, firms operating in the guided missiles and space vehicles and parts industry (SIC 376) derive 78% of their revenues from sales to the federal government. The corresponding figure for selected other industries with high exposures to federal purchases is 39% for ordnance and accessories (SIC 348); 27% for search, detection, navigation, guid- ance &amp; aeronautical systems (SIC 381); 21% for engineering services (SIC 871); 20% for aircrafts and parts (SIC 372); 15% for ship and boat building and repairing (SIC 373); 11% for blank books, loose leaf binders, and bookbinding (SIC 278); and 9% for heavy construction (SIC 160). Direct sales to the federal government are comparatively small in most other industries.” (p.1618)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Neighborhood choice and neighborhood change</title>
+			<link>https://aridecterfrain.com/posts/bruch_mare_2006/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/bruch_mare_2006/</guid>
+			<description>Elizabeth Bruch and Robert Mare, 2006 This paper takes aim at Schelling’s seminal agent-based models that showed how segregation results from individual choices of neighborhoods. First, a brief background on the Schelling model:
+Schelling’s model sets up a grid of black and white dots like a checkerboard. Here’s an image of small section of such a grid, focused on one agent and their surroundings.
+Schelling sets off a simulation meant to determine the consequences of white flight for segregation.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="elizabeth-bruch-and-robert-mare-2006" class="section level2">
+<h2>Elizabeth Bruch and Robert Mare, 2006</h2>
+<p>This paper takes aim at Schelling’s seminal agent-based models that showed how segregation results from individual choices of neighborhoods. First, a brief background on the Schelling model:</p>
+<p>Schelling’s model sets up a grid of black and white dots like a checkerboard. Here’s an image of small section of such a grid, focused on one agent and their surroundings.</p>
+<p><img src="/misc_img/bruch_mare_1.png" style="width:70.0%" /></p>
+<p>Schelling sets off a simulation meant to determine the consequences of white flight for segregation. Basically, he assumes that whites start wanting to move out of their current location on the grid when their immediate neighborhood becomes minority-white. Starting from this ‘choice function’, he simulates a number of iterations on the grid, where each iteration involves a randomly selected white or black dot making a choice about whether or not to move. The simulation plays out and leads to increased segregation. The conclusion, then, is that micro-level decisions by families and households to seek out neighborhoods where they are the majority group yields macro-level segregation.</p>
+<div id="bruch-and-mares-response" class="section level3">
+<h3>Bruch and Mare’s response</h3>
+<p>The thrust of Bruch and Mare’s paper is to evaluate the sensitivity of Schelling’s result to the shape of the choice function. Bruch and Mare set up a similar simulation and run it several times, each with a different choice function to define how the agents make their decisions. They observe how segregation changes over time in each case. Here are the different choice functions they assess:</p>
+<p><img src="/misc_img/bruch_mare_2.png" style="width:90.0%" /></p>
+<p>And here is how segregation changes over time in each case:</p>
+<p><img src="/misc_img/bruch_mare_3.png" style="width:70.0%" /></p>
+<p>The key takeaway from these plots is that the validity of Schelling’s conclusion about the inevitability of segregation really depends on the choice function that’s assumed. If we think that a white person’s preference for their neighborhood shifts as soon as they become a minority, Schelling’s conclusion holds. If, instead, their preferences are a linear function of their own neighborhood representation, Bruch and Mare show that this leads to much lower levels of segregation.</p>
+<p>The next logical question is: What do people’s choice functions really look like? Bruch and Mare use survey data that asks respondents to rate their neighborhood preferences to back out empirical choice functions and plot them. In particular, they seek any sign of a threshold in the choice function that would support Schelling’s choice function. Here are plots of the empirical choice functions:</p>
+<p><img src="/misc_img/bruch_mare_4.png" style="width:70.0%" /></p>
+<p>The authors argue that these curves are not indicative of the existence of a threshold, and I’m inclined to agree. Finally, the authors convert these curves into probability distributions and use them as choice functions in the simulation. This yields a simulation where the input parameters are empirically collected. Below are the final results, i.e. what happens to segregation across the grid when using an empirically derived choice function instead of the Schelling step function:</p>
+<p><img src="/misc_img/bruch_mare_5.png" style="width:70.0%" /></p>
+<p>Again, the result is clear. Segregation plateaus quickly in a simulation that reflects people’s self-reported preferences for homes.</p>
+<p>This is a very good paper, although there are two issues with it worth mentioning. First, even with empirical choice functions the models still feel a bit distant from reality. As the authors mention throughout the paper, there are many reasons why people make the choices they do when it comes to housing and neighborhoods. This model is hyperstylized and hones in exclusively on the role of neighborhood racial composition. Even then, it never incorporates empirical data on moves.</p>
+<p>Second, a response to this paper by <a href="https://www.journals.uchicago.edu/doi/10.1086/588795">Van de Rijt, Siegal and Macy</a> showed quite clearly that, just like Schelling’s conclusions are sensitive to the choice function used, Bruch and Mare’s conclusions are sensitive to the amount of randomness in the model. Basically, they show that segregation only plateaus when the agents’ decisions about whether and where to move are so random that they often move to neighborhoods where they are a smaller minority than where they previously lived. This mechanically reduces segregation and keeps it flat. If agents are instead programmed to move more deterministically to preferred neighborhoods, a continuous choice function does not prevent segregation at all. IF anything, it actually makes it worse.</p>
+<hr />
+<p>One clear reason Bruch and Mare are able to advance the Schelling model is that they had greater access to computational resources in the early 2000s than Schelling did in the late 1970s. This makes me wonder if, almost twenty years later, there might be further room to push the envelope.</p>
+<p>One can imagine, for instance, using modern spatial analysis tools to replace Bruch and Mare’s grid with something shaped like an actual neighborhood, and using the actual neighborhood boundaries and compositions to initialize the model. One can even think of inputting the actual changes in neighborhood composition between Decennial Censuses and using these changes to back out the underlying choice function. All of these things would be hard, but seemingly within the realm of possibility.</p>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Parental divorce is not uniformly disruptive to children’s educational attainment</title>
+			<link>https://aridecterfrain.com/posts/brand_etal_2019/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/brand_etal_2019/</guid>
+			<description>Jennie Brand, Ravaris Moore, Xi Song, and Yu Xie, 2019 This summary essentially covers two papers; the one in the title and a second paper published in Sociological Methodology, called “Uncovering Sociological Effect Heterogeneity using Machine Learning”, by some of the same authors. Both of these papers are about matching, which is a causal inference method the details of which are beyond the scope of this reading list. Also you probably now what it is.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="jennie-brand-ravaris-moore-xi-song-and-yu-xie-2019" class="section level2">
+<h2>Jennie Brand, Ravaris Moore, Xi Song, and Yu Xie, 2019</h2>
+<p>This summary essentially covers two papers; the one in the title and a second paper published in Sociological Methodology, called “Uncovering Sociological Effect Heterogeneity using Machine Learning”, by some of the same authors. Both of these papers are about matching, which is a causal inference method the details of which are beyond the scope of this reading list. Also you probably now what it is. If you don’t, basically it involves finding treated and control units who look the same on all other measures than the outcome, so that any differences in the outcome are plausibly attributable to the treatment.</p>
+<p>The first paper</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Research</title>
+			<link>https://aridecterfrain.com/posts/research/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/research/</guid>
+			<description>Computational Demography I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available here. I have one ongoing project in this area:
+Small Area Population Estimates from Consumer Data With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<hr />
+<div id="computational-demography" class="section level2">
+<h2>Computational Demography</h2>
+<p>I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available <a href="../cd_readinglist_2">here</a>. I have one ongoing project in this area:</p>
+<div id="small-area-population-estimates-from-consumer-data" class="section level4">
+<h4>Small Area Population Estimates from Consumer Data</h4>
+<p>With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people’s interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:</p>
+<ul>
+<li><p><em>Annual small-area estimates:</em> Researchers often need measures of year-over-year change in populations. The Census Bureau does not provide such measures for small geographies like tracts and block-groups on an annual basis, but consumer reference data does. This might make it uniquely useful, for example, for computing accurate rates of a virus like COVID-19, or measuring how population structures change after a natural disaster like a hurricane.</p></li>
+<li><p><em>Up-to-date estimates:</em> Policy decisions should be based on the most up-to-date information possible. The Census releases updated population information on a two-year schedule, so estimates of population levels in 2020 will be released towards the end of 2021. In contrast, we received consumer reference data for the entire United States in January 2021, almost a full year earlier than the Census.</p></li>
+<li><p><em>Estimates for any geographic unit:</em> There are lots of ways to divide up America. Demographers divide it into Census blocks and tracts. Education researchers look at school districts. Political scientists care about election precincts. Increasingly, researchers are interested in creating their own geographic buffers around particular neighborhoods and locations. The consumer reference data contains latitude-longitude coordinates for every household. By the magic of spatial data analysis, we can use these coordinates to count the number of people within any geographic area in which a researcher might be interested.</p></li>
+</ul>
+</div>
+</div>
+<div id="voting-behavior-and-election-fairness" class="section level2">
+<h2>Voting behavior and election fairness</h2>
+<p>This project emerged from my summer as a Data Science for Social Good Fellow at the University of Washington’s eScience Institute. Our team worked to revamp and publish an R package called <a href="https://cran.r-project.org/web/packages/eiCompare/index.html">eiCompare</a>, which contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Since releasing the package, our team has continued working to produce research that demonstrates the use of these tools in different regions and elections across the US, and continues to improve upon the methods included in the package.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>The association between gambling and financial, social and health outcomes in big financial data</title>
+			<link>https://aridecterfrain.com/posts/muggleton_etal_2020/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/muggleton_etal_2020/</guid>
+			<description>Naomi Muggleton and co-authors, 2021 This paper uses data from a large retail bank in the UK to study the association between gambling and other health and social outcomes that banks track. The dataset is large, containing 6.5 million banking customers over a 7 year span. The main findings of the paper can be summed up by one awesome figure:
+I’ve actually cut the figure off because it goes on and on and I can’t fit it all here.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="naomi-muggleton-and-co-authors-2021" class="section level2">
+<h2>Naomi Muggleton and co-authors, 2021</h2>
+<p>This paper uses data from a large retail bank in the UK to study the association between gambling and other health and social outcomes that banks track. The dataset is large, containing 6.5 million banking customers over a 7 year span. The main findings of the paper can be summed up by one <strong>awesome</strong> figure:</p>
+<p><img src="/misc_img/muggleton_2021_p1.png" /></p>
+<p>I’ve actually cut the figure off because it goes on and on and I can’t fit it all here. This figure was constructed in the following steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Take each month of each person’s banking activity and rank all those person-months according to the amount they spent on gambling.</p></li>
+<li><p>Bin those person-months into percentiles.</p></li>
+<li><p>For the person-months within each bin, take the mean value on all the other outcomes in the data.</p></li>
+<li><p>Plot the resulting 100 means as a function of gambling percentile.</p></li>
+</ol>
+<p>This is just a spectacular way to present the associations in the data. The first row, labelled “financial distress” outcomes, shows that activities like taking out payday loans or missing payments spike for people during months when they heavily engage in gambling. It almost looks like there’s some kind of threshold percentile after which gambling becomes problematic.</p>
+<p>We can also observe casual gamblers in the bottom row. When people gamble very little (this might be as little as one lottery ticket in a month, although we can’t tell because of the percentile transformation), they tend to also be spending more at bars and off-licenses. So this looks more like recreational gambling.</p>
+<p>Then in the middle we observe that gambling tends to be negatively associated with most forms of financial inclusion and financial planning. Things like having a mortgage, making mortgage payments, and having insurance are all increasingly common as people gamble less. The only financial activities that rise with gambling behavior are credit card use and debt recovery, which makes sense.</p>
+<p>The results of this paper are very intuitive and one might argue not novel or surprising. However, there is always value in documenting important social phenomena at a grand scale and with fine detail. I think such papers have great opportunity to make an actual direct impact on policy, especially when the results are so compellingly presented.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>The Dynamics of Son Preference, Technology Diffusion, and Fertility Decline Underlying Distorted Sex Ratios at Birth - A Simulation Approach</title>
+			<link>https://aridecterfrain.com/posts/kashyap_villavicencio_2016/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/kashyap_villavicencio_2016/</guid>
+			<description>Ridhi Kashyap and Francisco Villavicencio, 2016 This paper develops a simulation to explain the rising sex ratio at birth (SRB) across many countries in Asia. The model addresses an important theoretical question: Why has the ratio of male to female births been rising in many countries even as they modernize and son preference becomes less culturally salient?
+The answer, as their model shows, is that even as the proportion of women with a son preference has been declining, access to sex-selection technology has expanded.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="ridhi-kashyap-and-francisco-villavicencio-2016" class="section level2">
+<h2>Ridhi Kashyap and Francisco Villavicencio, 2016</h2>
+<p>This paper develops a simulation to explain the rising sex ratio at birth (SRB) across many countries in Asia. The model addresses an important theoretical question: Why has the ratio of male to female births been rising in many countries even as they modernize and son preference becomes less culturally salient?</p>
+<p>The answer, as their model shows, is that even as the proportion of women with a son preference has been declining, access to sex-selection technology has expanded. Access to this technology has a twofold effect. First, it enables parents to directly select for male children by aborting females. Second, it prevents parents from continuing to have children until they have a male.</p>
+<p>These mechanisms all lend themselves to a model. The authors construct such a model with the following set of input parameters:</p>
+<p><img src="/misc_img/kashyap_villavicencio_2016.png" style="width:80.0%" /></p>
+<p>They execute the model for the South Korean context. The assign specific functions to each of these parameters and try, where possible to map the onto South Korean data. After defining their inputs, they carry out many of the practices suggested in Bavel and Grow’s book: They using a Latin Hypercube to construct a grid over their inputs and they use regression metamodels to extrapolate the results from running the cube over the full grid.</p>
+<p>Their model moves in yearly increments, where each year people die and give birth at rates equivalent to estimates from the UN of South Korean demographic change. Meanwhile, access to sex-selective technology diffuses across the population of agents and women’s son preference declines over time.</p>
+<p>Likely because many of the model’s inputs were set using real data, it ends up conforming quite closely to observed trends in South Korea. Even more convincingly, they use RMSE to measure the deviation between the two.</p>
+<p><img src="/misc_img/kashyap_villavicencio_2016_2.png" style="width:80.0%" /></p>
+<p>After fitting their models, the authors run experiments to try and distinguish the roles of declining son preference and rising access to sex-selective technology. This figure is particularly informative:</p>
+<p><img src="/misc_img/kashyap_villavicencio_2016_3.png" style="width:80.0%" /></p>
+<p>It shows the results of running simulations where son-preference does not change from 1980 onward (stays at 50%), versus when it declines as modeled. They’ve also included a 100% constant son preference for reference. The plot shows the relative impacts of son-preference and access to technology on SRB. SRB rises from 1980-1990 as sex-selective technology diffuses. Under the constant son-preference, it rises more and stays high. In contrast, it rises less using a declining son-preference and continues declining throughout the 21st century.</p>
+<p>The conclusion, then, is that SRB can rise temporarily even under conditions of declining son-preference, just because sex-selective technology is becoming popular. The diffusion of this technology is temporary, however, and barring some cultural or technological shock, the overall trend will continue towards a lower SRB.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>The number of undocumented immigrants in the United States: Estimates based on demographic modelling with data from 1990 to 2016</title>
+			<link>https://aridecterfrain.com/posts/fazel_zarandi_etal_2018/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/fazel_zarandi_etal_2018/</guid>
+			<description>Mohammad Fazel-Zarandi, Jonathan S. Feinstein, and Edward H. Kaplan, 2018 This paper attempts to estimate the number of undocumented immigrants by starting from an estimate at an earlier point in time and estimating annual inflows outflows of undocumented immigrants up to the present. The main punchline of the paper is that the this demographic flow approach yields estimates roughly 1.5 to 2.5 times larger than those produced from the residual method.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="mohammad-fazel-zarandi-jonathan-s.-feinstein-and-edward-h.-kaplan-2018" class="section level2">
+<h2>Mohammad Fazel-Zarandi, Jonathan S. Feinstein, and Edward H. Kaplan, 2018</h2>
+<p>This paper attempts to estimate the number of undocumented immigrants by starting from an estimate at an earlier point in time and estimating annual inflows outflows of undocumented immigrants up to the present. The main punchline of the paper is that the this demographic flow approach yields estimates roughly 1.5 to 2.5 times larger than those produced from the residual method. The average estimate produced by the author’s simulation is 22.1 million undocumented immigrants, compared to 11.3 million from the residual method.</p>
+<p>The authors begin with an estimate in 1990 of 3.5 million undocumented immigrants (made from the residual method), and then construct a probabilistic model that takes in several different population inflow and outflow data sources at various time points to yield a trajectory of illegal immigrant stocks.</p>
+<p>To quantify inflows and outflows, the model combines data from a range of sources:</p>
+<ul>
+<li>1990 undocumented immigrant point estimate</li>
+<li>Estimated visa overstays for 2016, produced by the Department of Homeland Security (DHS).</li>
+<li>DHS data on number of border apprehensions per year, and DHS estimates of the apprehension <em>rate</em> from 2005-2015.</li>
+<li>Various assumed values of voluntary emigration by undocumented migrants out of the U.S.</li>
+<li>Various assumed estimates of circular migration (undocumented migrants leaving and returning).</li>
+<li>CDC mortality rates, adjusted to match estimates of the age-sex composition of the undocumented immigrant population.</li>
+<li>Annual deportations, directly from DHS data.</li>
+<li>DHS counts of the number of deferred action childhood arrivals (DACA).</li>
+</ul>
+<p>The model combines many snippets of data taken at different points in time and makes a lot of assumptions about how to use those data to inform the model. For instance, their simulations use an estimate from 2016 about the rate of immigrants who overstay their visa (therefore becoming undocumented), and for each of the previous 26 years they model the rate as somewhere between half and 1.5x the 2016 rate, with each multiplier being drawn at random from a uniform distribution. This assumption seems conservative. If the authors had applied expert knowledge instead of this random multiplier, their estimates would be less uncertain and probably just as high.</p>
+<p>The authors repeatedly emphasize that their modelling assumptions are conservative. In most cases I am inclined to agree, but the sheer number of assumptions certainly seems to raise the probability that one might be way off. Moreover, the way all the assumptions interact within the model, and the way some of them are made repeatedly year-over-year, makes it likely that one early and important mistake could result in large estimation errors.</p>
+<p>I think if I were a reviewer on this paper, I would want to see the authors fit their models with more of their assumptions left as parameters to estimate, and including a more recent estimate of the undocumented population. To convincingly demonstrate that they’re correct about underestimation via the residual method, they would need to show that the parameters in the model look absurd when <em>all</em> observed data is included.</p>
+<p>It also strikes me that the author’s explanation about non-response or misreporting by undocumented migrants should be empirically testable. There are ways to survey undocumented workers (eg. through respondent-driven sampling). Such a survey could ask undocumented immigrants if and how they indicate their immigration status when responding to the Census or ACS. Estimates from these surveys could be used to calibrate residual-based estimates and get a sense of how far off they might be.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>The social ties of immigrant communities in the United States</title>
+			<link>https://aridecterfrain.com/posts/herdagdelen_etal_2016/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/herdagdelen_etal_2016/</guid>
+			<description>Amac Herdagdelen, Bogdan State, Lada Adamic, and Winter Mason This paper uses an extensive Facebook network dataset to document the extent to which migrants from different countries have social ties to American citizens. These uniquely rich data were accessible to the authors because they all worked at Facebook or Instagram at the time. Before diving into the paper, a couple points worth discussing up front:
+ Most purely demographic research that tries to leverage digital trace data must work hard to justify both the representativeness of the data and the necessity of using it over old-school alternatives.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="amac-herdagdelen-bogdan-state-lada-adamic-and-winter-mason" class="section level2">
+<h2>Amac Herdagdelen, Bogdan State, Lada Adamic, and Winter Mason</h2>
+<p>This paper uses an extensive Facebook network dataset to document the extent to which migrants from different countries have social ties to American citizens. These uniquely rich data were accessible to the authors because they all worked at Facebook or Instagram at the time. Before diving into the paper, a couple points worth discussing up front:</p>
+<ul>
+<li><p>Most purely demographic research that tries to leverage digital trace data must work hard to justify both the representativeness of the data and the necessity of using it over old-school alternatives. In contrast, research on social networks and social integration does not face these same problems. There are very few good alternatives for studying social networks, and none achieve the same scale as Facebook. Further, sampling issues aside, the authors do not need to argue that their data capture a genuine snapshot of the social landscape because Facebook connections arguably define that landscape. They do this work anyways, but I don’t think they really have to.</p></li>
+<li><p>Although this paper is ultimately about the data and the methods used to analyze the data, the authors are deliberate in outlining the history of research on assimilation before diving into it. I appreciate this as a reader and it’s a good reminder not to cut corners when developing the theory to go along with a methods- or data-focused project.</p></li>
+</ul>
+<div id="now-on-to-the-data" class="section level4">
+<h4>Now, on to the data</h4>
+<p>In this paper the authors use a sample of 10 million Facebook users who list a hometown outside the US with at least two friends in their home country and the US. From these users the develop two aggregate measures, <strong>compatriot affinity</strong> and the <strong>exposure ratio</strong>. Compatriot affinity measures the proportion of all edges leaving any user from a given country that connect to another user from their same home country. For example, immigrants in Cuba have highest compatriot affinity - roughly 60% of their Facebook friends are also from Cuba. The exposure ratio measures the opposite, or the proportion of all edges leaving any user from a given country that connect to Americans. The two are almost the same, with differences being due to friendships between migrant groups. Here are the two plotted against each other. You can see Cuba in the top left.</p>
+<p><img src="/misc_img/herdagdelen_2016_p1.png" /></p>
+<p>This simple description is interesting in itself since it shows how migrants’ social experiences in the US differ depending on their country of origin. This level description might be hard or impossible to obtain with accuracy through traditional methods.</p>
+<p>The authors also include a questionable attempt to compare the geographic and online integration of immigrant communities. To measure geographic integration they compute dissimilarity, which is a very common and popular measure of neighborhood segregation. Usually dissimilarity is computed at the neighborhood level, and it’s magnitude can be interpeted as the proportion of people that would have to move to achieve a state of perfect diversity where every neighborhood’s composition matches the population composition of the broader region. Here, the authors use <strong>cities</strong> intead of neighborhoods, so their dissimilarity measure refers to segregation between major cities in the US instead of between neighborhoods. It’s hard to interpret this since we don’t usually think about cities being segregated from each other, and the though experiment of people moving between cities makes somewhat less sense. I don’t really think this analysis succeeds at what the authors intended, which is to compare geographic and online integration.</p>
+</div>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>The social ties of immigrant communities in the United States</title>
+			<link>https://aridecterfrain.com/posts/stewart_etal_2019/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/stewart_etal_2019/</guid>
+			<description>Ian Stewart, Rene Flores, Timothy Riffe, Ingmar Weber, and Emilio Zagheni, 2019 This is a really interesting paper about measuring cultural assimilation using the Facebook advertising platform. This platform is an increasingly common tool for sociological and demographic research. It provides estimates of an advertiser’s ‘reach’ should they target a particular subpopulation of Facebook users. In this case, the authors leverage the platform to measure the divergence of musical preferences between Mexican immigrants to the US and US nationals, focussing in on musical preferences as one culturally salient dimension along which assimilation can occur.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="ian-stewart-rene-flores-timothy-riffe-ingmar-weber-and-emilio-zagheni-2019" class="section level2">
+<h2>Ian Stewart, Rene Flores, Timothy Riffe, Ingmar Weber, and Emilio Zagheni, 2019</h2>
+<p>This is a really interesting paper about measuring cultural assimilation using the Facebook advertising platform. This platform is an increasingly common tool for sociological and demographic research. It provides estimates of an advertiser’s ‘reach’ should they target a particular subpopulation of Facebook users. In this case, the authors leverage the platform to measure the divergence of musical preferences between Mexican immigrants to the US and US nationals, focussing in on musical preferences as one culturally salient dimension along which assimilation can occur.</p>
+<p>The basic measures used in the paper are interest ratios, which is the ratio of the number of Facebook users from a given population who express interest in a particular genre to the number of users from that population expressing interest in any genre. That is,</p>
+<p><span class="math display">\[
+I_{p,i} = \frac{count(p,i)}{\sum_{j}count(p, j)}
+\]</span>
+Interest ratios quantify the interest that a population has in a genre of music. The next step to measure assimilation is to measure the proximity of interest ratios between populations. The authors put nicely how they want to do this:</p>
+<blockquote>
+<p>If the destination population is highly interested in hip-hop music, the origin population shows little interest in hip- hop, but the expat population from origin to destination is highly interested in hip-hop, we would say that the expat population is highly assimilated to the destination population with respect to hip-hop, meaning that expats match the taste of natives for the specific genre.</p>
+</blockquote>
+<p>This is exactly how I would try to define it. The definition is interestingly operationalized. To measure assimilation between a particular source population and US nationals, the authors proceed in the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Remove all interests that are more associated with the source pupolation than the destination population (<span class="math inline">\(I_{source} &gt; I_{US}\)</span>).</li>
+<li>Compute the difference between the interest ratios for source and destination populations for each inttterest, then remove all the interests where the difference falls below the 50th percentile. This means only the interests for which there are large base differences between people from Mexico and people from the US are included.</li>
+<li>For the remaining interests, compute the <strong>assimilation ratio</strong>:</li>
+</ol>
+<p><span class="math display">\[
+AR_i = \frac{I_{expat, i}}{I_{dest,i}}
+\]</span>
+This approach makes sense but it’s also a bit odd. It means later when the present the distributions of assimilation ratios across interests for the different migrant groups the distributions are not actually equivalent. The interests composing those distributions changes across groups. Here’s the figure:</p>
+<p><img src="/misc_img/stewart_etal_p1.png" style="width:70.0%" /></p>
+<p>You can see the method is working because most of the logged ratios are below zero (meaning most of the ratios are below 1). This means they’re only looking at interests favored by the destination group and they’re removed the rest. Precisely what has been removed actually changes across these panels, making direct comparisons more difficult than they seem.</p>
+<p>This figure also causes me to rethink my agreement with the above definition of assimilation. Shouldn’t there be a side of assimilation that has to do with the loss of interest in the culture of one’s origin country? Perhaps this ought to be captured or examined separately. It seems the method presented here could accommodate this analysis by flipping the way interests are subsetted.</p>
+<p>There’s also a really interesting plot of the assimilation ratios broken down by demographics:</p>
+<p><img src="/misc_img/stewart_etal_p2.png" style="width:70.0%" /></p>
+<p>Some features of the figure are expected, others less so. It makes sense that Spanish-speaking users would be less assimilated than bilignual and English speakers. Perhaps it also surprising that across all demographic groups, there is not much difference between second-generation Mexican migrants (orange) and first generation expats (blue). I might expect a larger gap between them, particular at younger ages. These estimates do seem fairly noisy, however.</p>
+</div>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Transforming Naturally Occurring Text Data Into Economic Statistics - The Case of Online Job Vacancy Postings</title>
+			<link>https://aridecterfrain.com/posts/turrell_etal_2019/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			
+			<guid>https://aridecterfrain.com/posts/turrell_etal_2019/</guid>
+			<description>Arthur Turrell and Co-Authors, 2019 This paper might go a bit beyond the bounds of a the ‘computational demography’ field, but I want to talk about it nonetheless! It’s also not irrelevant. The authors use a dataset of 15 million job adds to develop a measure of job vacancy flows and quantify the ‘tightness’ of the UK labor market. ‘Tightness’ is the ratio of the number of current job vacancies to the number of unemployed workers.</description>
+			<content type="html"><![CDATA[
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="arthur-turrell-and-co-authors-2019" class="section level2">
+<h2>Arthur Turrell and Co-Authors, 2019</h2>
+<p>This paper might go a bit beyond the bounds of a the ‘computational demography’ field, but I want to talk about it nonetheless! It’s also not <em>irrelevant</em>. The authors use a dataset of 15 million job adds to develop a measure of job vacancy flows and quantify the ‘tightness’ of the UK labor market. ‘Tightness’ is the ratio of the number of current job vacancies to the number of unemployed workers. It’s an important measure in some sub-fields of labor economics, but it might also be of interest to demographers who study people’s decisions about entry and exit the labor market.</p>
+<p>There are several interesting components of this paper. Perhaps its most innovative aspect, at least for this reading list, is the way it applies NLP tools can be used to construct measures of important economic or demographic variables from unstructured data. Here, the authors match jobs to SOC occupation codes by comparing the text descriptions posted by employers to the text descriptions of the SOC occupations. The full algorithm is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>First, check if the job title from an ad matches exactly to a SOC occupation. If so, assign it as an exact match. This step seems reasonable, although it’s certainly true that different companies can use different tasks to assign the same job. For instance, from company to company what distinguishes a data engineer from a data scientist may not be the same.</p></li>
+<li><p>In the absence of an exact match, the authors seek to match based on the text description of the ad. They first convert the full text description of the job into a Bag-of-words (BOW) representation weighted by term-frequency inverse-document frequency (TF-IDF). BOW representations convert a document into one-dimensional vector with length equal to the size of the total across the full corpus of text. For each document, the entries in the vector count the number of times each word occurs in that vector. Using TF-IDF weighting means that words are not entered in the bag-of-words as simple frequencies. Instead, they are weighted in such a way that magnifies the importance of rare words and limits the importance of very common words. This is one of many ways bring out the most meaningful text components of a document.</p></li>
+<li><p>Once the text has been processed, the authors get the five SOC occupations with text that most closely matches the BOW representation. Presumably, the SOC occupation descriptions have undergone the same pre-processing as the job ads. “Closeness” is measured using cosine similarity, which is one of many ways of measuring similarity between vectors.</p></li>
+<li><p>Among the final five candidate occupations for a job, the best is chosen using a fuzzy match.</p></li>
+</ol>
+<p>This procedure isn’t perfect. It encodes a number of ad hoc researcher decisions. In doing so, it becomes nearly impossible to quantify the statistical uncertainty carried through each step of the algorithm. It also assumes that the use of particular words by an employer implies the same meaning as the US Bureau of Labor Statistics, who maintain the SOC list. This may not always be the case. For instance, employers may exaggerate or understate the complexity of skills required for a job. Alternatively, employers in innovation-driven industries may quickly develop new qualifications and add them to their list of qualifications before the SOC descriptions can adjust. One could also argue that the methods they use are fairly basic, and that they could get better performance from a more modern NLP toolkit. However, I might argue that the incremental performance gains from such a shift might not be worth the effort in this case. Finally, the authors do not provide any explicit tests of how their algorithm performs. They could have, for instance, hand-labelled a small number of job ads and then applied their algorithm to see how many it got right. This is really the type of evaluation readers need to make a decision about the utility of the approach.</p>
+<p>Nonetheless, I think the authors’ use of unstructured text to essentially solve a missing data problem is quite generative. It suggests to future researchers that given unstructured text alone, one can still derive ways to get at the types of concrete measures economists and demographers care about.</p>
+</div>
+]]></content>
+		</item>
+		
+	</channel>
+</rss>

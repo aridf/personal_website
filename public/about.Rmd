@@ -1,0 +1,99 @@
+---
+title: "About me"
+author: "Ari Decter-Frain"
+date: "August 31, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I am a PhD student in the Cornell Brooks School of Public Policy. I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I also worked as a research analyst and product manager at [Multi Health Systems Inc.](https://mhs.com/), as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu) in 2020, and a machine learning engineer at [Graphika](https://graphika.com/) from May to November of 2021.
+
+I am interested in a lot of things. Here is what I've thought about most lately:
+
+* Computational demography
+
+* Figuring out how to use non-representative data
+
+* Machine learning for demographic measurement
+
+* Software development
+
+* The need for stakeholder engagement in data science work
+
+## Timeline
+
+_**Now**_
+
+* Wrapping up papers for submission
+* Working on `Who moves during recessions?' for presentation at APPAM in March
+* Starting new projects/collaborations! Fun!
+
+_**06/2021 - 12/2021**_
+
+* Worked as a Machine Learning Engineer at [Graphika](https://graphika.com/), building NLP classification models and models for cross-platform clustering of social media data.
+* RA for Dr. Matthew Hall on statistical models for the use of consumer data to measure population levels and migration flows.
+* Wrote my second year paper, using machine learning to improve race-ethnicity imputation.
+
+_**01/2021 - 05/2021: Spring of second year**_
+
+* Awarded SSHRC Doctoral Fellowship, which will fund the next three years of my PhD! Thanks, Canada!
+* Presented a poster entitled "Small Area Population Estimates from Consumer Data" (joint with Arthur Acolin and Matthew Hall) at the PAA 2021 annual conference
+* Also presented the above at the APPAM 2021 Student Seminar Series
+* Submitted the first paper of my PhD, collaborative work with my DSSG colleagues on measuring racially polarized voting and the racial composition of the voting population.
+* TA'd Big Data for Policy Analysis
+
+_**09/2020 - 12/2020: Fall of second year**_
+
+* Assembled my committee: Professors Doug Miller (Chair), Michael Macy, and Matthew Hall
+* TA'd Introduction to Statistics for PAM Majors
+* Presented ongoing research with my DSSG colleagues at [PRIEC](http://priec.org/)
+
+_**06/2020 - 08/2020: Data Science for Social Good**_
+
+* Developed an [R package](https://github.com/RPVote/eiCompare) to quantify vote dilution in US elections
+* Met many inspiring [people](https://escience.washington.edu/data-science-for-social-good-teams-summer-2020/)
+* Learned _a lot_. Some highlights:
+  * The "human-centered design" approach to data science
+  * How to collaborate on a coding project with a team spread across North America
+  * The intricacies of voting rights litigation and empirical research on voting
+  * Applied Bayesian statistics and spatial analysis in R
+
+_**09/2019 - 05/2020: First year at Cornell**_
+
+* Took courses in economics, statistics, computer science, sociology, and demography
+* Started contributing to some ongoing research projects
+* Became an affiliate of the Cornell Population Center ([CPC](https://cpc.cornell.edu/))
+* Moved back to Canada when the pandemic forced classes online in March
+
+_**06/2019 - 08/2019: Free summer**_
+
+* Visited friends in Berlin, road-tripped through Italy
+* Got engaged!
+* Traveled with my fiancee through South America:
+  * Fancy hotel in Cartegena
+  * Snorkeling on the Galapagos Islands
+  * Five day hike to Machu Picchu
+  * Drove through the Bolivian Salt Flats
+  
+_**09/2017 - 05/2019: Multi Health Systems**_
+
+* Did data science and product development research on a small "intrepreneurial" team called the Innovation Hub
+* Moved to product management: 
+  * Developed a business plan for a workplace mental health assessment product
+  * Led a small team to help clients connect to the product's API
+
+_**09/2016 - 08/2017: London School of Economics**_
+
+* Took courses in sociology, political science, demography, and causal inference
+* Met some amazing people from all over Europe and the rest of the world
+* Took weekend trips to Croatia, Scotland, Barcelona
+* First exposure to R, and to programming (addicted ever since)
+* Presented at the European Association of Social Psychology Conference in Granada, Spain
+
+_**09/2012 - 09/2016: University of Winnipeg**_
+
+* Studied political psychology in an undergraduate research lab
+* Wrote a book chapter and a text analysis paper

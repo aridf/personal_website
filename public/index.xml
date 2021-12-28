@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ari Decter-Frain</title>
+    <link>https://aridecterfrain.com/</link>
+    <description>Recent content on Ari Decter-Frain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Sat, 11 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://aridecterfrain.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Travel Map</title>
+      <link>https://aridecterfrain.com/posts/ari-trips-toronto-london/</link>
+      <pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/ari-trips-toronto-london/</guid>
+      <description>I want to see as much of the world as possible while I can. The map I’m making here will serve as a reminder of the memories I made around the world, and as motivation to go out and see the rest.
+I’ve made the map in Rmarkdown so anyone reading who has a basic familiarity with R and Rstudio should be able to easily make their own.
+To make the map I used R, ggplot, and Google’s geolocation API.</description>
+    </item>
+    
+    <item>
+      <title>How I Got To Cornell</title>
+      <link>https://aridecterfrain.com/posts/ari-career-background/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/ari-career-background/</guid>
+      <description>My career so far has been a delightfully eclectic adventure. In this post I provide a brief summary of my experiences and how they led me to start a PhD program at Cornell University.
+1. University of Winnipeg 2012 - 2016 I completed my undergraduate degree in Psychology at the University of Winnipeg. While studying, I worked as a research assistant for different professors in the department. I worked most extensively in Dr.</description>
+    </item>
+    
+    <item>
+      <title>About me</title>
+      <link>https://aridecterfrain.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/about/</guid>
+      <description>I am a PhD student in Cornell’s Policy Analysis and Management program. For the summer of 2021 I am working as a machine learning engineer at Graphika. I hold an MSc in Inequalities and Social Science from the London School of Economics and a BA in Psychology from the University of Winnipeg. I have also worked for two years as a data scientist and product manager at a people analytics firm called Multi Health Systems Inc.</description>
+    </item>
+    
+    <item>
+      <title>Agent-Based Modelling as a Tool to Advance Evolutionary Population Theory</title>
+      <link>https://aridecterfrain.com/posts/bavel_grow_2016/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/bavel_grow_2016/</guid>
+      <description>By Jan Van Bavel and André Grow, 2016 This article serves as the introduction to the book Agent-based modeling in population studies, edited by Bavel and Grow. Besides previewing the contributions made in the rest of the book, the authors discuss three important overarching topics:
+1. Demography is “rich in methods, but poor in theories” Bavel and Grow describe the historical development of demography as a discipline that primarily serves governments by meticulously tracking populations for policy purposes.</description>
+    </item>
+    
+    <item>
+      <title>Analyzing the Effect of Time in Migration Measurement Using Geo-referenced Digital Trace Data</title>
+      <link>https://aridecterfrain.com/posts/fiorio_etal_2020/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/fiorio_etal_2020/</guid>
+      <description>Lee Fiorio and co-authors, 2020 This paper develops a general framework for using geo-located digital trace data to estimate migration flows over a continuous time interval. The goal is to develop a framework that makes digital trace data useful for migration, even through most of it takes the unusual form of (id, timestamp, location). For example, if we want to use geo-located Tweets to measure migrant flows, all we have are the locations of users at the times when they Tweet.</description>
+    </item>
+    
+    <item>
+      <title>Applications and Recruitment Performance of Web-Based Respondent-Driven Sampling Scoping Review</title>
+      <link>https://aridecterfrain.com/posts/helms_etal_2021/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/helms_etal_2021/</guid>
+      <description>Yannick Helms and co-authors, 2021 This is a scoping review of recent web-based RDS studies. The authors document the sampling efforts of 18 such papers to uncover patterns in the types of practices that typically work for recruiting RDS samples.
+The majority of the included studies either recruited seeds through targeted Facebook advertisements, and 6 combined online seeding with offline recruiting from interest groups or the researchers’ own social networks.</description>
+    </item>
+    
+    <item>
+      <title>Aspirational pursuit of mates in online dating markets</title>
+      <link>https://aridecterfrain.com/posts/bruch_newman_2018/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/bruch_newman_2018/</guid>
+      <description>Elizabeth E. Bruch and M.E.J. Newman, 2018 This paper uses data from an online dating website to explore the mechanisms that lead to the well-observed phenomenon that mates tend to be similarly attractive. There are two competing explanations:
+Individuals seek out mates that are similar to themselves, perhaps in general and also in attractiveness.
+ Individuals seek to partner with the most attractive mate possible. Thus, the most attractive people pair off with each other, then the next most attractive, and so on in such a manner that everyone ends up paired with their equals.</description>
+    </item>
+    
+    <item>
+      <title>Assessing respondent-driven sampling</title>
+      <link>https://aridecterfrain.com/posts/crawford_etal_2018/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/crawford_etal_2018/</guid>
+      <description>Sharad Goel and Matthew Salganik, 2010 This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:
+\[ \hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)} \]
+This is just the mean of \(f(X_i)\) where each person, \(X_i\) is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals.</description>
+    </item>
+    
+    <item>
+      <title>Assessing respondent-driven sampling</title>
+      <link>https://aridecterfrain.com/posts/goel_salganik_2010/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/goel_salganik_2010/</guid>
+      <description>Sharad Goel and Matthew Salganik, 2010 This paper uses simulations drawn from known network populations to assess the statistical properties of respondent-driven sampling (RDS) estimators. The basic estimator under examination here is:
+\[ \hat{\mu}_f = \frac{1}{\Sigma_{i = 1}^n 1/degree(X_i)}\Sigma_{i = 1}^n\frac{f(X_i)}{degree(X_i)} \]
+This is just the mean of \(f(X_i)\) where each person, \(X_i\) is weighted in inverse proportion to their degree. So high-degree individuals are weighted down because they are probably oversampled in the RDS, and vice versa for low degree individuals.</description>
+    </item>
+    
+    <item>
+      <title>Big data and population processes: A revolution?</title>
+      <link>https://aridecterfrain.com/posts/billari_zagheni_2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://aridecterfrain.com/posts/billari_zagheni_2017/</guid>
+      <description>Fransisco Billari and Emilio Zagheni, 2017 This paper describes the influx of new data resulting from digitization as the fourth paradigm of demographic data. The four paradigms according to Billari and Zagheni, in rough chronological order, are as follows:
+Census data for national accounting: Historically, demographers have been concerned with using the largest, most complete datasets to study macro-level outcomes.
+ Microdata for testing theories: Smaller sample surveys emerged after WWII.</description>
+    </item>
+    
+  </channel>
+</rss>

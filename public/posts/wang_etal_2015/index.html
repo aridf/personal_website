@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Forecasting elections with non-representative polls">
+<meta itemprop="description" content="Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015 This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.
+The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console.">
+
+<meta itemprop="wordCount" content="556">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Forecasting elections with non-representative polls" />
+<meta property="og:description" content="Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015 This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.
+The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aridecterfrain.com/posts/wang_etal_2015/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Forecasting elections with non-representative polls"/>
+<meta name="twitter:description" content="Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015 This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.
+The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Forecasting elections with non-representative polls</title>
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/style.min.f62726f23939259429d68ac03937a1f2c17eb3427b95c358a1d24e49bd68d2b2.css" integrity="sha256-9icm8jk5JZQp1orAOTeh8sF+s0J7lcNYodJOSb1o0rI=">
+	
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.scss">
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://aridecterfrain.com">Ari Decter-Frain</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://aridecterfrain.com/about/">About</a>
+					<a href="https://aridecterfrain.com/posts/research">Research</a>
+					<a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/adecterfrain" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://www.linkedin.com/in/ari-decter-frain-084529b2/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/aridf" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://aridecterfrain.com/about/">About</a></li>
+			<li><a href="https://aridecterfrain.com/posts/research">Research</a></li>
+			<li><a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a></li>
+		</ul>
+	</div>
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				
+				<h1>Forecasting elections with non-representative polls</h1>
+			</header>
+			<div class="content">
+				
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="wei-wang-david-rothschild-sharad-goel-and-andrew-gelman-2015" class="section level2">
+<h2>Wei Wang, David Rothschild, Sharad Goel, and Andrew Gelman, 2015</h2>
+<p>This paper differs topically from others on the list, but it’s included here because a) the paper gives a very clear account of an approach to building forecasts from non-representative data, and b) I care about election fairness and election forecasting is super cool.</p>
+<p>The authors demonstrate how to overcome non-representative sampling using multilevel regression and poststratification (MRP) by forecasting the 2012 US Presidential election using survey data collected through the Xbox game console. Researchers at Microsoft administered election poll surveys via the Xbox online system in the months leading up to the election, to see whether these data could be used to predict the outcome of the election. Unsurprisingly, the Xbox sample has a dramatically different gender and age distribution than the voters who turned out to vote in the election. Nonetheless, they are able to obtain estimates that perform well compared to aggregates of official polls.</p>
+<p>The “secret sauce” for handling non-representativeness here is MRP, which enables researchers to use what they know about the population to re-weight the data in their sample, and to do so even with sparse data. The basic premise is to divide the sample up into meaningful subgroups, estimate the outcome of interest within each, then aggregate the subgroups estimates together, weighting each by their known population magnitude. We might worry that some of the subgroups we want to consider will have too few observations to yield reliable estimates, and this is where the “M” for “multilevel” comes in. Instead of running separate estimations for each subgroup, all the estimates can be carried out at once in a model that enables pooling between similar subgroups. This means even in subgroups with little or no data, one can achieve an estimate with reasonable levels of uncertainty by borrowing information from other cells.</p>
+<div id="in-a-bit-more-detail" class="section level3">
+<h3>In a bit more detail…</h3>
+<p>The basic structure of the model used in the paper is:</p>
+<p><span class="math display">\[
+Y_i = \alpha_0 + a_{j[i]}^{state} + a_{j[i]}^{sex} + a_{j[i]}^{age} + a_{j[i]}^{race} + ...
+\]</span></p>
+<p>Here, all the <span class="math inline">\(a_{j[i]}\)</span> terms shift the level of <span class="math inline">\(Y_i\)</span> according to its subgroup. Each of these level shifters is assigned prior probability distribution. In this case, the authors use a normal prior with zero mean, and assign hyperpriors to the variance. Fitting this model yields a set of parameters from which predicted values of <span class="math inline">\(Y\)</span> can be produced for each combination of <span class="math inline">\(a_j\)</span>’s. For instance, once we’ve estimated the level shifters for white voters, female voters, voters aged 25-35, and voters from Texas, we can sum these with <span class="math inline">\(\alpha_0\)</span> to yield an estimate for voters with all of those characteristics. Then we aggregate the estimates for each subgroup, where each subgroup is weighted by their known presence in the population:</p>
+<p><span class="math display">\[
+\hat{y}^{PS} = \frac{\sum_{k=1}^KN_j\hat{y_j}}{\sum_{k=1}^KN_j}
+\]</span></p>
+<p>What’s nice about MRP is you don’t need to calibrate every subgroup against a ground-truth equivalent, an approach taken elsewhere (eg.<a href="../zagheni_weber_gummadi_2017/">Zagheni, Weber, and Gummadi, 2017</a>). Here, all we have to know is the population distribution of demographic subgroups, which are often well-measured in Censuses. However, MRP is only ultimately applicable in situations where we’re interested in a population quantity, like the proportion of American voters supporting Obama. If our goal is to decompose our variable of interest and examine how it varies by demographics, we’re still stuck with potentially biased estimates.</p>
+</div>
+</div>
+
+			</div>
+			<hr class="post-end">
+		
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://aridecterfrain.com">Ari Decter-Frain</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://aridecterfrain.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+	<script src="https://aridecterfrain.com/js/main.min.3b8561d63aeee77aa04e677df95581a230b4b43adf7b208b8d671433e446cfc1.js" integrity="sha256-O4Vh1jru53qgTmd9+VWBojC0tDrfeyCLjWcUM+RGz8E="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-141103849-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

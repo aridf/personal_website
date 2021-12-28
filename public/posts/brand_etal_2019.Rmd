@@ -1,0 +1,16 @@
+---
+title: Parental divorce is not uniformly disruptive to children’s educational attainment
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Jennie Brand, Ravaris Moore, Xi Song, and Yu Xie, 2019
+
+This summary essentially covers two papers; the one in the title and a second paper published in Sociological Methodology, called "Uncovering Sociological Effect Heterogeneity using Machine Learning", by some of the same authors. Both of these papers are about matching, which is a causal inference method the details of which are beyond the scope of this reading list. Also you probably now what it is. If you don't, basically it involves finding treated and control units who look the same on all other measures than the outcome, so that any differences in the outcome are plausibly attributable to the treatment. 
+
+The first paper 

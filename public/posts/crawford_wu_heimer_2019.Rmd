@@ -1,0 +1,28 @@
+---
+title: Hidden Population Size Estimation From Respondent-Driven `Sampling:` A Network Approach
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Forrest W. Crawford, Jiacheng Wu, Robert Heimer, 2018
+
+This paper proposes a method for estimating the population size of hidden groups by leveraging network information from a sample collected via respondent-driven sampling (RDS). The "big idea" behind this paper is that a process of (RDS) is in some way a function of the total size of the network being sampled. The authors cleverly develop a probability model for how a respondent-driven network will develop, given a particular network size and probability of underlying edges in the network. The model incorporates the actual recruitment edges made, the degree of each sampled individual, the time it takes for someone to recruit their neighbor.
+
+The model begins by assuming a the underlying graph $G = (V, E)$ of individuals in the hidden population can be described by what's called an Erdős-Rényi random graph, which is basically a random graph where each edge has an equal probability, $p$, of occurring. Given this starting point, the degree, $d_i$, of any individual in the graph follows a binomial distribution. The authors use the following notation:
+
+$$
+d_i \sim Binomial(N, p)
+$$
+
+There are $N$ total nodes in the graph. This is what the authors want to estimate - the total population size. Individual $i$ can have edges to all $N$ others, and does so with probability $p$. 
+
+This is the basic intuition behind the model, but it gets more complicated quickly. To begin with, a recruitment network like the one constructed during RDS is not a random graph
+
+
+
+

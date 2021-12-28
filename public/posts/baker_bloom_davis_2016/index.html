@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Measuring Economic Policy Uncertainty">
+<meta itemprop="description" content="Scott Baker, Nicholas Bloom, and Steven Davis, 2016 The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.
+The index is so simple: Just count up the number of “articles in 10 leading U.">
+
+<meta itemprop="wordCount" content="801">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Measuring Economic Policy Uncertainty" />
+<meta property="og:description" content="Scott Baker, Nicholas Bloom, and Steven Davis, 2016 The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.
+The index is so simple: Just count up the number of “articles in 10 leading U." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://aridecterfrain.com/posts/baker_bloom_davis_2016/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Measuring Economic Policy Uncertainty"/>
+<meta name="twitter:description" content="Scott Baker, Nicholas Bloom, and Steven Davis, 2016 The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.
+The index is so simple: Just count up the number of “articles in 10 leading U."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Measuring Economic Policy Uncertainty</title>
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/style.min.f62726f23939259429d68ac03937a1f2c17eb3427b95c358a1d24e49bd68d2b2.css" integrity="sha256-9icm8jk5JZQp1orAOTeh8sF+s0J7lcNYodJOSb1o0rI=">
+	
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.scss">
+	<link rel="stylesheet" href="https://aridecterfrain.com/css/solarize.css">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://aridecterfrain.com">Ari Decter-Frain</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://aridecterfrain.com/about/">About</a>
+					<a href="https://aridecterfrain.com/posts/research">Research</a>
+					<a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="https://twitter.com/adecterfrain" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://www.linkedin.com/in/ari-decter-frain-084529b2/" target="_blank" rel="noopener me" title="Linkedin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://github.com/aridf" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://aridecterfrain.com/about/">About</a></li>
+			<li><a href="https://aridecterfrain.com/posts/research">Research</a></li>
+			<li><a href="https://aridecterfrain.com/adecterfrain_cv_02_2021.pdf">CV</a></li>
+		</ul>
+	</div>
+
+
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				
+				<h1>Measuring Economic Policy Uncertainty</h1>
+			</header>
+			<div class="content">
+				
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="scott-baker-nicholas-bloom-and-steven-davis-2016" class="section level2">
+<h2>Scott Baker, Nicholas Bloom, and Steven Davis, 2016</h2>
+<p>The field of natural language processing has exploded in recent years as researchers constantly try to one-up each other by inching closer to perfect performance with increasingly complex neural architectures. In the meantime, Baker, Bloom, and Davis have constructed a highly impactful measure of economic policy uncertainty (EPU) using a basic keyword search.</p>
+<p>The index is so simple: Just count up the number of “articles in 10 leading U.S. newspapers that contain the following trio of terms: ‘economic’ or ‘economy’; ‘uncertain’ or ‘uncertainty’; and one or more of ‘Congress,’ ‘deficit,’ ‘Federal Reserve,’ ‘legislation,’ ‘regulation,’ or ‘White House.’” (p.1594). That’s it. That’s the index<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>What’s so impressive about this paper is a) the qualitative effort that went into establishing the face validity of the measure, and b) that despite its simplicity, the authors are able to demonstrate its utility in very rigorous and compelling ways. I’ll talk about each of these.</p>
+<p>The authors document and the incredibly labor-intensive coding procedure they used to narrow in on their list of keywords. The process involves multiple rounds of audits by dozens of research assistants and a 65-page guidebook. Through auditing, they labeled a sizeable number of documents and narrowed in on a set of candidate keywords. Then, they constructed indices from every possible combination of keywords in their list and tested which permutation most closely match the hand-labeling of documents. The best-fitting set of keywords matches up with the hand-labeled index like this:</p>
+<p><img src="/misc_img/baker_bloom_davis_2016.png" style="width:60.0%" /></p>
+<p>Obviously a strong correlation. They also include appendices that show the effect of dropping any single keyword from the list is minimal. All in all, this is a model of rigorous text-based measure construction. And amazingly it doesn’t involve any fancy NLP techniques at all.</p>
+<p>The authors also do an incredible job of demonstrating that the index has practical applications and fits within existing economic frameworks as expected. They cover the basics of establishing convergent validity by showing that the EPU index correlates with other measures of uncertainty. They do this first using a measure of option price volatility. They also use the frequency of the word “uncertain” in the ‘Beige Book’, which is a 15,000 word document released eight times a year by the Federal Open Market Committee and summarizes the concerns expressed by businesses to the major Federal Reserve Banks across the U.S. They <em>also</em> do a similar analysis of firms’ 10-K filings (which are basically annual reports that include more financial details).</p>
+<p>But they don’t stop there! Going even further, the authors note that firms should differ in their exposure to policy uncertainty depending how much of their revenues come from government contracts. This motivates a validation exercise using firm-level data in a shift-share type setup. They use private and public data on Federal contracts to measure industry-level exposure policy uncertainty as the share of industry revenue that comes from government contracts<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
+<p>Using these exposure measures, they fit a regression model of firm option volatility on the interaction between exposure and the national EPU index, while including firm and time fixed effects in the model. The coefficient on the interaction implies that “for every 1% increase in our policy uncertainty index a firm with, say, a 50% government revenue share would see its stock volatility rise by 0.11%” (p. 1620).</p>
+<p>What’s so powerful about this last result is how closely it ties the EPU measure to such a specific outcome - the implied volatility within firms most affected by government fiscal policy. I think this paper really has it all when it comes to presenting and validating measures based on unique data.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Okay, it’s a little more complicated than that. First, the article frequencies are normalized to account for variation over time and across magazines in the number of articles published. Also, this keyword-based index is the main version, but there are two others. The first measures the current price of assets that pay out based on future government fiscal policy, and the second measures disagreement between professional forecasters of future government purchases. In the paper, however, only the keyword-based index is presented.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>“At the top end, firms operating in the guided missiles and space vehicles and parts industry (SIC 376) derive 78% of their revenues from sales to the federal government. The corresponding figure for selected other industries with high exposures to federal purchases is 39% for ordnance and accessories (SIC 348); 27% for search, detection, navigation, guid- ance &amp; aeronautical systems (SIC 381); 21% for engineering services (SIC 871); 20% for aircrafts and parts (SIC 372); 15% for ship and boat building and repairing (SIC 373); 11% for blank books, loose leaf binders, and bookbinding (SIC 278); and 9% for heavy construction (SIC 160). Direct sales to the federal government are comparatively small in most other industries.” (p.1618)<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+			</div>
+			<hr class="post-end">
+		
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2021 <a href="https://aridecterfrain.com">Ari Decter-Frain</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://aridecterfrain.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+	<script src="https://aridecterfrain.com/js/main.min.3b8561d63aeee77aa04e677df95581a230b4b43adf7b208b8d671433e446cfc1.js" integrity="sha256-O4Vh1jru53qgTmd9+VWBojC0tDrfeyCLjWcUM+RGz8E="></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-141103849-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

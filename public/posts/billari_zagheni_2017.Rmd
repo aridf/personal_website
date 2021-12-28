@@ -1,0 +1,24 @@
+---
+title: "Big data and population processes: A revolution?"
+author: "Ari Decter-Frain"
+date: "04/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fransisco Billari and Emilio Zagheni, 2017
+
+This paper describes the influx of new data resulting from digitization as the fourth paradigm of demographic data. The four paradigms according to Billari and Zagheni, in rough chronological order, are as follows: 
+
+1. *Census data for national accounting:* Historically, demographers have been concerned with using the largest, most complete datasets to study macro-level outcomes. 
+
+2. *Microdata for testing theories:* Smaller sample surveys emerged after WWII. These asked more specific questions to get at the drivers of population change.
+
+3. *Multi-level data:* This paradigm emphasizes the importance of macro-level constraints as influencing individual behavior. Agent-based modelling is suggested as a tool for extrapolating micro-level insights to make new predictions about macro-level trends. This paradigm matches Bavel and Brow's (2016) macro-micro-macro model.
+
+4. *Data revolution:* Widespread logging online behavior has created many new data sources. Unlike all previous generations, these are typically decentralized and non-representative.
+
+The authors go on to describe methodological shifts resulting from the data revolution. First, demographic calibration has gained new importance. To maximize the utility of new data for monitoring populations, one must first develop statistical models that account for any bias resulting from its non-representativeness. Second, in cases where bias cannot be modelled, new data may still be useful for monitoring *changes* in a quantity of interest, rather than absolute levels. Finally, there may be some opportunity to apply formal demographic methods to the study of online populations. For instance, one can construct a life table for the life of Twitter accounts and use it to estimate Twitter's population rate of growth.
