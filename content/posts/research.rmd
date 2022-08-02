@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Together with Matt Hall, I maintain a reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have two ongoing projects in this field:
 
-#### Small Area Estimates from Consumer Data
+### Small Area Estimates from Consumer Data
 
 I work on this project together with Professors Arthur Acolin and Matthew Hall. Consumer data are large datasets, often containing hundreds of millions of individual-level observations, maintained and sold by commercial vendors. These vendors maintain the data by combining and cross-referencing information about people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Vendors assemble these datasets for sale to marketers. We have purchased the data to see if we can leverage them for policy and research purposes. We have had success using the data for a few different research questions so far:
 
@@ -24,6 +24,9 @@ I work on this project together with Professors Arthur Acolin and Matthew Hall. 
 
 * Measuring annual tract-to-tract migration flows across the United States (In progress)
 
+### On the predictability of individual mortality
+
+During summer 2022 I am part of a collaborative project at the Max Planck Institute for Demographic Research, where we ask how well individual mortality can be predicted. We use longitudinal survey data on the aging US population from the Health and Retirement Survey (HRS), and compare a range of machine learning survival models to quantify exactly how well we can predict mortality.
 
 ## Political Methodology
 
