@@ -9,13 +9,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in the Cornell Brooks School of Public Policy. I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I also worked as a research analyst and product manager at [Multi Health Systems Inc.](https://mhs.com/), as a [Data Science for Social Good Fellow](https://escience.washington.edu/2020-data-science-for-social-good-projects) at the [University of Washington's eScience Institute](https://escience.washington.edu) in 2020, and a machine learning engineer at [Graphika](https://graphika.com/) from May to November of 2021.
+I am a PhD student in the Cornell Brooks School of Public Policy. I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I am currently visiting the Max Planck Institute for Demographic Research (MPIDR) in Rostock, Germany, as part of a research incubator program. For the fall semester I am interning at Spotify.
 
 I am interested in a lot of things. Here is what I've thought about most lately:
 
 * Computational demography
 
-* Figuring out how to use non-representative data
+* Using non-representative data to study populations
 
 * Machine learning for demographic measurement
 
@@ -25,15 +25,23 @@ I am interested in a lot of things. Here is what I've thought about most lately:
 
 ## Timeline
 
-_**Now**_
+_**Fall 2022**_
 
-* Wrapping up papers for submission
-* Working on `Who moves during recessions?' for presentation at APPAM in March
-* Starting new projects/collaborations! Fun!
+* Research Intern @ Spotify!!
+
+_**Summer 2022**_
+
+* Working on mortality prediction and survival modelling at MPIDR in Rostock ([link to program](https://www.demogr.mpg.de/en/news_events_6123/news_press_releases_4630/news/population_and_social_data_science_summer_incubator_program_10619)).
+* Paper on knowledge graph representations of online political discourse accepted to the The 11th International Conference on Complex Networks and their Applications! ([link to conference](https://complexnetworks.org/))
+* Received a revise-and-resubmit for a co-authored applied demography paper!
+
+_**Winter and Spring 2022**_
+
+* Released two preprints about proxying race/ethnicity in political science ([here](https://osf.io/preprints/socarxiv/e854z/) and [here](https://arxiv.org/abs/2206.14583))
 
 _**06/2021 - 12/2021: Summer and fall third year**_
 
-* Worked as a Machine Learning Engineer at [Graphika](https://graphika.com/), building NLP classification models and models for cross-platform clustering of social media data.
+* Worked as a Machine Learning Engineer at [Graphika](https://graphika.com/), building NLP classification models and methods for cross-platform clustering of social media data.
 * RA for Dr. Matthew Hall on statistical models for the use of consumer data to measure population levels and migration flows.
 * Wrote my second year paper, using machine learning to improve race-ethnicity imputation.
 

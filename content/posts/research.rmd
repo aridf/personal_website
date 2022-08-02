@@ -12,19 +12,32 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Computational Demography
 
-I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. I have an ever-growing reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have one ongoing project in this area:
+I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Together with Matt Hall, I maintain a reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have two ongoing projects in this field:
 
-#### Small Area Population Estimates from Consumer Data
+#### Small Area Estimates from Consumer Data
 
-With Professors Arthur Acolin and Matthew Hall. We are evaluating potential contribution of consumer data for the measurement of small-area populations. Consumer reference data is collected by combining and cross-referencing people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Private companies assemble these datasets for sale to marketers. We have purchased data from one such company and aim to determine how useful it can be for researchers. We are testing the following potential contributions of the data for measuring population levels:
+I work on this project together with Professors Arthur Acolin and Matthew Hall. Consumer data are large datasets, often containing hundreds of millions of individual-level observations, maintained and sold by commercial vendors. These vendors maintain the data by combining and cross-referencing information about people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Vendors assemble these datasets for sale to marketers. We have purchased the data to see if we can leverage them for policy and research purposes. We have had success using the data for a few different research questions so far:
 
-* *Annual small-area estimates:* Researchers often need measures of year-over-year change in populations. The Census Bureau does not provide such measures for small geographies like tracts and block-groups on an annual basis, but consumer reference data does. This might make it uniquely useful, for example, for computing accurate rates of a virus like COVID-19, or measuring how population structures change after a natural disaster like a hurricane.
+* Measuring the effect of gentrification-driven residential mobility on people's exposure to contextual determinants of health (paper forthcoming in Housing Policy and Debate).
 
-* *Up-to-date estimates:* Policy decisions should be based on the most up-to-date information possible. The Census releases updated population information on a two-year schedule, so estimates of population levels in 2020 will be released towards the end of 2021. In contrast, we received consumer reference data for the entire United States in January 2021, almost a full year earlier than the Census.
+* Measuring the number of households in each Census tract on an annual frequency (R&R)
 
-* *Estimates for any geographic unit:* There are lots of ways to divide up America. Demographers divide it into Census blocks and tracts. Education researchers look at school districts. Political scientists care about election precincts. Increasingly, researchers are interested in creating their own geographic buffers around particular neighborhoods and locations. The consumer reference data contains latitude-longitude coordinates for every household. By the magic of spatial data analysis, we can use these coordinates to count the number of people within any geographic area in which a researcher might be interested.
+* Measuring annual tract-to-tract migration flows across the United States (In progress)
 
 
-## Voting behavior and election fairness
+## Political Methodology
 
-This project emerged from my summer as a Data Science for Social Good Fellow at the University of Washington's eScience Institute. Our team worked to revamp and publish an R package called [eiCompare](https://cran.r-project.org/web/packages/eiCompare/index.html), which contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Since releasing the package, our team has continued working to produce research that demonstrates the use of these tools in different regions and elections across the US, and continues to improve upon the methods included in the package. 
+During the summer of 2020 I was a Data Science for Social Good Fellow at the University of Washington's eScience Institute. Our team worked to revamp and publish an R package called [eiCompare](https://cran.r-project.org/web/packages/eiCompare/index.html), which we continue to maintain. The package contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Out of our work came two additional research projects:
+
+* On the effect of a researcher's choice of race/ethnicity proxy on downstream conclusions about the voting preferences of different race/ethnic groups. ([preprint](https://osf.io/preprints/socarxiv/e854z/))
+
+* On machine learning methods as an alternative to the standard Bayesian approach to proxying race/ethnicity ([preprint](https://arxiv.org/abs/2206.14583)). 
+
+
+## Knowledge graphs for social science research
+
+Knowledge graphs represent heterogeneous networks containing multiple types of nodes and edges. Technology companies use them to represent their data. For instance, Amazon might use a knowledge graph to simultaneously represent information about who purchased, viewed, and reviewed which products, which products belong to which brands. Knowledge graphs can be embedded and used to cluster products or predict future links in the data. Amazon might use this to generate product recommendations, or to categorize their products (though this is just speculation). I worked with knowledge graphs at Graphika, and in a couple research projects:
+
+* Using knowledge graphs to measure partisanship in social media discourse (Paper forthcoming [here](https://complexnetworks.org/))
+
+* Quantifying lifestyle politics in online marketplaces using an Amazon co-purchase network (In progress)
