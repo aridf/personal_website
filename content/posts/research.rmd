@@ -12,35 +12,37 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Computational Demography
 
-I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Together with Matt Hall, I maintain a reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have two ongoing projects in this field:
+I think of computational demography as encapsulating the measurement and analysis of demographic processes via non-traditional data sources and computationally intensive methods. Together with Matt Hall, I maintain a reading list of papers in this field, which I keep available [here](../cd_readinglist_2). I have four ongoing projects in this field:
 
 ### Small Area Estimates from Consumer Data
 
 I work on this project together with Professors Arthur Acolin and Matthew Hall. Consumer data are large datasets, often containing hundreds of millions of individual-level observations, maintained and sold by commercial vendors. These vendors maintain the data by combining and cross-referencing information about people's interactions with various private and public institutions, like utility payments, voter registrations, real estate tax assessments, and credit card billing statements. Vendors assemble these datasets for sale to marketers. We have purchased the data to see if we can leverage them for policy and research purposes. We have had success using the data for a few different research questions so far:
 
-* Measuring the effect of gentrification-driven residential mobility on people's exposure to contextual determinants of health (paper forthcoming in Housing Policy and Debate).
+* Measuring the effect of gentrification-driven residential mobility on people's exposure to contextual determinants of health ([link](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:UeHWp8X0CEIC)).
 
-* Measuring the number of households in each Census tract on an annual frequency (R&R)
+* Estimating the number of households in each Census tract on an annual frequency ([link](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:IjCSPb-OGe4C)).
 
-* Measuring annual tract-to-tract migration flows across the United States (In progress)
+* Estimating annual tract-to-tract migration flows across the United States (In progress).
+
+* Assessing whether neighborhood politics affect households' preferences about where to live in the United States (In progress).
 
 ### On the predictability of individual mortality
 
-During summer 2022 I am part of a collaborative project at the Max Planck Institute for Demographic Research, where we ask how well individual mortality can be predicted. We use longitudinal survey data on the aging US population from the Health and Retirement Survey (HRS), and compare a range of machine learning survival models to quantify exactly how well we can predict mortality.
+During summer 2022 I was part of a collaborative project at the Max Planck Institute for Demographic Research, where we asked how well individual mortality can be predicted. We wrote a paper using longitudinal survey data on the aging US population from the Health and Retirement Survey (HRS), comparing a range of machine learning survival models to quantify exactly how well we can predict mortality.
 
 ## Political Methodology
 
-During the summer of 2020 I was a Data Science for Social Good Fellow at the University of Washington's eScience Institute. Our team worked to revamp and publish an R package called [eiCompare](https://cran.r-project.org/web/packages/eiCompare/index.html), which we continue to maintain. The package contains tools for estimating the voting behavior of different race groups. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Out of our work came two additional research projects:
+During the summer of 2020 I was a Data Science for Social Good Fellow at the University of Washington's eScience Institute. Our team worked to revamp and publish an R package called [eiCompare](https://cran.r-project.org/web/packages/eiCompare/index.html), which we continue to maintain. The package contains tools for estimating the voting behavior of different race groups using Bayesian statistical methods. We hope this package can help ensure that the 2021 round of electoral redistricting results in fair representation across the country. Out of our work came two additional research projects:
 
-* On the effect of a researcher's choice of race/ethnicity proxy on downstream conclusions about the voting preferences of different race/ethnic groups. ([preprint](https://osf.io/preprints/socarxiv/e854z/))
+* On the effect of a researcher's choice of race/ethnicity proxy on downstream conclusions about the voting preferences of different race/ethnic groups ([link](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:2osOgNQ5qMEC)).
 
-* On machine learning methods as an alternative to the standard Bayesian approach to proxying race/ethnicity ([preprint](https://arxiv.org/abs/2206.14583)). 
+* On machine learning methods as an alternative to the standard Bayesian approach to proxying race/ethnicity ([link](https://arxiv.org/abs/2206.14583)). 
 
 
 ## Knowledge graphs for social science research
 
 Knowledge graphs represent heterogeneous networks containing multiple types of nodes and edges. Technology companies use them to represent their data. For instance, Amazon might use a knowledge graph to simultaneously represent information about who purchased, viewed, and reviewed which products, which products belong to which brands. Knowledge graphs can be embedded and used to cluster products or predict future links in the data. Amazon might use this to generate product recommendations, or to categorize their products (though this is just speculation). I worked with knowledge graphs at Graphika, and in a couple research projects:
 
-* Using knowledge graphs to measure partisanship in social media discourse (Paper forthcoming [here](https://complexnetworks.org/))
+* Using knowledge graphs to measure partisanship in social media discourse ([link](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:W7OEmFMy1HYC)).
 
-* Quantifying lifestyle politics in online marketplaces using an Amazon co-purchase network (In progress)
+* Quantifying lifestyle politics in online marketplaces using an Amazon co-purchase network ([preprint](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:9yKSN-GCB0IC))

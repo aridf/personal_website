@@ -9,29 +9,32 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-I am a PhD student in the Cornell Brooks School of Public Policy. I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). I am currently visiting the Max Planck Institute for Demographic Research (MPIDR) in Rostock, Germany, as part of a research incubator program. For the fall semester I am interning at Spotify.
+I am a PhD candidate in the Cornell Brooks School of Public Policy, where I do research in economics and demography using computational methods. I have also interned as a Machine Learning Engineer at [Graphika Technologies](https://graphika.com/), and as a Research Scientist at [Spotify](https://open.spotify.com/?). I am currently seeking roles in the private sector. I hold an MSc in [Inequalities and Social Science](https://www.lse.ac.uk/study-at-lse/Graduate/Degree-programmes-2020/MSc-Inequalities-and-Social-Science) from the London School of Economics and a BA in Psychology from the [University of Winnipeg](https://www.uwinnipeg.ca/). 
 
-I am interested in a lot of things. Here is what I've thought about most lately:
-
-* Computational demography
-
-* Using non-representative data to study populations
-
-* Machine learning for demographic measurement
-
-* Software development
-
-* The need for stakeholder engagement in data science work
 
 ## Timeline
 
+_**Fall 2023**_
+
+* Continuing on my dissertation work
+* Began actively seeking private sector roles to start in 2024. Open to discussing any and all opportunities!
+
+_**Spring and Summer 2023**_
+
+* I spent the spring and summer working on my dissertation projects and doing research into different options for post-PhD careers.
+* My first-authored paper [Comparing Methods for Estimating Demographics in Racially Polarized Voting Analyses](https://journals-sagepub-com.proxy.library.cornell.edu/doi/full/10.1177/00491241231192383) was published in the Journal Sociological Methods and Research
+* My solo-authored paper [How should we proxy for race/ethnicity? Comparing Bayesian improved surname geocoding to machine learning methods](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:qjMakFHDy7sC) was conditionally accepted at the journal Political Science Research Methods
+
 _**Fall 2022**_
 
-* Research Intern @ Spotify!!
+* I interned on Spotify's Content Platform Research team. I worked on fitting graph neural networks (GNNs) to music industry knowledge graphs (with PyTorch) to create embeddings and do link prediction. I met many wonderful, intelligent people, and had a great time learning about the inner workings of a really cool industry.
+* I passed my PhD A-exam and moved to PhD candidacy!
+* My co-authored paper with Arthur Acolin and Matt Hall, [Small-area estimates from consumer trace data](https://www-jstor-org.proxy.library.cornell.edu/stable/48708297?typeAccessWorkflow=login) was published in the journal Demographic Research.
+* I presented my paper with Vlad Barash, Chief Scientist at Graphika Technologies, on [Using Knowledge Graphs to Detect Partisanship in Online Political Discourse](https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=rR7W1D4AAAAJ&citation_for_view=rR7W1D4AAAAJ:W7OEmFMy1HYC)
 
 _**Summer 2022**_
 
-* Working on mortality prediction and survival modelling at MPIDR in Rostock ([link to program](https://www.demogr.mpg.de/en/news_events_6123/news_press_releases_4630/news/population_and_social_data_science_summer_incubator_program_10619)).
+* I worked on mortality prediction and survival modelling at MPIDR in Rostock ([link to program](https://www.demogr.mpg.de/en/news_events_6123/news_press_releases_4630/news/population_and_social_data_science_summer_incubator_program_10619)).
 * Paper on knowledge graph representations of online political discourse accepted to the The 11th International Conference on Complex Networks and their Applications! ([link to conference](https://complexnetworks.org/))
 * Received a revise-and-resubmit for a co-authored applied demography paper!
 

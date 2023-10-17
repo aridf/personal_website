@@ -39,7 +39,7 @@ googleAnalytics = "UA-141103849-1"
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "PhD Student - Cornell Policy Analysis and Management"
+  homeSubtitle = "PhD Candidate - Cornell Public Policy"
   footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 
@@ -72,7 +72,6 @@ googleAnalytics = "UA-141103849-1"
     name = "About"
     url = "about/"
     weight = 32
-    
     
   [[menu.main]]
     name = "Research"
